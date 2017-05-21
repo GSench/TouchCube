@@ -1,0 +1,2 @@
+include 'android', 'core'
+include ':library'

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <Preference
+        android:title="@string/help_title"
+        android:summary="@string/about_summary"
+        android:key="help_button" />
+
+    <Preference
+    android:title="@string/contacts_title"
+    android:summary="@string/contacts_msg"
+    android:key="contacts_button" />
+
+    <Preference
+        android:title="@string/about_title"
+        android:key="about_button" />
+    
+
+</PreferenceScreen>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name" translatable="false">Touch Cube</string>
+    <string name="file_key" translatable="false">пиу пиу умри взломщик</string>
+    <string name="cont_desc" translatable="false">img</string>
+    <string name="clear_dialog">Clear?</string>
+    <string name="clear_dialog_message">Current workspace will be deleted. Are you sure?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="save_window_title">Select file</string>
+    <string name="save_window_load">Load</string>
+    <string name="storage_error">storage accept error</string>
+    <string name="no_files">no files</string>
+    <string name="delete_file_dialog_title">Delete?</string>
+    <string name="delete_file_dialog_message">This file will be deleted. Are you sure?</string>
+    <string name="get_name_title">Enter name</string>
+    <string name="bad_name">The name of file must not be empty or contains symbols *\/&quot;:?|&lt;&gt;</string>
+    <string name="no_files_selected">file does not selected</string>
+    <string name="del_ic" translatable="false">delete</string>
+    <string name="put_ic">put</string>
+    <string name="paint_ic">paint</string>
+    <string name="saving">Saving</string>
+    <string name="about_title">About</string>
+    <string name="about_summary">The main functionality of the app</string>
+    <string name="settings_label">Settings</string>
+    <string name="error_title">Error</string>
+    <string name="license_error_title">License error</string>
+    <string name="error_message">Error during checking license: </string>
+    <string name="unexpected_error">unexpected error</string>
+    <string name="retry">Retry</string>
+    <string name="next">Next</string>
+    <string name="tutorial_1">Single tap to put cube.</string>
+    <string name="tutorial_2">Drag finger to rotate a figure.</string>
+    <string name="tutorial_3">Pinch to zoom a figure.</string>
+    <string name="tutorial_4">Long press on cube to center the figure relative to the cube.</string>
+    <string name="tutorial_5">Second tap on current palette color to open color picking window.</string>
+    <string name="about_body_1">With the Touch Cube App You can build colored models of 3d objects. The program includes following instruments :
+\n\n
+- Put or delete cubes</string>
+	<string name="about_body_2">In the upper right corner of the screen, you can select the operating mode: put, paint or remove blocks. Cube will be put or repainted in according to the chosen color in the palette (the first is default). To change the mode press the other radio button in the menu. When selecting delete palette of colors will not be displayed.
+\n\n
+- Centre</string>
+	<string name="about_body_3">By clicking on the lower left button in the application, the rotation center of the object moves to the center of the figure.
+A long press on a separate block, the rotation center of the object moves to this place.
+\n\n
+- Palette</string>
+	<string name="about_body_4">The right part of the screen contains a palette of colors which can be used for setting of blocks. The selected color is outlined with white borders and is marked with an arrow on the left. The first color in the palette - the default color (black, with a blue frame), it can not be changed.
+If you press the selected color again (except the first), a window to select the color will be opened. There you can choose color, brightness and opacity. To establish colors you can as press the required color, or lead your finger across the panel RGB, brightness and transparency. In the upper part of the window displays the current color . To the left of the palette RGB there is black color, you can choose it when you want to get any shade of gray.
+To close the color selection window, click anywhere outside it, except of any color in the palette. By clicking on a different color in the palette, you can change it.
+When you exit the program, your color palette will be saved.
+\n\n
+- Cleaning Workspace</string>
+	<string name="about_body_5">To clear the current workspace, click the button in the lower right corner of the screen. You will be shown a window confirmation.
+\n\n
+- Saving / loading projects</string>
+	<string name="about_body_6">In the upper left corner of the screen there are three buttons: load, save and settings.
+By pressing the medium button (with the save icon) opens a window for selecting the project name. After pressing OK, the project will be saved. Attention, the file name must not be empty, or contains characters *\/&quot;:?|&lt;&gt; or end with a point.
+When you press the left button (with the folder icon) the project's folder window will open. To select a project, select it in the list (it will be highlighted in gray), and click the Load button. In this window, you can delete or share previously saved project. To close the window, click Cancel.
+Files you create are stored in a folder cube projects on device memory (/sdcard/cube projects). There you can copy project files of Touch Cube app (with extension .cu) received from friends or downloaded from our website.
+If the project file is not in the app folder, you can also load it, using your file manager program, by simply clicking on the file. You will be asked to save previous work.
+It should also be noted that your workspace will be saved after you exit program.</string>
+    <string name="save_workspace">Current project will be deleted. Do you want to save it?</string>
+    <string name="share_file_using">Share file using</string>
+    <string name="contacts_info">On all matters relating to the application to contact support</string>
+    <string name="email" translatable="false"><u>mobindustry.ru@gmail.com</u></string>
+    <string name="site" translatable="false"><u>http://www.mobindustry.ru/</u></string>
+    <string name="site_title">Our Website</string>
+    <string name="email_title">Our @ email</string>
+    <string name="contacts_title">Contacts</string>
+    <string name="contacts_msg">Technical Support and Feedback</string>
+    <string name="email_subject" translatable="false">Touch Cube Info</string>
+    <string name="ver" translatable="false">ver.</string>
+    <string name="version_name" translatable="false">1.0</string>
+    <string name="date" translatable="false">02.01.2015</string>
+    <string name="developer" translatable="false">© 2014-2015 MobIndustry</string>
+    <string name="help_title">Help</string>
+
+</resources>

@@ -1,0 +1,50 @@
+<resources>
+
+    <string name="clear_dialog">Tutto chiaro?</string>
+    <string name="clear_dialog_message">Di lavoro corrente verrà eliminato. Sei sicuro?</string>
+    <string name="yes">Sì</string>
+    <string name="no">No</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Annulla</string>
+    <string name="save_window_title">Seleziona file</string>
+    <string name="save_window_load">Caricare</string>
+    <string name="storage_error">stoccaggio accetta errore</string>
+    <string name="no_files">nessun file</string>
+    <string name="delete_file_dialog_title">Eliminare?</string>
+    <string name="delete_file_dialog_message">Questo file verrà eliminato. Sei sicuro?</string>
+    <string name="get_name_title">Inserisci nome</string>
+    <string name="bad_name">Il nome del file non deve essere vuoto o contiene simboli * \ / \:? | &lt;&gt;</string>
+    <string name="no_files_selected">file non selezionato</string>
+    <string name="put_ic">mettere</string>
+    <string name="paint_ic">vernice</string>
+    <string name="saving">Salvataggio in corso</string>
+    <string name="about_title">Circa</string>
+    <string name="about_summary">La funzionalità principale del app</string>
+    <string name="settings_label">Impostazioni</string>
+    <string name="error_title">Errore</string>
+    <string name="license_error_title">Errore di licenza</string>
+    <string name="error_message">Errore durante il controllo di licenza: </string>
+    <string name="unexpected_error">errore imprevisto</string>
+    <string name="retry">Riprova</string>
+    <string name="next">Successivo</string>
+    <string name="tutorial_1">Rubinetto singolo di mettere cubo.</string>
+    <string name="tutorial_2">Trascinare il dito per ruotare una figura.</string>
+    <string name="tutorial_3">Pinch to zoom una figura.</string>
+    <string name="tutorial_4">Premere a lungo sul cubo per centrare il dato relativo al cubo.</string>
+    <string name="tutorial_5">Secondo tap sul colore tavolozza corrente per aprire la finestra di colore raccolta.</string>
+    <string name="about_body_1">Con il Cube App touchpad consente di costruire modelli di colore di oggetti 3D. Il programma include i seguenti strumenti: \n \n - Inserire o eliminare cubi</string>
+    <string name="about_body_2">Nell\'angolo in alto a destra dello schermo, è possibile selezionare la modalità di funzionamento: mettere, dipingere o rimuovere i blocchi. Cubo sarà messo o riverniciato in base al colore scelto nella palette (la prima è di default). Per modificare la modalità di stampa l\'altro pulsante di opzione nel menu. Quando si seleziona eliminare tavolozza di colori non sarà visualizzato. \n \n - Centro</string>
+    <string name="about_body_3">Cliccando sul pulsante in basso a sinistra nella domanda, il centro di rotazione dell\'oggetto si sposta al centro della figura. Una pressione prolungata su un blocco separato, il centro di rotazione dell\'oggetto si sposta in questo posto. \n \n - Palette</string>
+    <string name="about_body_4">La parte destra dello schermo contiene una tavolozza di colori che possono essere utilizzati per la creazione di blocchi. Il colore scelto è delineato con bordi bianchi ed è contrassegnato da una freccia sulla sinistra. Il primo colore tavolozza - il colore predefinito (nero, con una cornice blu), che non può essere modificato. Se si preme il colore selezionato di nuovo (tranne il primo), si aprirà una finestra per selezionare il colore. Ci si può scegliere il colore, la luminosità e opacità. Per stabilire i colori che potete come premere il colore richiesto, o portare il dito sul pannello di RGB, luminosità e trasparenza. Nella parte superiore della finestra mostra il colore corrente. A sinistra della tavolozza RGB c\'è colore nero, è possibile scegliere quando si desidera ottenere qualsiasi tonalità di grigio. Per chiudere la finestra di selezione dei colori, cliccare ovunque al di fuori di esso, ad eccezione di qualsiasi colore nella tavolozza. Cliccando su un colore diverso nella palette, si può cambiare. Quando si esce dal programma, sarà salvato la tavolozza dei colori. \n \n - Area di lavoro di pulizia</string>
+    <string name="about_body_5">Per cancellare il lavoro corrente, fare clic sul pulsante nell\'angolo in basso a destra dello schermo. Vi verrà mostrata una finestra di conferma. \n \n - i progetti di risparmio / caricamento</string>
+    <string name="about_body_6">Nell\'angolo in alto a sinistra dello schermo ci sono tre pulsanti: caricare, salvare e impostazioni. Premendo il pulsante di media (con l\'icona di salvataggio) si apre una finestra per la selezione del nome del progetto. Dopo aver premuto OK, verrà salvato il progetto. Attenzione, il nome del file non deve essere vuoto, o contiene caratteri * \ / \:? |.. &lt;&gt; O terminare con un punto Quando si preme il pulsante di sinistra (con l\'icona della cartella) finestra di una cartella del progetto aprirà Per selezionare un progetto, selezionarlo nella lista (che verrà evidenziata in grigio), e fare clic sul pulsante Carica. In questa finestra, è possibile eliminare o condividere progetto precedentemente salvato. Per chiudere la finestra, fare clic su Annulla. file creati vengono memorizzati in un progetti cartella cubo sulla memoria del dispositivo (/sdcard/cube projects). Ci si può copiare i file di progetto di Touch Cube app (con estensione .CU) ricevuti da amici o scaricato dal nostro sito Web. Se il file di progetto non si trova nella cartella app, è anche possibile caricare, utilizzando il programma di file manager, semplicemente cliccando sul file. Vi verrà chiesto di salvare il lavoro precedente. Va inoltre osservato che l\'area di lavoro sarà salvato dopo programma di uscita.</string>
+    <string name="save_workspace">Progetto corrente verrà eliminato. Vuoi salvare?</string>
+    <string name="share_file_using">Condivisione di file utilizzando</string>
+    <string name="contacts_info">Per tutte le questioni relative all\'applicazione di contattare il supporto</string>
+    <string name="site_title">Il nostro sito</string>
+    <string name="email_title">La nostra e-mail @</string>
+    <string name="contacts_title">Contatti</string>
+    <string name="contacts_msg">E assistenza tecnica Commenti</string>
+    <string name="help_title">Aiuto</string>
+
+</resources>

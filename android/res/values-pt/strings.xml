@@ -1,0 +1,50 @@
+<resources>
+
+    <string name="clear_dialog">"Limpe? "</string>
+    <string name="clear_dialog_message">"Espaço de trabalho atual será excluída. Você tem certeza?"</string>
+    <string name="yes">"Sim"</string>
+    <string name="no">"Não"</string>
+    <string name="ok">"OK"</string>
+    <string name="cancel">"Cancelar"</string>
+    <string name="save_window_title">"Selecione o arquivo"</string>
+    <string name="save_window_load">"carregar"</string>
+    <string name="storage_error">"armazenamento aceitar o erro"</string>
+    <string name="no_files">"nenhum arquivo"</string>
+    <string name="delete_file_dialog_title">"Apagar?"</string>
+    <string name="delete_file_dialog_message">"Este arquivo será excluído. Você tem certeza?"</string>
+    <string name="get_name_title">"Digite o nome"</string>
+    <string name="bad_name">"O nome do arquivo não pode estar vazio ou contém símbolos * \ / \":? | &lt;&gt;"</string>
+    <string name="no_files_selected">"arquivo não selecionado"</string>
+    <string name="put_ic">"colocar"</string>
+    <string name="paint_ic">"pintar"</string>
+    <string name="saving">"Economia"</string>
+    <string name="about_title">"Sobre"</string>
+    <string name="about_summary">"A principal funcionalidade do app"</string>
+    <string name="settings_label">"Configurações"</string>
+    <string name="error_title">"Erro"</string>
+    <string name="license_error_title">"Erro de licença"</string>
+    <string name="error_message">"Erro durante a verificação de licença: "</string>
+    <string name="unexpected_error">"erro inesperado"</string>
+    <string name="retry">"Tentar novamente"</string>
+    <string name="next">"Próximo"</string>
+    <string name="tutorial_1">"Toque uma vez para colocar cubo."</string>
+    <string name="tutorial_2">"Arraste o dedo para girar a figura."</string>
+    <string name="tutorial_3">"Belisque para ampliar a figura."</string>
+    <string name="tutorial_4">"Pressione e segure em cubo para centralizar a figura em relação ao cubo."</string>
+    <string name="tutorial_5">"Segundo toque na paleta de cores atual para abrir a janela de cor escolher."</string>
+    <string name="about_body_1">"Com o Touch Cube App Você pode construir modelos coloridos de objetos 3D. O programa inclui instrumentos seguintes: \n \n - Coloque ou excluir cubos"</string>
+	<string name="about_body_2">"No canto superior direito da tela, você pode selecionar o modo de operação: colocar, pintar ou remover blocos. Cube será colocado ou repintadas em acordo com a cor escolhida na paleta (o primeiro é o padrão). Para alterar o modo pressione o botão de outro rádio no menu. Ao selecionar apagar paleta de cores não será exibido. \n \n - Centro"</string>
+	<string name="about_body_3">"Ao clicar no botão inferior esquerdo na aplicação, o centro de rotação do objecto se move para o centro da figura. Um toque longo em um bloco separado, o centro de rotação do objeto se move para este lugar. \n \n - Palette"</string>
+	<string name="about_body_4">"A parte direita da tela contém uma paleta de cores que podem ser usadas para a criação de blocos. A cor selecionada é esboçado com bordas brancas e é marcado com uma seta à esquerda. A primeira cor da paleta - o padrão de cor (preto, com uma moldura de azul), ele não pode ser alterado. Se você pressionar a cor selecionada novamente (exceto o primeiro), uma janela para selecionar a cor vai ser aberto. Lá você pode escolher a cor, brilho e opacidade. Para estabelecer cores que você pode como a imprensa a cor desejada, ou levar o dedo pelo painel RGB, brilho e transparência. Na parte superior da janela exibe a cor atual. À esquerda do RGB paleta há cor preta, você pode escolhê-lo quando quiser obter qualquer tom de cinza. Para fechar a janela de seleção de cores, clique em qualquer lugar fora dele, com exceção de todas as cores da paleta. Ao clicar em uma cor diferente na paleta, você pode alterá-la. Quando você sair do programa, sua paleta de cores será salvo. \n \n - Workspace Limpeza"</string>
+	<string name="about_body_5">"Para limpar a área de trabalho atual, clique no botão no canto inferior direito da tela. Você vai ser mostrada uma janela confirmação. \n \n - Projetos de gravar / carregar"</string>
+	<string name="about_body_6">"No canto superior esquerdo da tela, há três botões: carregar, salvar e configurações. Ao pressionar o botão médio (com o ícone salvar) abre uma janela para selecionar o nome do projeto. Após clicar em OK, o projeto será salvo. Atenção, o nome do arquivo não pode estar vazio, ou contém caracteres * \ / \":? |.. &lt;&gt; Ou terminar com um ponto Quando você pressiona o botão esquerdo (com o ícone da pasta) janela da pasta do projeto abrirá Para selecionar um projeto, selecione-o na lista (ele será destacado em cinza), e clique no botão Load. Nesta janela, você pode excluir ou compartilhar projeto salvo anteriormente. Para fechar a janela, clique em Cancelar. arquivos criados são armazenados em um projetos pasta cubo sobre a memória do dispositivo (/sdcard/cube projects). Lá você pode copiar arquivos de projeto de Touch Cube app (com extensão .cu) recebeu de amigos ou baixado do nosso website. Se o arquivo de projeto não está na pasta app, Você também pode carregá-lo, usando o seu programa gerenciador de arquivos, simplesmente clicando no arquivo. Você será solicitado a salvar o trabalho anterior. Além disso, deve-se notar que o seu espaço de trabalho será salvo depois de programa de saída."</string>
+    <string name="save_workspace">"Projeto atual será excluída. Você quer salvá-lo?"</string>
+    <string name="share_file_using">"Compartilhar usando arquivo"</string>
+    <string name="contacts_info">Em todas as questões relacionadas com a aplicação entrar em contato com o suporte</string>
+    <string name="site_title">O nosso site</string>
+    <string name="email_title">Nosso e-mail @</string>
+    <string name="contacts_title">Contactos </string>
+    <string name="contacts_msg">Suporte Técnico e Feedback</string>
+    <string name="help_title">Ajuda</string>
+
+</resources>

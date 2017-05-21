@@ -1,0 +1,50 @@
+<resources>
+
+    <string name="clear_dialog">"清楚了吗？"</string>
+    <string name="clear_dialog_message">"当前的工作空间将被删除。你确定吗？"</string>
+    <string name="yes">"是的"</string>
+    <string name="no">"没有"</string>
+    <string name="ok">"好"</string>
+    <string name="cancel">"取消"</string>
+    <string name="save_window_title">"选择文件"</string>
+    <string name="save_window_load">"加载"</string>
+    <string name="storage_error">"存储接受错误"</string>
+    <string name="no_files">"没有文件"</string>
+    <string name="delete_file_dialog_title">"删除?"</string>
+    <string name="delete_file_dialog_message">"该文件将被删除。你确定吗？"</string>
+    <string name="get_name_title">"输入名字"</string>
+    <string name="bad_name">"文件的名称不能为空或包含符号* \ /“：？| &lt;&gt;"</string>
+    <string name="no_files_selected">"文件不选"</string>
+    <string name="put_ic">"{0}{/0}put"</string>
+    <string name="paint_ic">"油漆"</string>
+    <string name="saving">"保存中..."</string>
+    <string name="about_title">"关于"</string>
+    <string name="about_summary">"该应用的主要功能"</string>
+    <string name="settings_label">"设置"</string>
+    <string name="error_title">"错误"</string>
+    <string name="license_error_title">"许可证错误"</string>
+    <string name="error_message">"检查许可证时出错："</string>
+    <string name="unexpected_error">"意外的错误"</string>
+    <string name="retry">"重试"</string>
+    <string name="next">"下一页"</string>
+    <string name="tutorial_1">"单一的水龙头放立方体。"</string>
+    <string name="tutorial_2">"拖动手指旋转的身影。"</string>
+    <string name="tutorial_3">"捏放大的人物。"</string>
+    <string name="tutorial_4">"长按立方体中心相对于立方体的身影。"</string>
+    <string name="tutorial_5">"第二自来水当前调色板的颜色，打开颜色拾取窗口。"</string>
+    <string name="about_body_1">"随着触摸立方应用程序，您可以建立三维物体的颜色模型。该方案包括以下工具：\n\n  - 把或删除立方体"</string>
+	<string name="about_body_2">"在屏幕的右上角，可以选择的操作模式：把，油漆或删除块。立方将按照调色板中选择的颜色（第一个是默认的）放在或粉刷的。要改变模式，按其他单选按钮在菜单中。当选择删除颜色调色板不会显示。 \n\n  - 中心"</string>
+	<string name="about_body_3">"通过点击在该应用程序的左下按钮时，物体的旋转中心移动到该图的中心。长按一个单独的块上，物体的旋转中心移动到这个地方。 \n\n  - 调色板"</string>
+	<string name="about_body_4">"在屏幕的右侧部分含有的颜色可以被用于块设置一个调色板。所选的颜色概述带白色边框，并且标有左边的箭头。在调色板中的第一颜色 - 默认颜色（黑色，用蓝色帧）时，它不能被改变。如果再次按所选择的颜色（除了第一个），一个窗口，选择颜色将被打开。在那里，你可以选择颜色，亮度和透明度。要建立的颜色，你可以为按所需的颜色，或带领你的手指划过面板RGB，亮度和透明度。在窗口的上部显示当前的颜色。在调色板RGB有黑色的左边，你可以选择它，当你想要得到的灰色任何阴影。关闭颜色选择窗口，单击以外的任何地方吧，在调色板任何颜色的除外。通过点击不同的颜色调色板中，你可以改变它。当你退出程序，你的调色板将被保存。 \n\n  - 清洁​​工作区"</string>
+	<string name="about_body_5">"要清除当前工作区，点击屏幕右下角的按钮。您将看到一个窗口进行确认。 \n\n  - 保存/载入项目"</string>
+	<string name="about_body_6">"在屏幕的左上角有三个按钮：负荷，保存和设置。按中键（与保存图标）打开选择项目名称的窗口。按确定后，该项目将被保存。注意，文件名不能为空，或者包含字符* \ /“：？|。&lt;&gt;或由点结束。当你按下左键（与文件夹图标），该项目的文件夹窗口将打开，要选择项目，在列表中（它会以灰色高亮显示），选中它，然后单击Load按钮，在该窗口中，您可以删除或共享以前保存的项目，要关闭窗口，单击取消。文件创建存储在在设备上存储的文件夹魔方项目（/sdcard/cube projects）。在那里，你可以复制的触摸立方应用项目文件（扩展名为.CU）收到来自朋友或从我们的网站上下载。如果项目文件不是在应用程序文件夹中，你也可以加载它，用你的文件管理器程序，只需点击该文件，你会被询问是否保存以前的工作，还应该注意的是，您的工作空间后，你退出程序进行保存。"</string>
+    <string name="save_workspace">"当前项目将被删除。你想救它？"</string>
+    <string name="share_file_using">"使用共享文件"</string>
+    <string name="contacts_info">有关应用程序联系支持所有事项</string>
+    <string name="site_title">我们的网站</string>
+    <string name="email_title">我们的@电子邮件</string>
+    <string name="contacts_title">联系人</string>
+    <string name="contacts_msg">技术支持和反馈</string>
+    <string name="help_title">帮助</string>
+
+</resources>
