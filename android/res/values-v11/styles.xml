@@ -1,0 +1,14 @@
+<resources>
+
+    <style name="CubesTheme" parent="@android:style/Theme.Holo">
+		<item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+        <style parent="@android:style/Theme.Holo" name="SettingsTheme">
+    </style>
+
+</resources>

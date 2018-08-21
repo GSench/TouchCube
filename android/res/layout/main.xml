@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/app_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+    <RelativeLayout
+        android:id="@+id/mainLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" >
+    </RelativeLayout>
+    
+    <Button
+        android:id="@+id/filesButton"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/open_button" />
+
+    <Button
+        android:id="@+id/saveButton"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@id/filesButton"
+        android:background="@drawable/save_button"/>
+    
+    <Button
+        android:id="@+id/settings_button"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/saveButton"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/settings_button" />
+
+    
+
+    <Button
+        android:id="@+id/centreButton"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/centre_button"/>
+
+    <Button
+        android:id="@+id/clearButton"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/delete_buttton" />
+    
+    <TableLayout
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        
+        <TableRow
+            android:layout_width="wrap_content"
+        	android:layout_height="wrap_content" >
+        	
+            <ImageView
+        		android:id="@+id/putIcon"
+        		android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"
+        		android:src="@drawable/ic_put_cube"
+        		android:contentDescription="@string/put_ic" />
+
+    		<ImageView
+    		    android:id="@+id/paintIcon"
+    		    android:layout_width="wrap_content"
+    		    android:layout_height="wrap_content"
+    		    android:contentDescription="@string/paint_ic"
+    		    android:src="@drawable/ic_format_paint" />
+    		
+    		<ImageView
+        		android:id="@+id/deleteIcon"
+        		android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"
+        		android:src="@drawable/ic_act_remove"
+        		android:contentDescription="@string/del_ic" />
+    		
+        </TableRow>
+        
+        <TableRow
+            android:layout_width="wrap_content"
+        	android:layout_height="wrap_content" >
+            
+            <RadioButton
+            	android:id="@+id/putRB"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:checked="true" />
+
+        	<RadioButton
+            	android:id="@+id/paintRB"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content" />
+
+        	<RadioButton
+            	android:id="@+id/deleteRB"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content" />
+        </TableRow>
+        
+    </TableLayout>
+
+
+</RelativeLayout>
