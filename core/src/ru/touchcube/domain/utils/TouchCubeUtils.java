@@ -1,5 +1,6 @@
-package ru.touchcube.domain;
+package ru.touchcube.domain.utils;
 
+import ru.touchcube.domain.model.Cube;
 import ru.touchcube.domain.utils.V3;
 
 /**

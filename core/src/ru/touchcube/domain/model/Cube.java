@@ -1,4 +1,4 @@
-package ru.touchcube.domain;
+package ru.touchcube.domain.model;
 
 import ru.touchcube.domain.utils.Color;
 import ru.touchcube.domain.utils.V3;

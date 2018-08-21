@@ -2,8 +2,11 @@ package ru.touchcube.domain;
 
 import java.util.ArrayList;
 
+import ru.touchcube.domain.model.Cube;
+import ru.touchcube.domain.model.CubeDrawing;
 import ru.touchcube.domain.presenter.WorldPresenter;
 import ru.touchcube.domain.utils.Color;
+import ru.touchcube.domain.utils.TouchCubeUtils;
 import ru.touchcube.domain.utils.V3;
 
 /**
@@ -36,22 +39,20 @@ public class TouchCubeWorld {
         loadFromCash();
     }
 
-    //TODO
-    private void loadFromCash(){
-        final TouchCubeWorld world = this;
-        /**
-        system.doOnBackground(new function<Void>(){
-            @Override
-            public void run(Void... params) {
-                final ArrayList<Cube> cubes = presenter.loadFromCash();
-                system.doOnForeground(new function<Void>() {
-                    @Override
-                    public void run(Void... params) {
-                        if(cubes!=null) world.cubes=cubes;
-                    }
-                });
-            }
-        });*/
+    public void isPutMode(){
+        mode=MODE_PUT;
+    }
+
+    public void isPaintMode(){
+        mode=MODE_PAINT;
+    }
+
+    public void isDeleteMode(){
+        mode=MODE_DELETE;
+    }
+
+    public void setCurrentColor(Color currentColor){
+        this.currentColor=currentColor;
     }
 
     public ArrayList<CubeDrawing> getCubes() {
@@ -122,6 +123,24 @@ public class TouchCubeWorld {
                 }
             }
         }
+    }
+
+    //TODO
+    private void loadFromCash(){
+        final TouchCubeWorld world = this;
+        /**
+         system.doOnBackground(new function<Void>(){
+        @Override
+        public void run(Void... params) {
+        final ArrayList<Cube> cubes = presenter.loadFromCash();
+        system.doOnForeground(new function<Void>() {
+        @Override
+        public void run(Void... params) {
+        if(cubes!=null) world.cubes=cubes;
+        }
+        });
+        }
+        });*/
     }
 
 }

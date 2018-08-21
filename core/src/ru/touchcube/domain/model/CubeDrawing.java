@@ -1,4 +1,4 @@
-package ru.touchcube.domain;
+package ru.touchcube.domain.model;
 
 /**
  * Created by grish on 21.08.2018.
