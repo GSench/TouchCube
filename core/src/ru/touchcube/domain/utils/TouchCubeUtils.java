@@ -46,7 +46,7 @@ public class TouchCubeUtils {
     }
 
     public static boolean pointsAreNear(V3 first, V3 second){
-        return Math.abs(first.x()+first.y()+first.z()-second.x()-second.y()-second.z())<=1;
+        return Math.abs(first.x()-second.x())+Math.abs(first.y()-second.y())+Math.abs(first.z()-second.z())<=1;
     }
 
 }
