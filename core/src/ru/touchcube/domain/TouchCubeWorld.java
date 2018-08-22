@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import ru.touchcube.domain.model.Cube;
 import ru.touchcube.domain.model.CubeDrawing;
 import ru.touchcube.domain.presenter.WorldPresenter;
-import ru.touchcube.domain.utils.Color;
+import ru.touchcube.domain.model.Color;
 import ru.touchcube.domain.utils.TouchCubeUtils;
-import ru.touchcube.domain.utils.V3;
+import ru.touchcube.domain.model.V3;
 import ru.touchcube.domain.utils.function;
 
 /**

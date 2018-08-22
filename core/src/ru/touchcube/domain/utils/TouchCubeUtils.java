@@ -1,6 +1,7 @@
 package ru.touchcube.domain.utils;
 
 import ru.touchcube.domain.model.Cube;
+import ru.touchcube.domain.model.V3;
 
 /**
  * Created by grish on 21.08.2018.

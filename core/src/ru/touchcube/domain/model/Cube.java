@@ -1,8 +1,5 @@
 package ru.touchcube.domain.model;
 
-import ru.touchcube.domain.utils.Color;
-import ru.touchcube.domain.utils.V3;
-
 /**
  * Created by grish on 21.08.2018.
  */
