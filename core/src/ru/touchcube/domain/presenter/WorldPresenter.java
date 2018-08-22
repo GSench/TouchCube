@@ -13,4 +13,6 @@ public interface WorldPresenter {
     ArrayList<Cube> loadFromCash();
     void init();
     CubeDrawing onCubeAdded(Cube newCube);
+    void stopRendering();
+    void showLoading();
 }

@@ -8,6 +8,7 @@ import ru.touchcube.domain.presenter.WorldPresenter;
 import ru.touchcube.domain.utils.Color;
 import ru.touchcube.domain.utils.TouchCubeUtils;
 import ru.touchcube.domain.utils.V3;
+import ru.touchcube.domain.utils.function;
 
 /**
  * Created by grish on 21.08.2018.
@@ -22,13 +23,12 @@ public class TouchCubeWorld {
     private WorldPresenter presenter;
     private SystemInterface system;
 
-    private ArrayList<CubeDrawing> cubes;
+    private final ArrayList<CubeDrawing> cubes = new ArrayList<CubeDrawing>();;
 
     int mode = 0;
     private Color currentColor;
 
     public TouchCubeWorld(WorldPresenter presenter, SystemInterface system){
-        cubes = new ArrayList<CubeDrawing>();
         this.presenter=presenter;
         this.system=system;
         currentColor = new Color(0,0,0,0, true);
@@ -36,7 +36,21 @@ public class TouchCubeWorld {
 
     public void start(){
         presenter.init();
-        loadFromCash();
+    }
+
+    public void load(final ArrayList<Cube> cubesToLoad){
+        presenter.showLoading();
+        presenter.stopRendering();
+        system.doOnBackground(new function<Void>() {
+            @Override
+            public void run(Void... params) {
+                synchronized (cubes){
+                    for(CubeDrawing cube: cubes) cube.onDelete();
+                    cubes.clear();
+                    for(Cube cube: cubesToLoad) put(cube);
+                }
+            }
+        });
     }
 
     public void isPutMode(){
@@ -86,12 +100,10 @@ public class TouchCubeWorld {
     }
 
     private void put(V3 pos, Color color){
-        put(pos, color, null);
+        put(new Cube(pos, color));
     }
 
-    private void put(V3 pos, Color color, boolean[] drawSides){
-        Cube newCube = new Cube(pos, color);
-        if(drawSides!=null) newCube.setDrawSides(drawSides);
+    private void put(Cube newCube){
         cubes.add(presenter.onCubeAdded(newCube));
         cubes.get(cubes.size()-1).onCreate();
     }
@@ -107,40 +119,42 @@ public class TouchCubeWorld {
     }
 
     private void checkSidesFor(CubeDrawing cube){
-        for(CubeDrawing cubeDrawing: cubes){
-            for(int i=0; i<6; i++){
-                if(cubeDrawing.getCube().getPosition().equals(TouchCubeUtils.getNearCubeCoordinates(cube.getCube(), i))){
-                    //cube "cubeDrawing" is near "cube" on cube's "i" side
-                    switch (mode){
-                        case MODE_PUT:
-                        case MODE_PAINT:
-                            //TODO
-                            break;
-                        case MODE_DELETE:
-                            //TODO
-                            break;
+        int checkedSides = 0;
+        for(CubeDrawing otherC: cubes){ //looping on cubes
+            if(TouchCubeUtils.pointsAreNear(cube.getCube().getPosition(), otherC.getCube().getPosition())){ //checking "otherC" is near "cube"
+                for(int i=0; i<6; i++){ //looping on sides
+                    if(otherC.getCube().getPosition().equals(TouchCubeUtils.getNearCubeCoordinates(cube.getCube(), i))){ //defining exact side
+                        //cube "otherC" is near "cube" on cube's "i" side
+                        Color c = cube.getCube().getColor();
+                        Color nearC = otherC.getCube().getColor();
+                        switch (mode){
+                            case MODE_PUT:
+                            case MODE_PAINT:
+                                if(((nearC.a()<0.9)&(!nearC.noColor()))&((c.a()>0.9)|(c.noColor()))){
+                                    cube.getCube().drawSide(i);
+                                    otherC.getCube().noDrawSide(TouchCubeUtils.reverseSide(i));
+                                } else if(((nearC.a()>0.9)|(nearC.noColor()))&((c.a()<0.9)&(!c.noColor()))){
+                                    cube.getCube().noDrawSide(i);
+                                    otherC.getCube().drawSide(TouchCubeUtils.reverseSide(i));
+                                } else if(((nearC.a()>0.9)|(nearC.noColor()))&((c.a()>0.9)|(c.noColor()))){
+                                    cube.getCube().noDrawSide(i);
+                                    otherC.getCube().noDrawSide(TouchCubeUtils.reverseSide(i));
+                                } else if(((nearC.a()<0.9)&(!nearC.noColor()))&((c.a()<0.9)&(!c.noColor()))){
+                                    cube.getCube().drawSide(i);
+                                    otherC.getCube().drawSide(TouchCubeUtils.reverseSide(i));
+                                }
+                                break;
+                            case MODE_DELETE:
+                                otherC.getCube().drawSide(TouchCubeUtils.reverseSide(i));
+                                break;
+                        }
+                        checkedSides++; //counting checked side of "cube"
+                        break;
                     }
                 }
             }
+            if(checkedSides>=6) break; //stopping looping on cubes if 6 sides of "cube" are checked
         }
-    }
-
-    //TODO
-    private void loadFromCash(){
-        final TouchCubeWorld world = this;
-        /**
-         system.doOnBackground(new function<Void>(){
-        @Override
-        public void run(Void... params) {
-        final ArrayList<Cube> cubes = presenter.loadFromCash();
-        system.doOnForeground(new function<Void>() {
-        @Override
-        public void run(Void... params) {
-        if(cubes!=null) world.cubes=cubes;
-        }
-        });
-        }
-        });*/
     }
 
 }

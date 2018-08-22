@@ -1,7 +1,6 @@
 package ru.touchcube.domain.utils;
 
 import ru.touchcube.domain.model.Cube;
-import ru.touchcube.domain.utils.V3;
 
 /**
  * Created by grish on 21.08.2018.
@@ -44,6 +43,10 @@ public class TouchCubeUtils {
                 return new V3(v.x(), v.y()+1, v.z());
         }
         return v;
+    }
+
+    public static boolean pointsAreNear(V3 first, V3 second){
+        return Math.abs(first.x()+first.y()+first.z()-second.x()-second.y()-second.z())<=1;
     }
 
 }
