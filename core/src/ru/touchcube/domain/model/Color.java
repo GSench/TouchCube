@@ -20,6 +20,14 @@ public class Color {
         this.noColorI = noColorI;
     }
 
+    public Color(String str){
+        ri = Integer.parseInt(str.substring(0,2), 16);
+        gi = Integer.parseInt(str.substring(2,4), 16);
+        bi = Integer.parseInt(str.substring(4,6), 16);
+        ai = Integer.parseInt(str.substring(6,8), 16);
+        noColorI = str.substring(8).equals("1");
+    }
+
     public int r(){
         return ri;
     }
@@ -34,5 +42,10 @@ public class Color {
     }
     public boolean noColor(){
         return noColorI;
+    }
+
+    @Override
+    public String toString(){
+        return Integer.toHexString(ri)+Integer.toHexString(gi)+Integer.toHexString(bi)+Integer.toHexString(ai)+(noColorI?1:0);
     }
 }
