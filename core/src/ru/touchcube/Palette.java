@@ -2,6 +2,8 @@ package ru.touchcube;
 
 import ru.touchcube.domain.SystemInterface;
 import ru.touchcube.domain.model.Color;
+import ru.touchcube.domain.presenter.PalettePresenter;
+import ru.touchcube.domain.utils.function;
 
 /**
  * Created by Григорий Сенченок on 23.08.2018.
@@ -9,20 +11,43 @@ import ru.touchcube.domain.model.Color;
 
 public class Palette {
 
-    public final static int COUNT = 5;
+    public static final int COUNT = 5;
     private static final String PALETTE = "palette";
 
+    private PalettePresenter presenter;
     private SystemInterface system;
 
-    private Color[] palette;
+    private final Color[] palette = new Color[COUNT];
+    private int currentColor = 0;
 
-    public Palette(SystemInterface system){
+    public Palette(SystemInterface system, PalettePresenter presenter){
         this.system=system;
-        palette = new Color[COUNT];
+        this.presenter=presenter;
     }
 
     public void init(){
         if(!loadSavedPalette()) loadDefaultPalette();
+        for(int i=0; i<COUNT; i++) presenter.updateColor(palette[i], i);
+    }
+
+    public void onColorClick(int pos){
+        if(pos<0||pos>=COUNT) return;
+        if(currentColor==pos && currentColor>0) presenter.openColorPicker();
+        else currentColor = pos;
+    }
+
+    public void setColor(Color color, int pos){
+        if(pos<1||pos>=COUNT||color.noColor()) return;
+        palette[pos] = color;
+        presenter.updateColor(color, pos);
+        system.doOnBackground(new function<Void>() {
+            @Override
+            public void run(Void... params) {
+                synchronized (palette){
+                    savePalette();
+                }
+            }
+        });
     }
 
     public void exit(){
@@ -30,11 +55,11 @@ public class Palette {
     }
 
     private void loadDefaultPalette(){
-        palette[0] = new Color(0,0,0,1,true);
-        palette[1] = new Color(255, 0,0,1, false);
-        palette[2] = new Color(255, 255,0,1, false);
-        palette[3] = new Color(0, 255,0,1, false);
-        palette[4] = new Color(0, 0,255,1, false);
+        palette[0] = new Color(0,0,0,1,true); //noColor
+        palette[1] = new Color(255, 0,0,1, false); //red
+        palette[2] = new Color(255, 255,0,1, false); //yellow
+        palette[3] = new Color(0, 255,0,1, false); //green
+        palette[4] = new Color(0, 0,255,1, false); //blue
     }
 
     private void savePalette(){
