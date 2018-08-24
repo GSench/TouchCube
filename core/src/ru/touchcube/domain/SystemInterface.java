@@ -20,5 +20,6 @@ public interface SystemInterface {
     public int getSavedInt(String title, int def);
     public void saveInt(String title, int i);*/
     public void removeSaved(String str);
-
+    byte[] loadCashFile(String filename, byte[] def);
+    void saveToCashFile(String filename, byte[] bytes);
 }
