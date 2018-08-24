@@ -16,7 +16,7 @@ import ru.touchcube.domain.utils.function;
 
 public class CubeModelManager {
 
-    private static final String CASH = "cash";
+    private static final String CASH = "cash.cu";
 
     private static final String EXTENSION = "cu";
 
@@ -38,23 +38,77 @@ public class CubeModelManager {
         system.doOnBackground(new function<Void>() {
             @Override
             public void run(Void... params) {
-                CubeModelFile file = storage.createNew(title+"."+EXTENSION);
+                function<Void> result = new function<Void>() {
+                    @Override
+                    public void run(Void... params) {presenter.onSaved(title);}
+                };
                 try {
+                    CubeModelFile file = storage.createNew(title+"."+EXTENSION);
                     file.write(encode(presenter.getCurrentModel()));
                 } catch (Exception e) {
                     e.printStackTrace();
-                    system.doOnForeground(new function<Void>() {
+                    result = new function<Void>() {
                         @Override
-                        public void run(Void... params) {presenter.onSaved(title);}
-                    });
+                        public void run(Void... params) {presenter.onSavingError(title);}
+                    };
                 }
-                system.doOnForeground(new function<Void>() {
-                    @Override
-                    public void run(Void... params) {presenter.onSavingError(title);}
-                });
+                system.doOnForeground(result);
             }
         });
+    }
 
+    public CubeModelFile[] getListModels(){
+        return storage.getList();
+    }
+
+    public void onLoadModel(final CubeModelFile file){
+        system.doOnBackground(new function<Void>() {
+            @Override
+            public void run(Void... params) {
+                function<Void> result;
+                try {
+                    final ArrayList<Cube> decoded = decode(file.read());
+                    result = new function<Void>() {
+                        @Override
+                        public void run(Void... params) {presenter.loadModel(decoded);}
+                    };
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    result = new function<Void>() {
+                        @Override
+                        public void run(Void... params) {presenter.onLoadError(file.getModelName());}
+                    };
+                }
+                system.doOnForeground(result);
+            }
+        });
+    }
+
+    public void onDeleteModel(final CubeModelFile file){
+        system.doOnBackground(new function<Void>() {
+            @Override
+            public void run(Void... params) {
+                function<Void> result;
+                try {
+                    file.delete();
+                    result = new function<Void>() {
+                        @Override
+                        public void run(Void... params) {presenter.updateModelList();}
+                    };
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    result = new function<Void>() {
+                        @Override
+                        public void run(Void... params) {presenter.onDeleteError(file.getModelName());}
+                    };
+                }
+                system.doOnForeground(result);
+            }
+        });
+    }
+
+    public void onShareModel(CubeModelFile file){
+        file.share();
     }
 
     public void exit(){

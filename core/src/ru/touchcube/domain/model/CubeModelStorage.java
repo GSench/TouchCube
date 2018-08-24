@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public abstract class CubeModelStorage {
 
-    public abstract ArrayList<CubeModelFile> getList();
-    public abstract CubeModelFile createNew(String filename);
+    public abstract CubeModelFile[] getList();
+    public abstract CubeModelFile createNew(String filename) throws Exception;
 
 }

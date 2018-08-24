@@ -13,4 +13,7 @@ public interface CubeModelManagerPresenter {
     ArrayList<Cube> getCurrentModel();
     void onSavingError(String title);
     void onSaved(String title);
+    void onLoadError(String modelName);
+    void onDeleteError(String modelName);
+    void updateModelList();
 }

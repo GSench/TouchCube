@@ -20,4 +20,8 @@ public abstract class CubeModelFile {
 
     public abstract void write(byte[] content) throws Exception;
 
+    public abstract void delete() throws Exception;
+
+    public abstract void share();
+
 }
