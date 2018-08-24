@@ -93,6 +93,11 @@ public class TouchCubeWorld {
         }
     }
 
+    public void onClearButton(){
+        for(CubeDrawing cube: cubes) cube.onDelete();
+        cubes.clear();
+    }
+
     private CubeDrawing getCubeOn(V3 v){
         for(CubeDrawing cubeDrawing: cubes)
             if(cubeDrawing.getCube().getPosition().equals(v)) return cubeDrawing;
