@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import ru.touchcube.domain.model.Color;
 import ru.touchcube.domain.model.Cube;
+import ru.touchcube.domain.model.CubeModelFile;
+import ru.touchcube.domain.model.CubeModelStorage;
 import ru.touchcube.domain.model.V3;
 import ru.touchcube.domain.presenter.CubeModelManagerPresenter;
 import ru.touchcube.domain.utils.function;
@@ -16,16 +18,43 @@ public class CubeModelManager {
 
     private static final String CASH = "cash";
 
+    private static final String EXTENSION = "cu";
+
     private CubeModelManagerPresenter presenter;
+    private CubeModelStorage storage;
     private SystemInterface system;
 
-    public CubeModelManager(CubeModelManagerPresenter presenter, SystemInterface system) {
+    public CubeModelManager(CubeModelManagerPresenter presenter, CubeModelStorage storage, SystemInterface system) {
         this.presenter = presenter;
         this.system = system;
+        this.storage=storage;
     }
 
     public void init(){
         loadFromCash();
+    }
+
+    public void onSaveModel(final String title){
+        system.doOnBackground(new function<Void>() {
+            @Override
+            public void run(Void... params) {
+                CubeModelFile file = storage.createNew(title+"."+EXTENSION);
+                try {
+                    file.write(encode(presenter.getCurrentModel()));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    system.doOnForeground(new function<Void>() {
+                        @Override
+                        public void run(Void... params) {presenter.onSaved(title);}
+                    });
+                }
+                system.doOnForeground(new function<Void>() {
+                    @Override
+                    public void run(Void... params) {presenter.onSavingError(title);}
+                });
+            }
+        });
+
     }
 
     public void exit(){
