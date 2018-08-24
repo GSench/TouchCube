@@ -20,6 +20,5 @@ public interface SystemInterface {
     public int getSavedInt(String title, int def);
     public void saveInt(String title, int i);*/
     public void removeSaved(String str);
-    public String md5(String s);
 
 }
