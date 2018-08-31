@@ -23,7 +23,7 @@ public class TouchCubeWorld {
     private WorldPresenter presenter;
     private SystemInterface system;
 
-    private final ArrayList<CubeDrawing> cubes = new ArrayList<CubeDrawing>();;
+    private final ArrayList<CubeDrawing> cubes = new ArrayList<CubeDrawing>();
 
     int mode = 0;
     private Color currentColor;
@@ -135,16 +135,16 @@ public class TouchCubeWorld {
                         switch (mode){
                             case MODE_PUT:
                             case MODE_PAINT:
-                                if(((nearC.a()<0.9)&(!nearC.noColor()))&((c.a()>0.9)|(c.noColor()))){
+                                if(((nearC.a()<230)&(!nearC.noColor()))&((c.a()>230)|(c.noColor()))){
                                     cube.getCube().drawSide(i);
                                     otherC.getCube().noDrawSide(TouchCubeUtils.reverseSide(i));
-                                } else if(((nearC.a()>0.9)|(nearC.noColor()))&((c.a()<0.9)&(!c.noColor()))){
+                                } else if(((nearC.a()>230)|(nearC.noColor()))&((c.a()<230)&(!c.noColor()))){
                                     cube.getCube().noDrawSide(i);
                                     otherC.getCube().drawSide(TouchCubeUtils.reverseSide(i));
-                                } else if(((nearC.a()>0.9)|(nearC.noColor()))&((c.a()>0.9)|(c.noColor()))){
+                                } else if(((nearC.a()>230)|(nearC.noColor()))&((c.a()>230)|(c.noColor()))){
                                     cube.getCube().noDrawSide(i);
                                     otherC.getCube().noDrawSide(TouchCubeUtils.reverseSide(i));
-                                } else if(((nearC.a()<0.9)&(!nearC.noColor()))&((c.a()<0.9)&(!c.noColor()))){
+                                } else if(((nearC.a()<230)&(!nearC.noColor()))&((c.a()<230)&(!c.noColor()))){
                                     cube.getCube().drawSide(i);
                                     otherC.getCube().drawSide(TouchCubeUtils.reverseSide(i));
                                 }
