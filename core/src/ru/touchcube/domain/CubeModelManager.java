@@ -8,6 +8,7 @@ import ru.touchcube.domain.model.CubeModelFile;
 import ru.touchcube.domain.model.CubeModelStorage;
 import ru.touchcube.domain.model.V3;
 import ru.touchcube.domain.presenter.CubeModelManagerPresenter;
+import ru.touchcube.domain.utils.CubeModelFileDescriptor;
 import ru.touchcube.domain.utils.function;
 
 /**
@@ -44,7 +45,7 @@ public class CubeModelManager {
                 };
                 try {
                     CubeModelFile file = storage.createNew(title+"."+EXTENSION);
-                    file.write(encode(presenter.getCurrentModel()));
+                    file.write(CubeModelFileDescriptor.encode(presenter.getCurrentModel()));
                 } catch (Exception e) {
                     e.printStackTrace();
                     result = new function<Void>() {
@@ -67,7 +68,7 @@ public class CubeModelManager {
             public void run(Void... params) {
                 function<Void> result;
                 try {
-                    final ArrayList<Cube> decoded = decode(file.read());
+                    final ArrayList<Cube> decoded = CubeModelFileDescriptor.decode(file.read());
                     result = new function<Void>() {
                         @Override
                         public void run(Void... params) {presenter.loadModel(decoded);}
@@ -130,7 +131,7 @@ public class CubeModelManager {
                         }
                     });
                 } else {
-                    final ArrayList<Cube> decoded = decode(modelEncoded);
+                    final ArrayList<Cube> decoded = CubeModelFileDescriptor.decode(modelEncoded);
                     system.doOnForeground(new function<Void>() {
                         @Override
                         public void run(Void... params) {
@@ -146,19 +147,9 @@ public class CubeModelManager {
         system.doOnBackground(new function<Void>() {
             @Override
             public void run(Void... params) {
-                system.saveToCashFile(CASH, encode(model));
+                system.saveToCashFile(CASH, CubeModelFileDescriptor.encode(model));
             }
         });
-    }
-
-    private ArrayList<Cube> decode(byte[] encoded){
-        //TODO
-        return null;
-    }
-
-    private byte[] encode(ArrayList<Cube> decoded){
-        //TODO
-        return null;
     }
 
 }
