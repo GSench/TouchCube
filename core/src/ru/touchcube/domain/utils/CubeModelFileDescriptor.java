@@ -14,7 +14,7 @@ public class CubeModelFileDescriptor {
 
     public static ArrayList<Cube> decode(byte[] encoded){
         ByteBuffer buffer = ByteBuffer.wrap(encoded);
-        byte braceByte = "\\".getBytes(Charset.forName("UTF-8"))[0];
+        byte braceByte = "^".getBytes(Charset.forName("UTF-8"))[0];
         for(int i=0; i<encoded.length; i++) if(buffer.get()==braceByte) break;
 
         int size = buffer.remaining()/BYTE_SIZE;
@@ -24,7 +24,7 @@ public class CubeModelFileDescriptor {
     }
 
     public static byte[] encode(ArrayList<Cube> decoded){
-        byte[] header = "Touch Cube model encoded in binary format. Cubes' data starts after backslash symbol byte \\".getBytes(Charset.forName("UTF-8"));
+        byte[] header = "Touch Cube model encoded in binary format. Cubes' data starts after caret symbol byte ^".getBytes(Charset.forName("UTF-8"));
         ByteBuffer buffer = ByteBuffer.allocate(header.length+decoded.size()*BYTE_SIZE);
         buffer.put(header);
         for(Cube cube: decoded) buffer.put(cubeToBytes(cube));
