@@ -21,6 +21,10 @@ public class MainPresenterImpl implements MainPresenter {
     private MainInteractor interactor;
     private MainView view;
 
+    public boolean isRendering() {
+        return render;
+    }
+
     private boolean render = true;
 
     public MainPresenterImpl(SystemInterface system, CubeModelStorage storage){
