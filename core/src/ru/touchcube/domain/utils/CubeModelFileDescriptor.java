@@ -27,25 +27,28 @@ public class CubeModelFileDescriptor {
         byte[] header = "Touch Cube model encoded in binary format. Cubes' data starts after caret symbol byte ^".getBytes(Charset.forName("UTF-8"));
         ByteBuffer buffer = ByteBuffer.allocate(header.length+decoded.size()*BYTE_SIZE);
         buffer.put(header);
-        for(Cube cube: decoded) buffer.put(cubeToBytes(cube));
+        for(Cube cube: decoded) putCube(cube, buffer);
         return buffer.array();
     }
 
-    private static byte[] cubeToBytes(Cube cube){
+    private static void putCube(Cube cube, ByteBuffer buffer){
         byte drawSidesByte = 0;
         for(int i=0; i<6; i++)
             drawSidesByte = (byte) ((drawSidesByte<<1)|(cube.getDrawSides()[i]?1:0));
         drawSidesByte = (byte) ((drawSidesByte<<1)|(cube.getColor().noColor()?1:0));
-        return ByteBuffer.allocate(BYTE_SIZE)
-                .put(drawSidesByte)
-                .putInt(cube.getPosition().x())
-                .putInt(cube.getPosition().y())
-                .putInt(cube.getPosition().z())
-                .put(((byte)(cube.getColor().r()-128)))
-                .put(((byte)(cube.getColor().g()-128)))
-                .put(((byte)(cube.getColor().b()-128)))
-                .put(((byte)(cube.getColor().a()-128)))
-                .array();
+        //drawSidesByte is byte: 0ssssssn ,
+        // where s = 1 if cube's side is drawing, 0 otherwise; ssssss is drawSides array from 0 to 5;
+        // n = 1 if noColor is true, 0 otherwise;
+        buffer
+                .put(drawSidesByte) //1b
+                .putInt(cube.getPosition().x()) //4b
+                .putInt(cube.getPosition().y()) //4b
+                .putInt(cube.getPosition().z()) //4b
+                .put(((byte)(cube.getColor().r()-128))) //1b
+                .put(((byte)(cube.getColor().g()-128))) //1b
+                .put(((byte)(cube.getColor().b()-128))) //1b
+                .put(((byte)(cube.getColor().a()-128))) //1b
+        ; //17 bytes totally
     }
 
     private static Cube cubeFromBytes(ByteBuffer buffer){
