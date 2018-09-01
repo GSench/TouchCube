@@ -26,12 +26,10 @@ public class TouchCubeWorld {
     private final ArrayList<CubeDrawing> cubes = new ArrayList<CubeDrawing>();
 
     int mode = 0;
-    private Color currentColor;
 
     public TouchCubeWorld(WorldPresenter presenter, SystemInterface system){
         this.presenter=presenter;
         this.system=system;
-        currentColor = new Color(0,0,0,0, true);
     }
 
     public void start(){
@@ -65,10 +63,6 @@ public class TouchCubeWorld {
         mode=MODE_DELETE;
     }
 
-    public void setCurrentColor(Color currentColor){
-        this.currentColor=currentColor;
-    }
-
     public ArrayList<CubeDrawing> getCubes() {
         return cubes;
     }
@@ -78,12 +72,12 @@ public class TouchCubeWorld {
             case MODE_PUT:
                 V3 near = TouchCubeUtils.getNearCubeCoordinates(touched.getCube(), side);
                 if(getCubeOn(near)==null){
-                    put(near, currentColor);
+                    put(near, presenter.getCurrentColor());
                     checkSidesFor(cubes.get(cubes.size()-1));
                 }
                 break;
             case MODE_PAINT:
-                paint(touched);
+                paint(touched, presenter.getCurrentColor());
                 checkSidesFor(touched);
                 break;
             case MODE_DELETE:
@@ -118,7 +112,7 @@ public class TouchCubeWorld {
         cube.onDelete();
     }
 
-    private void paint(CubeDrawing cube){
+    private void paint(CubeDrawing cube, Color currentColor){
         cube.getCube().setColor(currentColor);
         cube.onColorChanged();
     }
