@@ -1,4 +1,4 @@
-package ru.touchcube.domain.presenter;
+package ru.touchcube.domain.interactor;
 
 import ru.touchcube.domain.model.Color;
 
@@ -6,7 +6,7 @@ import ru.touchcube.domain.model.Color;
  * Created by Григорий Сенченок on 24.08.2018.
  */
 
-public interface PalettePresenter {
+public interface PaletteFace {
     void updateColor(Color color, int pos);
     void openColorPicker();
 

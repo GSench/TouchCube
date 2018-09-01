@@ -1,8 +1,8 @@
-package ru.touchcube.domain;
+package ru.touchcube.domain.services;
 
 import ru.touchcube.domain.SystemInterface;
 import ru.touchcube.domain.model.Color;
-import ru.touchcube.domain.presenter.PalettePresenter;
+import ru.touchcube.domain.interactor.PaletteFace;
 import ru.touchcube.domain.utils.function;
 
 /**
@@ -14,32 +14,36 @@ public class Palette {
     public static final int COUNT = 5;
     private static final String PALETTE = "palette";
 
-    private PalettePresenter presenter;
+    private PaletteFace face;
     private SystemInterface system;
 
     private final Color[] palette = new Color[COUNT];
     private int currentColor = 0;
 
-    public Palette(SystemInterface system, PalettePresenter presenter){
+    public Palette(SystemInterface system, PaletteFace face){
         this.system=system;
-        this.presenter=presenter;
+        this.face =face;
     }
 
     public void init(){
         if(!loadSavedPalette()) loadDefaultPalette();
-        for(int i=0; i<COUNT; i++) presenter.updateColor(palette[i], i);
+        for(int i=0; i<COUNT; i++) face.updateColor(palette[i], i);
+    }
+
+    public Color getCurrentColor(){
+        return palette[currentColor];
     }
 
     public void onColorClick(int pos){
         if(pos<0||pos>=COUNT) return;
-        if(currentColor==pos && currentColor>0) presenter.openColorPicker();
+        if(currentColor==pos && currentColor>0) face.openColorPicker();
         else currentColor = pos;
     }
 
     public void setColor(Color color, int pos){
         if(pos<1||pos>=COUNT||color.noColor()) return;
         palette[pos] = color;
-        presenter.updateColor(color, pos);
+        face.updateColor(color, pos);
         system.doOnBackground(new function<Void>() {
             @Override
             public void run(Void... params) {

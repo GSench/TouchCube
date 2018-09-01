@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import ru.touchcube.MyTouchCube;
+import ru.touchcube.presentation.MyTouchCube;
 
 public class AndroidLauncher extends AndroidApplication {
 	@Override

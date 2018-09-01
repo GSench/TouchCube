@@ -1,4 +1,4 @@
-package ru.touchcube;
+package ru.touchcube.presentation;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;

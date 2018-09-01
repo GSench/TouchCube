@@ -1,14 +1,16 @@
-package ru.touchcube.domain;
+package ru.touchcube.domain.services;
 
 import java.util.ArrayList;
 
+import ru.touchcube.domain.SystemInterface;
+import ru.touchcube.domain.interactor.WorldFace;
+import ru.touchcube.domain.model.Color;
 import ru.touchcube.domain.model.Cube;
 import ru.touchcube.domain.model.CubeDrawing;
-import ru.touchcube.domain.presenter.WorldPresenter;
-import ru.touchcube.domain.model.Color;
-import ru.touchcube.domain.utils.TouchCubeUtils;
 import ru.touchcube.domain.model.V3;
+import ru.touchcube.domain.utils.TouchCubeUtils;
 import ru.touchcube.domain.utils.function;
+import ru.touchcube.domain.utils.function_get;
 
 /**
  * Created by grish on 21.08.2018.
@@ -20,25 +22,22 @@ public class TouchCubeWorld {
     public static final int MODE_DELETE = 2;
     public static final int MODE_PAINT = 3;
 
-    private WorldPresenter presenter;
+    private WorldFace face;
     private SystemInterface system;
+    private function_get<Color> currentColor;
 
     private final ArrayList<CubeDrawing> cubes = new ArrayList<CubeDrawing>();
 
     int mode = 0;
 
-    public TouchCubeWorld(WorldPresenter presenter, SystemInterface system){
-        this.presenter=presenter;
+    public TouchCubeWorld(WorldFace face, function_get<Color> currentColor, SystemInterface system){
+        this.face = face;
+        this.currentColor=currentColor;
         this.system=system;
     }
 
-    public void start(){
-        presenter.init();
-    }
-
     public void load(final ArrayList<Cube> cubesToLoad){
-        presenter.showLoading();
-        presenter.stopRendering();
+        face.stopRendering();
         system.doOnBackground(new function<Void>() {
             @Override
             public void run(Void... params) {
@@ -47,6 +46,7 @@ public class TouchCubeWorld {
                     cubes.clear();
                     for(Cube cube: cubesToLoad) put(cube);
                 }
+                face.continueRendering();
             }
         });
     }
@@ -72,12 +72,12 @@ public class TouchCubeWorld {
             case MODE_PUT:
                 V3 near = TouchCubeUtils.getNearCubeCoordinates(touched.getCube(), side);
                 if(getCubeOn(near)==null){
-                    put(near, presenter.getCurrentColor());
+                    put(near, currentColor.get());
                     checkSidesFor(cubes.get(cubes.size()-1));
                 }
                 break;
             case MODE_PAINT:
-                paint(touched, presenter.getCurrentColor());
+                paint(touched, currentColor.get());
                 checkSidesFor(touched);
                 break;
             case MODE_DELETE:
@@ -103,7 +103,7 @@ public class TouchCubeWorld {
     }
 
     private void put(Cube newCube){
-        cubes.add(presenter.onCubeAdded(newCube));
+        cubes.add(face.onCubeAdded(newCube));
         cubes.get(cubes.size()-1).onCreate();
     }
 
