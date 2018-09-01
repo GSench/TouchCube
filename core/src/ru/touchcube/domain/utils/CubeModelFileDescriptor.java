@@ -1,8 +1,8 @@
 package ru.touchcube.domain.utils;
 
 import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import ru.touchcube.domain.model.Color;
 import ru.touchcube.domain.model.Cube;
@@ -13,17 +13,20 @@ public class CubeModelFileDescriptor {
     private static int BYTE_SIZE = 17;
 
     public static ArrayList<Cube> decode(byte[] encoded){
-        //TODO
-        int size = encoded.length/BYTE_SIZE;
+        ByteBuffer buffer = ByteBuffer.wrap(encoded);
+        byte braceByte = "\\".getBytes(Charset.forName("UTF-8"))[0];
+        for(int i=0; i<encoded.length; i++) if(buffer.get()==braceByte) break;
+
+        int size = buffer.remaining()/BYTE_SIZE;
         ArrayList<Cube> cubes = new ArrayList<Cube>(size);
-        for(int i=0; i<size; i++)
-            cubes.add(cubeFromBytes(Arrays.copyOfRange(encoded, i*BYTE_SIZE, (i+1)*BYTE_SIZE)));
+        for(int i=0; i<size; i++) cubes.add(cubeFromBytes(buffer));
         return cubes;
     }
 
     public static byte[] encode(ArrayList<Cube> decoded){
-        //TODO
-        ByteBuffer buffer = ByteBuffer.allocate(decoded.size()*BYTE_SIZE);
+        byte[] header = "Touch Cube model encoded in binary format. Cubes' data starts after backslash symbol byte \\".getBytes(Charset.forName("UTF-8"));
+        ByteBuffer buffer = ByteBuffer.allocate(header.length+decoded.size()*BYTE_SIZE);
+        buffer.put(header);
         for(Cube cube: decoded) buffer.put(cubeToBytes(cube));
         return buffer.array();
     }
@@ -45,9 +48,8 @@ public class CubeModelFileDescriptor {
                 .array();
     }
 
-    private static Cube cubeFromBytes(byte[] bytes){
-        if(bytes.length!=BYTE_SIZE) return null;
-        ByteBuffer buffer = ByteBuffer.wrap(bytes);
+    private static Cube cubeFromBytes(ByteBuffer buffer){
+        if(buffer.remaining()<BYTE_SIZE) return null;
         byte drawSidesByte = buffer.get();
         boolean noColor = (drawSidesByte & 1) == 1;
         boolean[] drawSidesArray = new boolean[6];
