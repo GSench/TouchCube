@@ -10,21 +10,14 @@ import ru.touchcube.domain.model.CubeDrawing;
 
 public interface MainView {
 
+    void init();
     void showSavingError(String title);
-
     void closeSavingMessage();
-
     void showLoadError(String modelName);
-
     void showDeleteError(String modelName);
-
     void updateModelList();
-
     void updateColor(Color color, int pos);
-
     void openColorPicker();
-
     CubeDrawing add(Cube newCube);
 
-    void init();
 }
