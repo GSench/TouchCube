@@ -6,9 +6,17 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import ru.touchcube.presentation.presenters_impl.MainPresenterImpl;
+
 public class MyTouchCube extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img;
+
+	private MainPresenterImpl presenter;
+
+	public MyTouchCube(MainPresenterImpl presenter){
+		this.presenter=presenter;
+	}
 	
 	@Override
 	public void create () {
