@@ -103,7 +103,7 @@ public class AndroidInterface implements SystemInterface {
         if(def==null) defaultArr = null;
         else defaultArr = new HashSet<>(Arrays.asList(def));
         Set<String> stringSet = act.getSharedPreferences(SPREF, Context.MODE_PRIVATE).getStringSet(title, defaultArr);
-        return stringSet!=null ? stringSet.toArray(new String[stringSet.size()]) : null;
+        return stringSet!=null ? stringSet.toArray(new String[stringSet.size()]) : def;
     }
 
     @Override

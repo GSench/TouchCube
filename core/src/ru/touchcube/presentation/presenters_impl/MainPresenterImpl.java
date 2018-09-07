@@ -48,6 +48,10 @@ public class MainPresenterImpl implements MainPresenter {
         interactor.tapOnCube(cubeDrawing, side);
     }
 
+    public void longTapOnCube(CubeDrawing cubeDrawing, int side){
+        interactor.longTapOnCube(cubeDrawing, side);
+    }
+
     public void onClearButtonPushed(){
         interactor.onClearButtonPushed();
     }
@@ -72,8 +76,8 @@ public class MainPresenterImpl implements MainPresenter {
         interactor.onColorPicked(color, pos);
     }
 
-    public CubeModelFile[] getListModels(){
-        return interactor.getListModels();
+    public void onFilesButtonClicked(){
+        interactor.onFilesButtonClicked();
     }
 
     public void onSaveCurrentModel(String title){
@@ -97,6 +101,11 @@ public class MainPresenterImpl implements MainPresenter {
     }
 
     @Override
+    public void openModelList(CubeModelFile[] listModels) {
+        view.openModelList(listModels);
+    }
+
+    @Override
     public void onSavingError(String title) {
         view.showSavingError(title);
     }
@@ -117,8 +126,13 @@ public class MainPresenterImpl implements MainPresenter {
     }
 
     @Override
-    public void updateModelList() {
-        view.updateModelList();
+    public void updateModelList(CubeModelFile[] listModels) {
+        view.updateModelList(listModels);
+    }
+
+    @Override
+    public void onNameError(String title) {
+        view.onNameError();
     }
 
     @Override
@@ -149,5 +163,9 @@ public class MainPresenterImpl implements MainPresenter {
     @Override
     public void init() {
         view.init();
+    }
+
+    public void onCentreButtonPushed() {
+        interactor.onCentreButtonPushed();
     }
 }

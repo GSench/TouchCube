@@ -37,7 +37,24 @@ public class CubeModelManager {
         this.storage=storage;
     }
 
+    public void onFilesButtonClicked() {
+        face.openModelList(storage.getList());
+    }
+
     public void onSaveModel(final String title){
+        if(
+                title.equals("")||
+                title.contains(".")||
+                title.contains("*")||
+                title.contains("\\")||
+                title.contains("/")||
+                title.contains(":")||
+                title.contains("?")||
+                title.contains("|")||
+                title.contains("\"")){
+            face.onNameError(title);
+            return;
+        }
         system.doOnBackground(new function<Void>() {
             @Override
             public void run(Void... params) {
@@ -60,10 +77,6 @@ public class CubeModelManager {
                 system.doOnForeground(result);
             }
         });
-    }
-
-    public CubeModelFile[] getListModels(){
-        return storage.getList();
     }
 
     public void onLoadModel(final CubeModelFile file){
@@ -98,7 +111,7 @@ public class CubeModelManager {
                     file.delete();
                     result = new function<Void>() {
                         @Override
-                        public void run(Void... params) {face.updateModelList();}
+                        public void run(Void... params) {face.updateModelList(storage.getList());}
                     };
                 } catch (Exception e) {
                     e.printStackTrace();

@@ -18,9 +18,9 @@ import ru.touchcube.domain.utils.function_get;
 
 public class TouchCubeWorld {
 
-    public static final int MODE_PUT = 1;
-    public static final int MODE_DELETE = 2;
-    public static final int MODE_PAINT = 3;
+    private static final int MODE_PUT = 1;
+    private static final int MODE_DELETE = 2;
+    private static final int MODE_PAINT = 3;
 
     private WorldFace face;
     private SystemInterface system;
@@ -28,7 +28,7 @@ public class TouchCubeWorld {
 
     private final ArrayList<CubeDrawing> cubes = new ArrayList<CubeDrawing>();
 
-    int mode = 0;
+    private int mode = 0;
 
     public TouchCubeWorld(WorldFace face, function_get<Color> currentColor, SystemInterface system){
         this.face = face;
@@ -88,8 +88,20 @@ public class TouchCubeWorld {
     }
 
     public void onClearButton(){
-        for(CubeDrawing cube: cubes) cube.onDelete();
-        cubes.clear();
+        synchronized (cubes){
+            for(CubeDrawing cube: cubes) cube.onDelete();
+            cubes.clear();
+        }
+    }
+
+    public void reloadCurrent() {
+        synchronized (cubes){
+            ArrayList<Cube> load = new ArrayList<Cube>(cubes.size());
+            for(CubeDrawing cubeDrawing: cubes) load.add(cubeDrawing.getCube());
+            for(CubeDrawing cube: cubes) cube.onDelete();
+            cubes.clear();
+            for(Cube cube: load) put(cube);
+        }
     }
 
     private CubeDrawing getCubeOn(V3 v){

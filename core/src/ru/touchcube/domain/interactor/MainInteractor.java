@@ -48,8 +48,16 @@ public class MainInteractor {
         worldService.tapOnCube(cubeDrawing, side);
     }
 
+    public void longTapOnCube(CubeDrawing cubeDrawing, int side) {
+        worldService.reloadCurrent();
+    }
+
     public void onClearButtonPushed(){
         worldService.onClearButton();
+    }
+
+    public void onCentreButtonPushed(){
+        worldService.reloadCurrent();
     }
 
     public void isPutMode(){
@@ -72,8 +80,8 @@ public class MainInteractor {
         paletteService.setColor(color, pos);
     }
 
-    public CubeModelFile[] getListModels(){
-        return modelManagerService.getListModels();
+    public void onFilesButtonClicked(){
+        modelManagerService.onFilesButtonClicked();
     }
 
     public void onSaveCurrentModel(String title){
@@ -120,4 +128,5 @@ public class MainInteractor {
             return paletteService.getCurrentColor();
         }
     };
+
 }
