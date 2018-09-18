@@ -15,7 +15,7 @@ public class CubeModelFileDescriptor {
     public static ArrayList<Cube> decode(byte[] encoded){
         ByteBuffer buffer = ByteBuffer.wrap(encoded);
         byte braceByte = "^".getBytes(Charset.forName("UTF-8"))[0];
-        for(int i=0; i<encoded.length; i++) if(buffer.get()==braceByte) break;
+        for (byte anEncoded : encoded) if (buffer.get() == braceByte) break;
 
         int size = buffer.remaining()/BYTE_SIZE;
         ArrayList<Cube> cubes = new ArrayList<Cube>(size);
