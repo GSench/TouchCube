@@ -146,8 +146,8 @@ public class MainPresenterImpl implements MainPresenter {
     }
 
     @Override
-    public void openColorPicker() {
-        view.openColorPicker();
+    public void openColorPicker(int pos) {
+        view.openColorPicker(pos);
     }
 
     @Override

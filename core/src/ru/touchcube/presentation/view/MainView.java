@@ -18,7 +18,7 @@ public interface MainView {
     void showDeleteError(String modelName);
     void updateModelList(CubeModelFile[] listModels);
     void updateColor(Color color, int pos);
-    void openColorPicker();
+    void openColorPicker(int pos);
     CubeDrawing add(Cube newCube);
     void openModelList(CubeModelFile[] listModels);
     void onNameError();

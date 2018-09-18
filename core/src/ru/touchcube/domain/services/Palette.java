@@ -36,7 +36,7 @@ public class Palette {
 
     public void onColorClick(int pos){
         if(pos<0||pos>=COUNT) return;
-        if(currentColor==pos && currentColor>0) face.openColorPicker();
+        if(currentColor==pos && currentColor>0) face.openColorPicker(pos);
         else currentColor = pos;
     }
 

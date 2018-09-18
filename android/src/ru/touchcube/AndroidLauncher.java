@@ -161,7 +161,7 @@ public class AndroidLauncher extends AndroidApplication implements MainView {
     }
 
     @Override
-    public void openColorPicker() {
+    public void openColorPicker(int pos) {
         //TODO
     }
 
