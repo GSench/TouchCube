@@ -55,6 +55,7 @@ public class CubeModelManager {
             face.onNameError(title);
             return;
         }
+        face.onStartSaving(title);
         system.doOnBackground(new function<Void>() {
             @Override
             public void run(Void... params) {

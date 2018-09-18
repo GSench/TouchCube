@@ -111,6 +111,11 @@ public class MainPresenterImpl implements MainPresenter {
     }
 
     @Override
+    public void onStartSaving(String title) {
+        view.showSavingMessage(title);
+    }
+
+    @Override
     public void onSaved(String title) {
         view.closeSavingMessage();
     }

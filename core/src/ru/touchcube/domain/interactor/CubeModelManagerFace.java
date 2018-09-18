@@ -14,4 +14,5 @@ public interface CubeModelManagerFace {
     void onDeleteError(String modelName);
     void updateModelList(CubeModelFile[] listModels);
     void onNameError(String title);
+    void onStartSaving(String title);
 }

@@ -34,18 +34,13 @@ public class AndroidLauncher extends AndroidApplication implements MainView {
         presenter = new MainPresenterImpl(new AndroidInterface(this), new AndroidModelStorage());
         libgdx = new MyTouchCube(presenter);
         presenter.setView(this);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
         presenter.start();
     }
 
     @Override
-    protected void onStop() {
+    protected void onDestroy() {
         presenter.finish();
-        super.onStop();
+        super.onDestroy();
     }
 
     private void buttonsSetting(){
@@ -184,6 +179,11 @@ public class AndroidLauncher extends AndroidApplication implements MainView {
     @Override
     public void onNameError() {
         Toast.makeText(this, getResources().getString(R.string.bad_name), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showSavingMessage(String title) {
+        //TODO
     }
 
     private void openTitleInputDialog(){

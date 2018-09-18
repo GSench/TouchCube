@@ -22,4 +22,6 @@ public interface MainView {
     CubeDrawing add(Cube newCube);
     void openModelList(CubeModelFile[] listModels);
     void onNameError();
+    void showSavingMessage(String title);
+
 }
