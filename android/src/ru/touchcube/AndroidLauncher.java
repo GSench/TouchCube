@@ -2,6 +2,8 @@ package ru.touchcube;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,14 +17,17 @@ import ru.touchcube.domain.model.Color;
 import ru.touchcube.domain.model.Cube;
 import ru.touchcube.domain.model.CubeDrawing;
 import ru.touchcube.domain.model.CubeModelFile;
+import ru.touchcube.domain.services.Palette;
 import ru.touchcube.model.AndroidModelStorage;
 import ru.touchcube.presentation.MyTouchCube;
 import ru.touchcube.presentation.presenters_impl.MainPresenterImpl;
 import ru.touchcube.presentation.view.MainView;
+import top.defaults.colorpicker.ColorPickerPopup;
 
 public class AndroidLauncher extends AndroidApplication implements MainView {
 
     private MainViewHolder viewHolder;
+    private PaletteColorViewHolder[] palette;
     private MyTouchCube libgdx;
     private MainPresenterImpl presenter;
 
@@ -108,6 +113,23 @@ public class AndroidLauncher extends AndroidApplication implements MainView {
                 presenter.onClearButtonPushed();
             }
         });
+        paletteInit();
+    }
+
+    private void paletteInit(){
+        palette = new PaletteColorViewHolder[Palette.COUNT];
+        for(int i=0; i< Palette.COUNT; i++){
+            final int pos = i;
+            palette[i] = new PaletteColorViewHolder(this, viewHolder.palette);
+            palette[i].colorView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    presenter.onColorClick(pos);
+                }
+            });
+            palette[i].colorView.setBackgroundColor(0x00000000);
+            viewHolder.palette.addView(palette[i].paletteColor);
+        }
     }
 
     private void openSettings() {
@@ -157,12 +179,56 @@ public class AndroidLauncher extends AndroidApplication implements MainView {
 
     @Override
     public void updateColor(Color color, int pos) {
-        //TODO
+        if(color.noColor()) palette[pos].colorView.setBackground(viewHolder.cubeTexture);
+        else palette[pos].colorView.setBackgroundColor(android.graphics.Color.argb(color.a(), color.r(), color.g(), color.b()));
     }
 
     @Override
-    public void openColorPicker(int pos) {
-        //TODO
+    public void openColorPicker(final int pos) {
+        int color = android.graphics.Color.TRANSPARENT;
+        Drawable background = palette[pos].colorView.getBackground();
+        if (background instanceof ColorDrawable)
+            color = ((ColorDrawable) background).getColor();
+        /**
+        viewHolder.colorPickerView.setInitialColor(color);
+        viewHolder.colorPickerView.setVisibility(View.VISIBLE);
+        viewHolder.colorPickerView.subscribe(new ColorObserver() {
+            @Override
+            public void onColor(int color, boolean fromUser) {
+                Color color1 = new Color(
+                        android.graphics.Color.red(color),
+                        android.graphics.Color.green(color),
+                        android.graphics.Color.blue(color),
+                        android.graphics.Color.alpha(color),
+                        false);
+                presenter.onColorPicked(color1, pos);
+            }
+        });*/
+        new ColorPickerPopup.Builder(this)
+                .initialColor(color) // Set initial color
+                .enableAlpha(true) // Enable alpha slider or not
+                .okTitle("Choose")
+                .cancelTitle("Cancel")
+                .showIndicator(true)
+                .showValue(false)
+                .build()
+                .show(viewHolder.parent, new ColorPickerPopup.ColorPickerObserver() {
+                    @Override
+                    public void onColorPicked(int color) {
+                        Color color1 = new Color(
+                                android.graphics.Color.red(color),
+                                android.graphics.Color.green(color),
+                                android.graphics.Color.blue(color),
+                                android.graphics.Color.alpha(color),
+                                false);
+                        presenter.onColorPicked(color1, pos);
+                    }
+
+                    @Override
+                    public void onColor(int color, boolean fromUser) {
+
+                    }
+                });
     }
 
     @Override

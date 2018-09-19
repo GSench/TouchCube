@@ -46,6 +46,6 @@ public class Color {
 
     @Override
     public String toString(){
-        return Integer.toHexString(ri)+Integer.toHexString(gi)+Integer.toHexString(bi)+Integer.toHexString(ai)+(noColorI?1:0);
+        return String.format("%02X", ri)+String.format("%02X", gi)+String.format("%02X", bi)+String.format("%02X", ai)+(noColorI?"1":"0");
     }
 }

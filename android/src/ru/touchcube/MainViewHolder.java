@@ -1,10 +1,14 @@
 package ru.touchcube;
 
+import android.graphics.drawable.Drawable;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
+
+import java.io.IOException;
 
 /**
  * Created by grish on 02.09.2018.
@@ -12,6 +16,7 @@ import android.widget.RelativeLayout;
 
 public class MainViewHolder {
 
+    public ViewGroup parent;
     public RelativeLayout mainLayout;
     public RadioButton putRB;
     public RadioButton paintRB;
@@ -24,8 +29,12 @@ public class MainViewHolder {
     public Button settings_button;
     public Button centreButton;
     public Button clearButton;
+    public LinearLayout palette;
+    public Drawable cubeTexture;
+    //public ColorPickerView colorPickerView;
 
     public MainViewHolder(ViewGroup parent){
+        this.parent=parent;
         mainLayout = parent.findViewById(R.id.mainLayout);
         putRB = parent.findViewById(R.id.putRB);
         paintRB = parent.findViewById(R.id.paintRB);
@@ -38,6 +47,11 @@ public class MainViewHolder {
         settings_button = parent.findViewById(R.id.settings_button);
         centreButton = parent.findViewById(R.id.centreButton);
         clearButton = parent.findViewById(R.id.clearButton);
+        palette = parent.findViewById(R.id.palette);
+        //colorPickerView = parent.findViewById(R.id.colorPickerView);
+        try {
+            cubeTexture = Drawable.createFromStream(parent.getContext().getAssets().open("cube_nc.png"), null);
+        } catch (IOException e) {}//should be safe
     }
 
 }
