@@ -37,22 +37,22 @@ public class Palette {
 
     public void onColorClick(int pos){
         if(pos<0||pos>=COUNT) return;
-        if(currentColor==pos && currentColor>0) face.openColorPicker(pos);
-        else currentColor = pos;
+        if(currentColor==pos) {
+            if (face.isColorPickerOpened()) face.closeColorPicker();
+            else if (currentColor > 0) face.openColorPicker(palette[currentColor]);
+        }
+        else {
+            currentColor = pos;
+            if(currentColor==0) face.closeColorPicker();
+            else if(face.isColorPickerOpened()) face.openColorPicker(palette[currentColor]);
+        }
     }
 
-    public void setColor(Color color, int pos){
-        if(pos<1||pos>=COUNT||color.noColor()) return;
-        palette[pos] = color;
-        face.updateColor(color, pos);
-        system.doOnBackground(new function<Void>() {
-            @Override
-            public void run(Void... params) {
-                synchronized (palette){
-                    savePalette();
-                }
-            }
-        });
+    public void colorPicked(Color color){
+        if(currentColor>0){
+            palette[currentColor] = color;
+            face.updateColor(color, currentColor);
+        }
     }
 
     public void exit(){
@@ -84,4 +84,14 @@ public class Palette {
         return true;
     }
 
+    public void onColorPickerClosed() {
+        system.doOnBackground(new function<Void>() {
+            @Override
+            public void run(Void... params) {
+                synchronized (palette){
+                    savePalette();
+                }
+            }
+        });
+    }
 }

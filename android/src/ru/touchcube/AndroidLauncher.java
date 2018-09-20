@@ -22,6 +22,7 @@ import ru.touchcube.model.AndroidModelStorage;
 import ru.touchcube.presentation.MyTouchCube;
 import ru.touchcube.presentation.presenters_impl.MainPresenterImpl;
 import ru.touchcube.presentation.view.MainView;
+import top.defaults.colorpicker.ColorObserver;
 import top.defaults.colorpicker.ColorPickerPopup;
 
 public class AndroidLauncher extends AndroidApplication implements MainView {
@@ -124,12 +125,37 @@ public class AndroidLauncher extends AndroidApplication implements MainView {
             palette[i].colorView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    viewHolder.currentColor.setVisibility(View.VISIBLE);
                     presenter.onColorClick(pos);
                 }
             });
             palette[i].colorView.setBackgroundColor(0x00000000);
             viewHolder.palette.addView(palette[i].paletteColor);
         }
+        viewHolder.colorPickerView.subscribe(new ColorObserver() {
+            @Override
+            public void onColor(int color, boolean fromUser) {
+                Color color1 = new Color(
+                        android.graphics.Color.red(color),
+                        android.graphics.Color.green(color),
+                        android.graphics.Color.blue(color),
+                        android.graphics.Color.alpha(color),
+                        false);
+                presenter.onColorPicked(color1);
+            }
+        });
+        viewHolder.colorPickerContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //do nothing
+            }
+        });
+        viewHolder.colorPickerCloser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                closeColorPicker();
+            }
+        });
     }
 
     private void openSettings() {
@@ -184,51 +210,15 @@ public class AndroidLauncher extends AndroidApplication implements MainView {
     }
 
     @Override
-    public void openColorPicker(final int pos) {
-        int color = android.graphics.Color.TRANSPARENT;
-        Drawable background = palette[pos].colorView.getBackground();
-        if (background instanceof ColorDrawable)
-            color = ((ColorDrawable) background).getColor();
-        /**
-        viewHolder.colorPickerView.setInitialColor(color);
-        viewHolder.colorPickerView.setVisibility(View.VISIBLE);
-        viewHolder.colorPickerView.subscribe(new ColorObserver() {
-            @Override
-            public void onColor(int color, boolean fromUser) {
-                Color color1 = new Color(
-                        android.graphics.Color.red(color),
-                        android.graphics.Color.green(color),
-                        android.graphics.Color.blue(color),
-                        android.graphics.Color.alpha(color),
-                        false);
-                presenter.onColorPicked(color1, pos);
-            }
-        });*/
-        new ColorPickerPopup.Builder(this)
-                .initialColor(color) // Set initial color
-                .enableAlpha(true) // Enable alpha slider or not
-                .okTitle("Choose")
-                .cancelTitle("Cancel")
-                .showIndicator(true)
-                .showValue(false)
-                .build()
-                .show(viewHolder.parent, new ColorPickerPopup.ColorPickerObserver() {
-                    @Override
-                    public void onColorPicked(int color) {
-                        Color color1 = new Color(
-                                android.graphics.Color.red(color),
-                                android.graphics.Color.green(color),
-                                android.graphics.Color.blue(color),
-                                android.graphics.Color.alpha(color),
-                                false);
-                        presenter.onColorPicked(color1, pos);
-                    }
+    public void openColorPicker(Color initial) {
+        viewHolder.colorPickerView.setInitialColor(android.graphics.Color.argb(initial.a(), initial.r(), initial.g(), initial.b()));
+        viewHolder.colorPickerContainer.setVisibility(View.VISIBLE);
+        viewHolder.colorPickerCloser.setVisibility(View.VISIBLE);
+    }
 
-                    @Override
-                    public void onColor(int color, boolean fromUser) {
-
-                    }
-                });
+    @Override
+    public boolean isColorPickerOpened(){
+        return viewHolder.colorPickerContainer.getVisibility()==View.VISIBLE;
     }
 
     @Override
@@ -250,6 +240,13 @@ public class AndroidLauncher extends AndroidApplication implements MainView {
     @Override
     public void showSavingMessage(String title) {
         //TODO
+    }
+
+    @Override
+    public void closeColorPicker() {
+        presenter.onColorPickerClosed();
+        viewHolder.colorPickerContainer.setVisibility(View.GONE);
+        viewHolder.colorPickerCloser.setVisibility(View.GONE);
     }
 
     private void openTitleInputDialog(){

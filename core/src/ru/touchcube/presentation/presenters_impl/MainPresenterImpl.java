@@ -72,8 +72,8 @@ public class MainPresenterImpl implements MainPresenter {
         interactor.onColorClick(pos);
     }
 
-    public void onColorPicked(Color color, int pos){
-        interactor.onColorPicked(color, pos);
+    public void onColorPicked(Color color){
+        interactor.onColorPicked(color);
     }
 
     public void onFilesButtonClicked(){
@@ -146,8 +146,18 @@ public class MainPresenterImpl implements MainPresenter {
     }
 
     @Override
-    public void openColorPicker(int pos) {
-        view.openColorPicker(pos);
+    public void openColorPicker(Color initial) {
+        view.openColorPicker(initial);
+    }
+
+    @Override
+    public boolean isColorPickerOpened() {
+        return view.isColorPickerOpened();
+    }
+
+    @Override
+    public void closeColorPicker() {
+        view.closeColorPicker();
     }
 
     @Override
@@ -172,5 +182,9 @@ public class MainPresenterImpl implements MainPresenter {
 
     public void onCentreButtonPushed() {
         interactor.onCentreButtonPushed();
+    }
+
+    public void onColorPickerClosed() {
+        interactor.onColorPickerClosed();
     }
 }

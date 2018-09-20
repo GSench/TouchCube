@@ -1,6 +1,7 @@
 package ru.touchcube;
 
 import android.graphics.drawable.Drawable;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -9,6 +10,8 @@ import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 
 import java.io.IOException;
+
+import top.defaults.colorpicker.ColorPickerView;
 
 /**
  * Created by grish on 02.09.2018.
@@ -31,7 +34,10 @@ public class MainViewHolder {
     public Button clearButton;
     public LinearLayout palette;
     public Drawable cubeTexture;
-    //public ColorPickerView colorPickerView;
+    public LinearLayout colorPickerContainer;
+    public ColorPickerView colorPickerView;
+    public View colorPickerCloser;
+    public View currentColor;
 
     public MainViewHolder(ViewGroup parent){
         this.parent=parent;
@@ -48,10 +54,19 @@ public class MainViewHolder {
         centreButton = parent.findViewById(R.id.centreButton);
         clearButton = parent.findViewById(R.id.clearButton);
         palette = parent.findViewById(R.id.palette);
-        //colorPickerView = parent.findViewById(R.id.colorPickerView);
+        colorPickerContainer = parent.findViewById(R.id.colorPickerContainer);
+        initColorPickerView(colorPickerContainer);
+        colorPickerCloser = parent.findViewById(R.id.colorPickerCloser);
+        currentColor = parent.findViewById(R.id.selectedColor);
         try {
             cubeTexture = Drawable.createFromStream(parent.getContext().getAssets().open("cube_nc.png"), null);
-        } catch (IOException e) {}//should be safe
+        } catch (IOException e) {}//must be safe
+    }
+
+    private void initColorPickerView(ViewGroup parent){
+        colorPickerView = new ColorPickerView(parent.getContext());
+        colorPickerView.setEnabledAlpha(true);
+        parent.addView(colorPickerView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
     }
 
 }

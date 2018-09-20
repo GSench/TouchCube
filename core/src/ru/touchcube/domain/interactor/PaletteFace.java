@@ -8,6 +8,8 @@ import ru.touchcube.domain.model.Color;
 
 public interface PaletteFace {
     void updateColor(Color color, int pos);
-    void openColorPicker(int pos);
+    void openColorPicker(Color initial);
+    public boolean isColorPickerOpened();
+    public void closeColorPicker();
 
 }

@@ -76,8 +76,8 @@ public class MainInteractor {
         paletteService.onColorClick(pos);
     }
 
-    public void onColorPicked(Color color, int pos){
-        paletteService.setColor(color, pos);
+    public void onColorPicked(Color color){
+        paletteService.colorPicked(color);
     }
 
     public void onFilesButtonClicked(){
@@ -129,4 +129,7 @@ public class MainInteractor {
         }
     };
 
+    public void onColorPickerClosed() {
+        paletteService.onColorPickerClosed();
+    }
 }
