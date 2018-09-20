@@ -13,6 +13,7 @@ public class Palette {
 
     public static final int COUNT = 5;
     private static final String PALETTE = "palette";
+    private static final String PALETTE_SEPARATOR = ";";
 
     private PaletteFace face;
     private SystemInterface system;
@@ -59,23 +60,25 @@ public class Palette {
     }
 
     private void loadDefaultPalette(){
-        palette[0] = new Color(0,0,0,1,true); //noColor
-        palette[1] = new Color(255, 0,0,1, false); //red
-        palette[2] = new Color(255, 255,0,1, false); //yellow
-        palette[3] = new Color(0, 255,0,1, false); //green
-        palette[4] = new Color(0, 0,255,1, false); //blue
+        palette[0] = new Color(0,0,0,255,true); //noColor
+        palette[1] = new Color(255, 0,0,255, false); //red
+        palette[2] = new Color(255, 255,0,255, false); //yellow
+        palette[3] = new Color(0, 255,0,255, false); //green
+        palette[4] = new Color(0, 0,255,255, false); //blue
     }
 
     private void savePalette(){
-        String[] save = new String[COUNT];
+        StringBuilder save = new StringBuilder();
         for(int i=0; i<COUNT; i++)
-            save[i]=palette[i].toString();
-        system.saveStringArray(PALETTE, save);
+            save.append(palette[i].toString()).append(PALETTE_SEPARATOR);
+        save.deleteCharAt(save.length()-1);
+        system.saveString(PALETTE, save.toString());
     }
 
     private boolean loadSavedPalette(){
-        String[] load = system.getSavedStringArray(PALETTE, null);
-        if(load==null) return false;
+        String loadStr = system.getSavedString(PALETTE, null);
+        if(loadStr==null) return false;
+        String[] load = loadStr.split(PALETTE_SEPARATOR);
         if(load.length!=COUNT) return false;
         for(int i=0; i<COUNT; i++) palette[i]=new Color(load[i]);
         return true;

@@ -95,7 +95,7 @@ public class AndroidInterface implements SystemInterface {
         byte[] ret = new byte[byteChain.size()];
         for(int i=0; i<byteChain.size(); i++) ret[i]=byteChain.get(i);
         return ret;
-    }*/
+    }
 
     @Override
     public String[] getSavedStringArray(String title, String[] def) {
@@ -112,7 +112,7 @@ public class AndroidInterface implements SystemInterface {
                 .edit()
                 .putStringSet(title, new HashSet<>(Arrays.asList(array)))
                 .commit();
-    }
+    }*/
 
     @Override
     public byte[] loadCashFile(String filename, byte[] def) {
@@ -124,7 +124,6 @@ public class AndroidInterface implements SystemInterface {
 
     }
 
-    /**
     @Override
     public String getSavedString(String title, String def) {
         return act.getSharedPreferences(SPREF, Context.MODE_PRIVATE).getString(title, def);
