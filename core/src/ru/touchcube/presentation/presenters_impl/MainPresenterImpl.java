@@ -161,6 +161,11 @@ public class MainPresenterImpl implements MainPresenter {
     }
 
     @Override
+    public void setCurrentColor(int currentColor) {
+        view.setCurrentColor(currentColor);
+    }
+
+    @Override
     public CubeDrawing onCubeAdded(Cube newCube) {
         return view.add(newCube);
     }

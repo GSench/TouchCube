@@ -25,4 +25,5 @@ public interface MainView {
     void onNameError();
     void showSavingMessage(String title);
     void closeColorPicker();
+    void setCurrentColor(int currentColor);
 }

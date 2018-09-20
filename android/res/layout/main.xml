@@ -31,7 +31,9 @@
     <View
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:id="@+id/selectedColor"/>
+        android:id="@+id/selectedColor"
+		android:background="@drawable/current_color"
+        android:visibility="gone"/>
 
     <LinearLayout
         android:id="@+id/colorPickerContainer"

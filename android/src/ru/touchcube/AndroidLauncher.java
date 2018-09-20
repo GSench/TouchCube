@@ -125,7 +125,6 @@ public class AndroidLauncher extends AndroidApplication implements MainView {
             palette[i].colorView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    viewHolder.currentColor.setVisibility(View.VISIBLE);
                     presenter.onColorClick(pos);
                 }
             });
@@ -247,6 +246,15 @@ public class AndroidLauncher extends AndroidApplication implements MainView {
         presenter.onColorPickerClosed();
         viewHolder.colorPickerContainer.setVisibility(View.GONE);
         viewHolder.colorPickerCloser.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void setCurrentColor(int currentColor) {
+        viewHolder.currentColor.setVisibility(View.VISIBLE);
+        int[] location = new int[2];
+        palette[currentColor].paletteColor.getLocationOnScreen(location);
+        viewHolder.currentColor.setX(location[0]);
+        viewHolder.currentColor.setY(location[1]);
     }
 
     private void openTitleInputDialog(){

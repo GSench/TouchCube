@@ -29,6 +29,7 @@ public class Palette {
     public void init(){
         if(!loadSavedPalette()) loadDefaultPalette();
         for(int i=0; i<COUNT; i++) face.updateColor(palette[i], i);
+        face.setCurrentColor(currentColor);
     }
 
     public Color getCurrentColor(){
@@ -37,6 +38,7 @@ public class Palette {
 
     public void onColorClick(int pos){
         if(pos<0||pos>=COUNT) return;
+        face.setCurrentColor(pos);
         if(currentColor==pos) {
             if (face.isColorPickerOpened()) face.closeColorPicker();
             else if (currentColor > 0) face.openColorPicker(palette[currentColor]);
