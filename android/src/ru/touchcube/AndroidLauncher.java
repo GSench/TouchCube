@@ -2,9 +2,14 @@ package ru.touchcube;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.res.Resources;
+import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
+import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -31,6 +36,8 @@ public class AndroidLauncher extends AndroidApplication implements MainView {
     private PaletteColorViewHolder[] palette;
     private MyTouchCube libgdx;
     private MainPresenterImpl presenter;
+
+    private boolean alreadyRunning = false;
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
@@ -250,11 +257,17 @@ public class AndroidLauncher extends AndroidApplication implements MainView {
 
     @Override
     public void setCurrentColor(int currentColor) {
+        float x = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40, Resources.getSystem().getDisplayMetrics());
+        float y = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40, Resources.getSystem().getDisplayMetrics());
+        Point size = new Point();
+        getWindowManager().getDefaultDisplay().getSize(size);
+        int width = size.x;
+        int height = size.y;
+        x = width-x;
+        y = height/2-(y*Palette.COUNT)/2+currentColor*y;
         viewHolder.currentColor.setVisibility(View.VISIBLE);
-        int[] location = new int[2];
-        palette[currentColor].paletteColor.getLocationOnScreen(location);
-        viewHolder.currentColor.setX(location[0]);
-        viewHolder.currentColor.setY(location[1]);
+        viewHolder.currentColor.setX(x);
+        viewHolder.currentColor.setY(y);
     }
 
     private void openTitleInputDialog(){
