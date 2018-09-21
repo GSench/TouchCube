@@ -227,8 +227,7 @@ public class AndroidLauncher extends AndroidApplication implements MainView {
 
     @Override
     public CubeDrawing add(Cube newCube) {
-        //TODO
-        return null;
+        return libgdx.add(newCube);
     }
 
     @Override
