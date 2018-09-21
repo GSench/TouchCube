@@ -37,8 +37,6 @@ public class AndroidLauncher extends AndroidApplication implements MainView {
     private MyTouchCube libgdx;
     private MainPresenterImpl presenter;
 
-    private boolean alreadyRunning = false;
-
     @Override
     protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
