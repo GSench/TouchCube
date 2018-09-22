@@ -1,7 +1,6 @@
 package ru.touchcube.presentation;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.decals.Decal;
 
@@ -14,13 +13,13 @@ public class CubeDrawer extends CubeDrawing {
 
     public static final int CUBE_SIZE = 2;
     private Decal[] sides;
-    private function_get<Texture> getCubeTexture;
-    private function_get<Texture> getCubeNCTexture;
+    private function_get<TextureRegion> getCubeTexture;
+    private function_get<TextureRegion> getCubeNCTexture;
     private function_get<V3F> getCenter;
 
     public CubeDrawer(Cube cube,
-                      function_get<Texture> getCubeTexture,
-                      function_get<Texture> getCubeNCTexture,
+                      function_get<TextureRegion> getCubeTexture,
+                      function_get<TextureRegion> getCubeNCTexture,
                       function_get<V3F> getCenter) {
         super(cube);
         sides = new Decal[6];
@@ -42,8 +41,8 @@ public class CubeDrawer extends CubeDrawing {
     public void onCreate() {
 
         int s=CUBE_SIZE;
-        TextureRegion texture = new TextureRegion(getCubeNCTexture.get());
-        TextureRegion textureC = new TextureRegion(getCubeTexture.get());
+        TextureRegion texture = getCubeNCTexture.get();
+        TextureRegion textureC = getCubeTexture.get();
         int xReal = 0, yReal = 0, zReal = 0, angleAlpha = 0, angleBeta = 0;
         int x = getCube().getPosition().x();
         int y = getCube().getPosition().y();

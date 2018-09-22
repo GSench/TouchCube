@@ -2,16 +2,14 @@ package ru.touchcube.presentation;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.decals.CameraGroupStrategy;
 import com.badlogic.gdx.graphics.g3d.decals.Decal;
 import com.badlogic.gdx.graphics.g3d.decals.DecalBatch;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
-import com.badlogic.gdx.input.GestureDetector;
 
 import ru.touchcube.domain.model.Cube;
 import ru.touchcube.domain.model.CubeDrawing;
@@ -40,23 +38,23 @@ public class MyTouchCube extends ApplicationAdapter {
     DecalBatch decalBt;
 
     //Cube textures
-	private Texture cubeTexture, cubeNCTexture;
+	private TextureRegion cubeTexture, cubeNCTexture;
 
 	//Center
     private V3F center = new V3F(0,0,0);
 
-	private function_get<Texture> getCubeTexture = new function_get<Texture>() {
+	private function_get<TextureRegion> getCubeTexture = new function_get<TextureRegion>() {
         @Override
-        public Texture get() {
-            if(cubeTexture==null) cubeTexture = new Texture("cube.png");
+        public TextureRegion get() {
+            if(cubeTexture==null) cubeTexture = new TextureRegion(new Texture("cube.png"));
             return cubeTexture;
         }
     };
 
-    private function_get<Texture> getCubeNCTexture = new function_get<Texture>() {
+    private function_get<TextureRegion> getCubeNCTexture = new function_get<TextureRegion>() {
         @Override
-        public Texture get() {
-            if(cubeNCTexture==null) cubeNCTexture = new Texture("cube_nc.png");
+        public TextureRegion get() {
+            if(cubeNCTexture==null) cubeNCTexture = new TextureRegion(new Texture("cube_nc.png"));
             return cubeNCTexture;
         }
     };
