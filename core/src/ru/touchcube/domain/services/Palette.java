@@ -2,7 +2,7 @@ package ru.touchcube.domain.services;
 
 import ru.touchcube.domain.SystemInterface;
 import ru.touchcube.domain.model.Color;
-import ru.touchcube.domain.interactor.PaletteFace;
+import ru.touchcube.domain.interactor.PalettePresenter;
 import ru.touchcube.domain.utils.function;
 
 /**
@@ -15,21 +15,21 @@ public class Palette {
     private static final String PALETTE = "palette";
     private static final String PALETTE_SEPARATOR = ";";
 
-    private PaletteFace face;
+    private PalettePresenter presenter;
     private SystemInterface system;
 
     private final Color[] palette = new Color[COUNT];
     private int currentColor = 0;
 
-    public Palette(SystemInterface system, PaletteFace face){
+    public Palette(SystemInterface system, PalettePresenter presenter){
         this.system=system;
-        this.face =face;
+        this.presenter =presenter;
     }
 
     public void init(){
         if(!loadSavedPalette()) loadDefaultPalette();
-        for(int i=0; i<COUNT; i++) face.updateColor(palette[i], i);
-        face.setCurrentColor(currentColor);
+        for(int i=0; i<COUNT; i++) presenter.updateColor(palette[i], i);
+        presenter.setCurrentColor(currentColor);
     }
 
     public Color getCurrentColor(){
@@ -38,22 +38,22 @@ public class Palette {
 
     public void onColorClick(int pos){
         if(pos<0||pos>=COUNT) return;
-        face.setCurrentColor(pos);
+        presenter.setCurrentColor(pos);
         if(currentColor==pos) {
-            if (face.isColorPickerOpened()) face.closeColorPicker();
-            else if (currentColor > 0) face.openColorPicker(palette[currentColor]);
+            if (presenter.isColorPickerOpened()) presenter.closeColorPicker();
+            else if (currentColor > 0) presenter.openColorPicker(palette[currentColor]);
         }
         else {
             currentColor = pos;
-            if(currentColor==0) face.closeColorPicker();
-            else if(face.isColorPickerOpened()) face.openColorPicker(palette[currentColor]);
+            if(currentColor==0) presenter.closeColorPicker();
+            else if(presenter.isColorPickerOpened()) presenter.openColorPicker(palette[currentColor]);
         }
     }
 
-    public void colorPicked(Color color){
+    public void onColorPicked(Color color){
         if(currentColor>0){
             palette[currentColor] = color;
-            face.updateColor(color, currentColor);
+            presenter.updateColor(color, currentColor);
         }
     }
 

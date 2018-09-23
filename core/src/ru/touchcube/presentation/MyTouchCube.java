@@ -11,13 +11,17 @@ import com.badlogic.gdx.graphics.g3d.decals.Decal;
 import com.badlogic.gdx.graphics.g3d.decals.DecalBatch;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 
+import java.util.ArrayList;
+
+import ru.touchcube.domain.model.Color;
 import ru.touchcube.domain.model.Cube;
 import ru.touchcube.domain.model.CubeDrawing;
 import ru.touchcube.domain.utils.function_get;
-import ru.touchcube.presentation.presenters_impl.MainPresenterImpl;
+import ru.touchcube.presentation.presenters_impl.WorldPresenterImpl;
 import ru.touchcube.presentation.utils.V3F;
+import ru.touchcube.presentation.view.WorldView;
 
-public class MyTouchCube extends ApplicationAdapter {
+public class MyTouchCube extends ApplicationAdapter implements WorldView {
 
     //Orthographic Camera
     OrthographicCamera cam;
@@ -59,10 +63,13 @@ public class MyTouchCube extends ApplicationAdapter {
         }
     };
 
-	private MainPresenterImpl presenter;
+	private WorldPresenterImpl presenter;
+	private function_get<Color> getCurrentColor;
 
-	public MyTouchCube(MainPresenterImpl presenter){
-		this.presenter=presenter;
+	public MyTouchCube(function_get<Color> getCurrentColor){
+	    this.getCurrentColor=getCurrentColor;
+		presenter = new WorldPresenterImpl();
+        presenter.setView(this);
 	}
 	
 	@Override
@@ -90,6 +97,8 @@ public class MyTouchCube extends ApplicationAdapter {
 
         //Decal Batch for cubes
         decalBt=new DecalBatch(new CameraGroupStrategy(cam));
+
+        presenter.start();
 	}
 
 	@Override
@@ -116,7 +125,8 @@ public class MyTouchCube extends ApplicationAdapter {
 		decalBt.dispose();
 	}
 
-	public CubeDrawing add(Cube newCube) {
+    @Override
+    public CubeDrawing add(Cube newCube) {
         return new CubeDrawer(newCube,
                 getCubeTexture,
                 getCubeNCTexture,
@@ -127,4 +137,55 @@ public class MyTouchCube extends ApplicationAdapter {
                     }
                 });
 	}
+
+    @Override
+    public Color getCurrentColor() {
+        return getCurrentColor.get();
+    }
+
+    public void isPutMode() {
+        presenter.isPutMode();
+    }
+
+    public void isPaintMode() {
+        presenter.isPaintMode();
+    }
+
+    public void isDeleteMode() {
+        presenter.isDeleteMode();
+    }
+
+    public void onCentreButtonPushed() {
+        Gdx.app.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                presenter.onCentreButtonPushed();
+            }
+        });
+    }
+
+    public void onClearButtonPushed() {
+        Gdx.app.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                presenter.onClearButtonPushed();
+            }
+        });
+    }
+
+    public ArrayList<Cube> getCurrentModel() {
+        ArrayList<CubeDrawing> currentModel = presenter.getCubes();
+        ArrayList<Cube> cubes = new ArrayList<Cube>(currentModel.size());
+        for(CubeDrawing cubeDrawing: currentModel) cubes.add(cubeDrawing.getCube());
+        return cubes;
+    }
+
+    public void loadModel(final ArrayList<Cube> model) {
+	    Gdx.app.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                presenter.loadModel(model);
+            }
+        });
+    }
 }

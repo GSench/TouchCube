@@ -1,26 +1,12 @@
 package ru.touchcube.domain.interactor;
 
-import java.util.ArrayList;
-
-import ru.touchcube.domain.MainPresenter;
-import ru.touchcube.domain.SystemInterface;
-import ru.touchcube.domain.model.Color;
-import ru.touchcube.domain.model.Cube;
-import ru.touchcube.domain.model.CubeDrawing;
-import ru.touchcube.domain.model.CubeModelFile;
-import ru.touchcube.domain.model.CubeModelStorage;
-import ru.touchcube.domain.services.CubeModelManager;
-import ru.touchcube.domain.services.Palette;
-import ru.touchcube.domain.services.TouchCubeWorld;
-import ru.touchcube.domain.utils.function;
-import ru.touchcube.domain.utils.function_get;
-
 /**
  * Created by grish on 01.09.2018.
  */
 
 public class MainInteractor {
 
+    /**
     private TouchCubeWorld worldService;
     private Palette paletteService;
     private CubeModelManager modelManagerService;
@@ -53,7 +39,7 @@ public class MainInteractor {
     }
 
     public void onClearButtonPushed(){
-        worldService.onClearButton();
+        worldService.onClearButtonPushed();
     }
 
     public void onCentreButtonPushed(){
@@ -77,7 +63,7 @@ public class MainInteractor {
     }
 
     public void onColorPicked(Color color){
-        paletteService.colorPicked(color);
+        paletteService.onColorPicked(color);
     }
 
     public void onFilesButtonClicked(){
@@ -85,7 +71,7 @@ public class MainInteractor {
     }
 
     public void onSaveCurrentModel(String title){
-        modelManagerService.onSaveModel(title);
+        modelManagerService.onSaveCurrentModel(title);
     }
 
     public void onLoadModel(CubeModelFile file){
@@ -131,5 +117,5 @@ public class MainInteractor {
 
     public void onColorPickerClosed() {
         paletteService.onColorPickerClosed();
-    }
+    }*/
 }

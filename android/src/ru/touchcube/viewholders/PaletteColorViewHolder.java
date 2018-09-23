@@ -1,8 +1,10 @@
-package ru.touchcube;
+package ru.touchcube.viewholders;
 
 import android.app.Activity;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+
+import ru.touchcube.R;
 
 /**
  * Created by grish on 19.09.2018.

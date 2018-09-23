@@ -1,15 +1,17 @@
-package ru.touchcube.domain.interactor;
+package ru.touchcube.presentation.view;
 
 import ru.touchcube.domain.model.Color;
 
 /**
- * Created by Григорий Сенченок on 24.08.2018.
+ * Created by grish on 23.09.2018.
  */
 
-public interface PaletteFace {
+public interface PaletteView {
+
     void updateColor(Color color, int pos);
     void openColorPicker(Color initial);
     boolean isColorPickerOpened();
     void closeColorPicker();
     void setCurrentColor(int currentColor);
+
 }
