@@ -2,6 +2,7 @@ package ru.touchcube.presentation;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.graphics.g3d.decals.CameraGroupStrategy;
 import com.badlogic.gdx.graphics.g3d.decals.Decal;
 import com.badlogic.gdx.graphics.g3d.decals.DecalBatch;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
+import com.badlogic.gdx.input.GestureDetector;
 
 import java.util.ArrayList;
 
@@ -18,28 +20,26 @@ import ru.touchcube.domain.model.Cube;
 import ru.touchcube.domain.model.CubeDrawing;
 import ru.touchcube.domain.utils.function_get;
 import ru.touchcube.presentation.presenters_impl.WorldPresenterImpl;
+import ru.touchcube.presentation.utils.MyGestureListener;
 import ru.touchcube.presentation.utils.V3F;
 import ru.touchcube.presentation.view.WorldView;
 
 public class MyTouchCube extends ApplicationAdapter implements WorldView {
 
     //Orthographic Camera
-    OrthographicCamera cam;
-
-    //Input Controllers
-    CameraInputController camController;
+    private OrthographicCamera cam;
 
     //Screen size
-    float w, h;
+    private float w, h;
 
     //Cube count & size params
-    int maxDistance = 128;
+    private static final int maxDistance = 128;
 
     //Camera position
-    float xCamPos, yCamPos, zCamPos;
+    private float xCamPos, yCamPos, zCamPos;
 
     //Batchs
-    DecalBatch decalBt;
+    private DecalBatch decalBt;
 
     //Cube textures
 	private TextureRegion cubeTexture, cubeNCTexture;
@@ -92,8 +92,12 @@ public class MyTouchCube extends ApplicationAdapter implements WorldView {
         cam.update();
 
         //Handing touches
-        camController = new CameraInputController(cam);
-        Gdx.input.setInputProcessor(camController);
+        InputMultiplexer input = new InputMultiplexer();
+        CameraInputController camController = new CameraInputController(cam);
+        GestureDetector gestureDetector = new GestureDetector(gestureListener);
+        input.addProcessor(gestureDetector);
+        input.addProcessor(camController);
+        Gdx.input.setInputProcessor(input);
 
         //Decal Batch for cubes
         decalBt=new DecalBatch(new CameraGroupStrategy(cam));
@@ -188,4 +192,19 @@ public class MyTouchCube extends ApplicationAdapter implements WorldView {
             }
         });
     }
+
+    private MyGestureListener gestureListener = new MyGestureListener(){
+        private float prevInitialDistance = -1;
+        private float prevCamZoom = 1;
+        @Override
+        public boolean zoom(float initialDistance, float distance) {
+            if(prevInitialDistance!=initialDistance){
+                prevInitialDistance=initialDistance;
+                prevCamZoom=cam.zoom;
+            }
+            cam.zoom=prevCamZoom*(initialDistance/distance);
+            System.out.println("initialDistance="+initialDistance+" distance="+distance+" d-i="+(distance-initialDistance));
+            return false;
+        }
+    };
 }
