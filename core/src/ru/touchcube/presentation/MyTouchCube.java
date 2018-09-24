@@ -239,9 +239,9 @@ public class MyTouchCube extends ApplicationAdapter implements WorldView {
                 //vertices: {x1, y1, z1, ?, ?, ?, x2, y2, z2, ?, ?, ?, x3, y3, z3, ?, ?, ?, x4, y4, z4, ?, ?, ?}
                 // for 0 side:
                 // z=-1
-                // x 2 1
-                // x 4 3
-                //   y y
+                // y 2 1
+                // y 4 3
+                //   x x
 
                 triangle1[0]=verticesOfDecal[0]; //1
                 triangle1[1]=verticesOfDecal[1];
