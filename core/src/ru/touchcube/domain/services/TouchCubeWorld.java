@@ -27,6 +27,7 @@ public class TouchCubeWorld {
 
     public TouchCubeWorld(WorldPresenter presenter){
         this.presenter = presenter;
+        mode=MODE_PUT;
     }
 
     public void load(ArrayList<Cube> cubesToLoad){

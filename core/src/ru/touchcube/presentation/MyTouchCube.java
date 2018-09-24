@@ -12,12 +12,16 @@ import com.badlogic.gdx.graphics.g3d.decals.Decal;
 import com.badlogic.gdx.graphics.g3d.decals.DecalBatch;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.Ray;
 
 import java.util.ArrayList;
 
 import ru.touchcube.domain.model.Color;
 import ru.touchcube.domain.model.Cube;
 import ru.touchcube.domain.model.CubeDrawing;
+import ru.touchcube.domain.utils.Pair;
 import ru.touchcube.domain.utils.function_get;
 import ru.touchcube.presentation.presenters_impl.WorldPresenterImpl;
 import ru.touchcube.presentation.utils.MyGestureListener;
@@ -203,8 +207,91 @@ public class MyTouchCube extends ApplicationAdapter implements WorldView {
                 prevCamZoom=cam.zoom;
             }
             cam.zoom=prevCamZoom*(initialDistance/distance);
-            System.out.println("initialDistance="+initialDistance+" distance="+distance+" d-i="+(distance-initialDistance));
+            return false;
+        }
+        @Override
+        public boolean tap(float x, float y, int count, int button) {
+            Pair<CubeDrawing, Integer> intersected = intersectCube(x,y);
+            if(intersected!=null) presenter.tapOnCube(intersected.f, intersected.s);
             return false;
         }
     };
+
+    private Pair<CubeDrawing, Integer> intersectCube(float xTouch, float yTouch){
+        CubeDrawing currentCube=null;
+        int currentSide = -1;
+        Ray tapping = cam.getPickRay(xTouch, yTouch);
+        float verticesOfDecal[]=new float[24];
+        float triangle1[] = new float[9];
+        float triangle2[] = new float[9];
+        Vector3 intersection = new Vector3(0,0,0);
+        Vector3 intersection1 = new Vector3(0,0,0);
+        Vector3 intersection2 = new Vector3(0,0,0);
+        Vector3 shortestIntersection = null;
+        for (CubeDrawing cube : presenter.getCubes()){
+            CubeDrawer cubeDrawer = (CubeDrawer) cube;
+            for (int i=0; i<6; i++){
+                Decal d = cubeDrawer.getSides()[i];
+                intersection=new Vector3(0,0,0);
+                intersection1 = new Vector3(0,0,0);
+                intersection2 = new Vector3(0,0,0);
+                verticesOfDecal=d.getVertices();
+                //vertices: {x1, y1, z1, ?, ?, ?, x2, y2, z2, ?, ?, ?, x3, y3, z3, ?, ?, ?, x4, y4, z4, ?, ?, ?}
+                // for 0 side:
+                // z=-1
+                // x 2 1
+                // x 4 3
+                //   y y
+
+                triangle1[0]=verticesOfDecal[0]; //1
+                triangle1[1]=verticesOfDecal[1];
+                triangle1[2]=verticesOfDecal[2];
+                triangle1[3]=verticesOfDecal[6]; //2
+                triangle1[4]=verticesOfDecal[7];
+                triangle1[5]=verticesOfDecal[8];
+                triangle1[6]=verticesOfDecal[12]; //3
+                triangle1[7]=verticesOfDecal[13];
+                triangle1[8]=verticesOfDecal[14];
+
+                triangle2[0]=verticesOfDecal[6]; //2
+                triangle2[1]=verticesOfDecal[7];
+                triangle2[2]=verticesOfDecal[8];
+                triangle2[3]=verticesOfDecal[12]; //3
+                triangle2[4]=verticesOfDecal[13];
+                triangle2[5]=verticesOfDecal[14];
+                triangle2[6]=verticesOfDecal[18]; //4
+                triangle2[7]=verticesOfDecal[19];
+                triangle2[8]=verticesOfDecal[20];
+
+                if (Intersector.intersectRayTriangles(tapping, triangle1, intersection1)||
+                        Intersector.intersectRayTriangles(tapping, triangle2, intersection2)) {
+
+                    if (!(intersection1.len()==0)){
+                        intersection.set(intersection1);
+                    }
+                    if (!(intersection2.len()==0)){
+                        intersection.set(intersection2);
+                    }
+
+                    if (shortestIntersection==null){
+                        shortestIntersection=new Vector3();
+                        shortestIntersection.set(intersection);
+                        currentCube=cube;
+                        currentSide=i;
+                    } else {
+                        Vector3 tapSubIntersect = new Vector3(0,0,0).set(tapping.origin).sub(intersection);
+                        Vector3 tapSubShortest = new Vector3(0,0,0).set(tapping.origin).sub(shortestIntersection);
+                        if (tapSubIntersect.len()<tapSubShortest.len()){
+                            shortestIntersection.set(intersection);
+                            currentCube=cube;
+                            currentSide=i;
+                        }
+                    }
+                }
+            }
+        }
+        if(currentCube==null) return null;
+        return new Pair<CubeDrawing, Integer>(currentCube, currentSide);
+    }
+
 }
