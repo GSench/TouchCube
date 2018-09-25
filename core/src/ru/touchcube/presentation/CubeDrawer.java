@@ -49,7 +49,7 @@ public class CubeDrawer extends CubeDrawing {
         int z = getCube().getPosition().z();
 
         for (int i=0; i<6; i++) {
-            sides[i] = Decal.newDecal(s, s, getCube().getColor().noColor()?texture:textureC, !getCube().getColor().noColor()&&getCube().getColor().a()<255);
+            sides[i] = Decal.newDecal(s, s, getCube().getColor().noColor()?texture:textureC, true);
             switch (i) {
                 case 0:
                     xReal = x * s;
@@ -110,7 +110,20 @@ public class CubeDrawer extends CubeDrawing {
 
     @Override
     public void onColorChanged() {
-
+        for(Decal side: sides){
+            if(getCube().getColor().noColor()){
+                side.setTextureRegion(getCubeNCTexture.get());
+                side.setColor(Color.WHITE);
+            } else {
+                side.setTextureRegion(getCubeTexture.get());
+                float color = Color.toFloatBits(
+                        getCube().getColor().r(),
+                        getCube().getColor().g(),
+                        getCube().getColor().b(),
+                        getCube().getColor().a());
+                side.setColor(color);
+            }
+        }
     }
 
 }
