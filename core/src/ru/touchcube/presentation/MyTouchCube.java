@@ -237,12 +237,14 @@ public class MyTouchCube extends ApplicationAdapter implements WorldView {
                 intersection2 = new Vector3(0,0,0);
                 verticesOfDecal=d.getVertices();
                 //vertices: {x1, y1, z1, ?, ?, ?, x2, y2, z2, ?, ?, ?, x3, y3, z3, ?, ?, ?, x4, y4, z4, ?, ?, ?}
-                // for 0 side:
-                // z=-1
-                // y 2 1
-                // y 4 3
-                //   x x
+                // if we look on the face side of decal's rectangle,
+                // the corners will be ordered in this way:
+                // 1 2
+                // 3 4
 
+                // I use triangle 123:
+                // 1 2
+                // 3
                 triangle1[0]=verticesOfDecal[0]; //1
                 triangle1[1]=verticesOfDecal[1];
                 triangle1[2]=verticesOfDecal[2];
@@ -253,6 +255,9 @@ public class MyTouchCube extends ApplicationAdapter implements WorldView {
                 triangle1[7]=verticesOfDecal[13];
                 triangle1[8]=verticesOfDecal[14];
 
+                //And triangle 234:
+                //   2
+                // 3 4
                 triangle2[0]=verticesOfDecal[6]; //2
                 triangle2[1]=verticesOfDecal[7];
                 triangle2[2]=verticesOfDecal[8];
