@@ -218,85 +218,46 @@ public class MyTouchCube extends ApplicationAdapter implements WorldView {
     };
 
     private Pair<CubeDrawing, Integer> intersectCube(float xTouch, float yTouch){
-        CubeDrawing currentCube=null;
-        int currentSide = -1;
+        CubeDrawing touchedCube=null;
+        int touchedSide = -1;
+
         Ray tapping = cam.getPickRay(xTouch, yTouch);
-        float verticesOfDecal[]=new float[24];
-        float triangle1[] = new float[9];
-        float triangle2[] = new float[9];
-        Vector3 intersection = new Vector3(0,0,0);
-        Vector3 intersection1 = new Vector3(0,0,0);
-        Vector3 intersection2 = new Vector3(0,0,0);
-        Vector3 shortestIntersection = null;
+
+        Vector3 intersection, intersection1, intersection2, shortestIntersection = null;
         for (CubeDrawing cube : presenter.getCubes()){
             CubeDrawer cubeDrawer = (CubeDrawer) cube;
             for (int i=0; i<6; i++){
-                Decal d = cubeDrawer.getSides()[i];
-                intersection=new Vector3(0,0,0);
+                intersection = new Vector3(0,0,0);
                 intersection1 = new Vector3(0,0,0);
                 intersection2 = new Vector3(0,0,0);
-                verticesOfDecal=d.getVertices();
-                //vertices: {x1, y1, z1, ?, ?, ?, x2, y2, z2, ?, ?, ?, x3, y3, z3, ?, ?, ?, x4, y4, z4, ?, ?, ?}
-                // if we look on the face side of decal's rectangle,
-                // the corners will be ordered in this way:
-                // 1 2
-                // 3 4
 
-                // I use triangle 123:
-                // 1 2
-                // 3
-                triangle1[0]=verticesOfDecal[0]; //1
-                triangle1[1]=verticesOfDecal[1];
-                triangle1[2]=verticesOfDecal[2];
-                triangle1[3]=verticesOfDecal[6]; //2
-                triangle1[4]=verticesOfDecal[7];
-                triangle1[5]=verticesOfDecal[8];
-                triangle1[6]=verticesOfDecal[12]; //3
-                triangle1[7]=verticesOfDecal[13];
-                triangle1[8]=verticesOfDecal[14];
+                Pair<float[], float[]> triangles = cubeDrawer.getTrianglesOfSide(i);
 
-                //And triangle 234:
-                //   2
-                // 3 4
-                triangle2[0]=verticesOfDecal[6]; //2
-                triangle2[1]=verticesOfDecal[7];
-                triangle2[2]=verticesOfDecal[8];
-                triangle2[3]=verticesOfDecal[12]; //3
-                triangle2[4]=verticesOfDecal[13];
-                triangle2[5]=verticesOfDecal[14];
-                triangle2[6]=verticesOfDecal[18]; //4
-                triangle2[7]=verticesOfDecal[19];
-                triangle2[8]=verticesOfDecal[20];
+                if (Intersector.intersectRayTriangles(tapping, triangles.f, intersection1)||
+                        Intersector.intersectRayTriangles(tapping, triangles.s, intersection2)) {
 
-                if (Intersector.intersectRayTriangles(tapping, triangle1, intersection1)||
-                        Intersector.intersectRayTriangles(tapping, triangle2, intersection2)) {
-
-                    if (!(intersection1.len()==0)){
-                        intersection.set(intersection1);
-                    }
-                    if (!(intersection2.len()==0)){
-                        intersection.set(intersection2);
-                    }
+                    if (intersection1.len()!=0) intersection.set(intersection1);
+                    if (intersection2.len()!=0) intersection.set(intersection2);
 
                     if (shortestIntersection==null){
                         shortestIntersection=new Vector3();
                         shortestIntersection.set(intersection);
-                        currentCube=cube;
-                        currentSide=i;
+                        touchedCube=cube;
+                        touchedSide=i;
                     } else {
                         Vector3 tapSubIntersect = new Vector3(0,0,0).set(tapping.origin).sub(intersection);
                         Vector3 tapSubShortest = new Vector3(0,0,0).set(tapping.origin).sub(shortestIntersection);
                         if (tapSubIntersect.len()<tapSubShortest.len()){
                             shortestIntersection.set(intersection);
-                            currentCube=cube;
-                            currentSide=i;
+                            touchedCube=cube;
+                            touchedSide=i;
                         }
                     }
                 }
             }
         }
-        if(currentCube==null) return null;
-        return new Pair<CubeDrawing, Integer>(currentCube, currentSide);
+        if(touchedCube==null) return null;
+        return new Pair<CubeDrawing, Integer>(touchedCube, touchedSide);
     }
 
 }
