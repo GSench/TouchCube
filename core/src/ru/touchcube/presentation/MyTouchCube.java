@@ -117,13 +117,8 @@ public class MyTouchCube extends ApplicationAdapter implements WorldView {
         //Drawing cubes
         for(CubeDrawing cubeDrawing: presenter.getCubes()){
             CubeDrawer cubeDrawer = (CubeDrawer) cubeDrawing;
-            for(int i=0; i<6; i++){
-                if(isDrawing(cubeDrawer, i)){
-                    System.out.println("d"+i);
-                    decalBt.add(cubeDrawer.getSides()[i]);
-                }
-            }
-
+            for(int i=0; i<6; i++)
+                if(isDrawing(cubeDrawer, i)) decalBt.add(cubeDrawer.getSides()[i]);
         }
         decalBt.flush();
 	}
@@ -248,10 +243,7 @@ public class MyTouchCube extends ApplicationAdapter implements WorldView {
         @Override
         public boolean tap(float x, float y, int count, int button) {
             Pair<CubeDrawing, Integer> intersected = intersectCube(x,y);
-            if(intersected!=null){
-                presenter.tapOnCube(intersected.f, intersected.s);
-                System.out.println("Tapped on " + intersected.f.getCube().getPosition().toString()+" side "+intersected.s);
-            }
+            if(intersected!=null) presenter.tapOnCube(intersected.f, intersected.s);
             return false;
         }
         @Override
