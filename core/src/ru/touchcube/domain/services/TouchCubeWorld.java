@@ -72,6 +72,10 @@ public class TouchCubeWorld {
         }
     }
 
+    public void tapOnBackground(){
+        if(cubes.size()==0) put(new V3(0,0,0), new Color(0,0,0,255, true));
+    }
+
     public void onClearButtonPushed(){
         for(CubeDrawing cube: cubes) cube.onDelete();
         cubes.clear();

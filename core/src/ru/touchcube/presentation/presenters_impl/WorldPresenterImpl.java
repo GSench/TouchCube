@@ -72,6 +72,10 @@ public class WorldPresenterImpl implements WorldPresenter {
         interactor.reloadCurrent();
     }
 
+    public void tapOnBackground() {
+        interactor.tapOnBackground();
+    }
+
     @Override
     public CubeDrawing onCubeAdded(Cube newCube) {
         return view.add(newCube);
