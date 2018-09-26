@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import ru.touchcube.domain.model.Color;
 import ru.touchcube.domain.model.Cube;
 import ru.touchcube.domain.model.CubeDrawing;
+import ru.touchcube.domain.model.V3;
 import ru.touchcube.domain.utils.Pair;
 import ru.touchcube.domain.utils.function_get;
 import ru.touchcube.presentation.presenters_impl.WorldPresenterImpl;
@@ -38,9 +39,6 @@ public class MyTouchCube extends ApplicationAdapter implements WorldView {
 
     //Cube count & size params
     private static final int maxDistance = 128;
-
-    //Camera position
-    private float xCamPos, yCamPos, zCamPos;
 
     //Batchs
     private DecalBatch decalBt;
@@ -86,9 +84,6 @@ public class MyTouchCube extends ApplicationAdapter implements WorldView {
         cam = new OrthographicCamera(Gdx.graphics.getWidth()/60, Gdx.graphics.getHeight()/60);
         float camPosition = CubeDrawer.CUBE_SIZE*maxDistance;
         float camFarDistance = (float) (Math.sqrt(3)*camPosition*2);
-        xCamPos=camPosition;
-        yCamPos=camPosition;
-        zCamPos=camPosition;
         cam.position.set(camPosition, camPosition, camPosition);
         cam.lookAt(0,0,0);
         cam.near = 0.1f;
@@ -122,11 +117,27 @@ public class MyTouchCube extends ApplicationAdapter implements WorldView {
         //Drawing cubes
         for(CubeDrawing cubeDrawing: presenter.getCubes()){
             CubeDrawer cubeDrawer = (CubeDrawer) cubeDrawing;
-            for(Decal side: cubeDrawer.getSides())
-                decalBt.add(side);
+            for(int i=0; i<6; i++){
+                if(isDrawing(cubeDrawer, i)){
+                    System.out.println("d"+i);
+                    decalBt.add(cubeDrawer.getSides()[i]);
+                }
+            }
+
         }
         decalBt.flush();
 	}
+
+	private boolean isDrawing(CubeDrawer cube, int side) {
+        return cube.getCube().getDrawSides()[side] && (
+                        (side == 0 && cam.position.z < 0) ||
+                        (side == 1 && cam.position.x > 0) ||
+                        (side == 2 && cam.position.z > 0) ||
+                        (side == 3 && cam.position.x < 0) ||
+                        (side == 4 && cam.position.y < 0) ||
+                        (side == 5 && cam.position.y > 0)
+        );
+    }
 	
 	@Override
 	public void dispose () {
@@ -212,7 +223,10 @@ public class MyTouchCube extends ApplicationAdapter implements WorldView {
         @Override
         public boolean tap(float x, float y, int count, int button) {
             Pair<CubeDrawing, Integer> intersected = intersectCube(x,y);
-            if(intersected!=null) presenter.tapOnCube(intersected.f, intersected.s);
+            if(intersected!=null){
+                presenter.tapOnCube(intersected.f, intersected.s);
+                System.out.println("Tapped on " + intersected.f.getCube().getPosition().toString()+" side "+intersected.s);
+            }
             return false;
         }
     };
@@ -227,6 +241,10 @@ public class MyTouchCube extends ApplicationAdapter implements WorldView {
         for (CubeDrawing cube : presenter.getCubes()){
             CubeDrawer cubeDrawer = (CubeDrawer) cube;
             for (int i=0; i<6; i++){
+                //Warning: if decal wasn't added to DecalBatch in render method, its coordinates are indefinite
+                //So cubeDrawer.getTrianglesOfSide(i) will work incorrect (see next)
+                //So we must skip such decals
+                if(!isDrawing(cubeDrawer, i)) continue;
                 intersection = new Vector3(0,0,0);
                 intersection1 = new Vector3(0,0,0);
                 intersection2 = new Vector3(0,0,0);
