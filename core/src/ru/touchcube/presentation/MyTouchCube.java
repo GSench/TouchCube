@@ -178,9 +178,34 @@ public class MyTouchCube extends ApplicationAdapter implements WorldView {
         Gdx.app.postRunnable(new Runnable() {
             @Override
             public void run() {
+                centerModel();
                 presenter.onCentreButtonPushed();
             }
         });
+    }
+
+    private void centerModel(){
+	    if(presenter.getCubes().size()==0) return;
+        V3 pos = presenter.getCubes().get(0).getCube().getPosition();
+	    float
+                minX = pos.x(), maxX = pos.x(),
+                minY = pos.y(), maxY = pos.y(),
+                minZ = pos.z(), maxZ = pos.z();
+	    for(CubeDrawing cube: presenter.getCubes()){
+	        pos = cube.getCube().getPosition();
+	        if(pos.x()<minX) minX=pos.x();
+	        if(pos.x()>maxX) maxX=pos.x();
+            if(pos.y()<minY) minY=pos.y();
+            if(pos.y()>maxY) maxY=pos.y();
+            if(pos.z()<minZ) minZ=pos.z();
+            if(pos.z()>maxZ) maxZ=pos.z();
+        }
+        center = new V3F(((maxX+minX)/2)*CubeDrawer.CUBE_SIZE, ((maxY+minY)/2)*CubeDrawer.CUBE_SIZE,((maxZ+minZ)/2)*CubeDrawer.CUBE_SIZE);
+    }
+
+    private void centerCube(CubeDrawing cube){
+	    V3 pos = cube.getCube().getPosition();
+	    center = new V3F(pos.x()*CubeDrawer.CUBE_SIZE, pos.y()*CubeDrawer.CUBE_SIZE, pos.z()*CubeDrawer.CUBE_SIZE);
     }
 
     public void onClearButtonPushed() {
@@ -226,6 +251,15 @@ public class MyTouchCube extends ApplicationAdapter implements WorldView {
             if(intersected!=null){
                 presenter.tapOnCube(intersected.f, intersected.s);
                 System.out.println("Tapped on " + intersected.f.getCube().getPosition().toString()+" side "+intersected.s);
+            }
+            return false;
+        }
+        @Override
+        public boolean longPress(float x, float y) {
+            Pair<CubeDrawing, Integer> intersected = intersectCube(x,y);
+            if(intersected!=null){
+                centerCube(intersected.f);
+                presenter.longTapOnCube(intersected.f, intersected.s);
             }
             return false;
         }
