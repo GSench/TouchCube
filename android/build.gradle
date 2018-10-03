@@ -136,4 +136,5 @@ repositories {
 
 dependencies {
     implementation 'com.github.duanhong169:colorpicker:1.1.1'
+    implementation 'commons-io:commons-io:2.5'
 }

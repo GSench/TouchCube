@@ -3,9 +3,10 @@ package ru.touchcube;
 import android.app.Activity;
 import android.content.Context;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import org.apache.commons.io.IOUtils;
+
+import java.io.FileOutputStream;
+import java.io.InputStream;
 
 import ru.touchcube.domain.SystemInterface;
 import ru.touchcube.domain.utils.function;
@@ -116,12 +117,29 @@ public class AndroidInterface implements SystemInterface {
 
     @Override
     public byte[] loadCashFile(String filename, byte[] def) {
-        return new byte[0];
+        InputStream inputStream = null;
+        try {
+            inputStream = act.openFileInput(filename);
+            def = IOUtils.toByteArray(inputStream);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            IOUtils.closeQuietly(inputStream);
+        }
+        return def;
     }
 
     @Override
     public void saveToCashFile(String filename, byte[] bytes) {
-
+        FileOutputStream outputStream = null;
+        try {
+            outputStream = act.openFileOutput(filename, Context.MODE_PRIVATE);
+            IOUtils.write(bytes, outputStream);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            IOUtils.closeQuietly(outputStream);
+        }
     }
 
     @Override
