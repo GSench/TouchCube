@@ -2,5 +2,7 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
     <color android:id="@+id/color1" android:layout_width="wrap_content" android:layout_height="wrap_content" name="tutorial_back_color">#C000</color>
     <color name="color_picker_background">#FAFAFA</color>
+    <color name="divider">#E0E0E0</color>
+    <color name="selected">#E0E0E0</color>
     
 </resources>

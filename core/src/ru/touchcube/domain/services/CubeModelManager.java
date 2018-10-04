@@ -18,9 +18,7 @@ import ru.touchcube.domain.utils.function;
 
 public class CubeModelManager {
 
-    private static final String CASH = "cash.cu";
-
-    private static final String EXTENSION = "cu";
+    private static final String CASH = "cash";
 
     private CubeModelManagerPresenter presenter;
     private CubeModelStorage storage;
@@ -60,7 +58,7 @@ public class CubeModelManager {
                         presenter.onSaved(title);}
                 };
                 try {
-                    CubeModelFile file = storage.createNew(title+"."+EXTENSION);
+                    CubeModelFile file = storage.createNew(title);
                     file.write(CubeModelFileDescriptor.encode(presenter.getCurrentModel()));
                 } catch (Exception e) {
                     e.printStackTrace();

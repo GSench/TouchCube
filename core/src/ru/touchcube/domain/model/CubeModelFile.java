@@ -13,7 +13,7 @@ public abstract class CubeModelFile {
     }
 
     public String getModelName() {
-        return filename.substring(0, filename.lastIndexOf("."));
+        return filename;
     }
 
     public abstract byte[] read() throws Exception;
