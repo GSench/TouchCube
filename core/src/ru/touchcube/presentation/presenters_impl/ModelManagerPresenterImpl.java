@@ -27,8 +27,8 @@ public class ModelManagerPresenterImpl implements CubeModelManagerPresenter {
         this.view=view;
     }
 
-    public void start(){
-        interactor.loadFromCash();
+    public void start(CubeModelFile cubeModelFile){
+        interactor.loadFromCash(cubeModelFile);
     }
 
     public void onFilesButtonClicked(){

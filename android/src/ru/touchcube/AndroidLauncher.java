@@ -1,5 +1,8 @@
 package ru.touchcube;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +20,8 @@ import ru.touchcube.presentation.MyTouchCube;
 import ru.touchcube.viewholders.MainViewHolder;
 
 public class AndroidLauncher extends AndroidApplication {
+
+    private static final String FIRST_START = "FIRST_START";
 
     private MainViewHolder viewHolder;
     private MyTouchCube libgdx;
@@ -52,6 +57,7 @@ public class AndroidLauncher extends AndroidApplication {
         LibGDXViewSetting();
         paletteView.start();
         modelManagerView.start();
+        tutorial();
     }
 
     @Override
@@ -59,6 +65,17 @@ public class AndroidLauncher extends AndroidApplication {
         modelManagerView.finish();
         paletteView.finish();
         super.onDestroy();
+    }
+
+    private void tutorial(){
+        if(!getSharedPreferences(FIRST_START, MODE_PRIVATE).getBoolean(FIRST_START, true)) return;
+        Tutorial tutorial = new Tutorial(viewHolder.parent, this, new function<Void>() {
+            @Override
+            public void run(Void... params) {
+                getSharedPreferences(FIRST_START, MODE_PRIVATE).edit().putBoolean(FIRST_START, false).apply();
+            }
+        });
+        tutorial.start();
     }
 
     private void buttonsSetting(){
@@ -111,14 +128,33 @@ public class AndroidLauncher extends AndroidApplication {
         viewHolder.clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                libgdx.onClearButtonPushed();
+                onClearDialog();
             }
         });
     }
 
+    private void onClearDialog(){
+        new AlertDialog.Builder(this)
+                .setTitle(getResources().getString(R.string.clear_dialog))
+                .setMessage(getResources().getString(R.string.clear_dialog_message))
+                .setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                        libgdx.onClearButtonPushed();
+                    }
+                })
+                .setNegativeButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                })
+                .create().show();
+    }
+
     private void openSettings() {
-        //TODO
-        System.out.println("SETTINGS ACTIVITY");
+        startActivity(new Intent(this, MyPreferenceActivity.class));
     }
 
     private void LibGDXViewSetting(){

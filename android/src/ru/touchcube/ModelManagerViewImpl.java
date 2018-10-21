@@ -2,8 +2,11 @@ package ru.touchcube;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -18,6 +21,7 @@ import ru.touchcube.domain.model.CubeModelFile;
 import ru.touchcube.domain.utils.function;
 import ru.touchcube.domain.utils.function_get;
 import ru.touchcube.model.AndroidModelStorage;
+import ru.touchcube.model.AndroidModelUri;
 import ru.touchcube.presentation.presenters_impl.ModelManagerPresenterImpl;
 import ru.touchcube.presentation.view.ModelManagerView;
 import ru.touchcube.viewholders.CubeModelViewHolder;
@@ -37,6 +41,7 @@ public class ModelManagerViewImpl implements ModelManagerView {
 
     private LinearLayout modelList;
     private AlertDialog loadWindow;
+    private ProgressDialog progressDialog;
     private CubeModelFile selected = null;
 
     public ModelManagerViewImpl(Activity act, function_get<ArrayList<Cube>> getCurrentModel, function<ArrayList<Cube>> loadModel){
@@ -53,7 +58,15 @@ public class ModelManagerViewImpl implements ModelManagerView {
     }
 
     public void start(){
-        presenter.start();
+        Intent intent = act.getIntent();
+        String action = intent.getAction();
+        if (action != null && !action.equals(Intent.ACTION_VIEW)){
+            presenter.start(null);
+            return;
+        }
+        Uri toOpen = intent.getData();
+        AndroidModelUri androidModelUri = new AndroidModelUri(toOpen, act);
+        presenter.start(androidModelUri);
     }
 
     public void finish(){
@@ -128,25 +141,22 @@ public class ModelManagerViewImpl implements ModelManagerView {
 
     @Override
     public void showSavingError(String title) {
-        //TODO
-        System.out.println("showSavingError for "+title);
+        Toast.makeText(act, act.getResources().getString(R.string.saving_error), Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void closeSavingMessage() {
-        //TODO
+        if(progressDialog!=null) progressDialog.dismiss();
     }
 
     @Override
     public void showLoadError(String modelName) {
-        //TODO
-        System.out.println("showLoadError for "+modelName);
+        Toast.makeText(act, act.getResources().getString(R.string.loading_error), Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void showDeleteError(String modelName) {
-        //TODO
-        System.out.println("showDeleteError for "+modelName);
+        Toast.makeText(act, act.getResources().getString(R.string.error_deleting), Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -159,7 +169,7 @@ public class ModelManagerViewImpl implements ModelManagerView {
             modelViewHolder.deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    presenter.onDeleteModel(modelFile);
+                    onDeleteDialog(modelFile);
                 }
             });
             modelViewHolder.shareButton.setOnClickListener(new View.OnClickListener() {
@@ -181,6 +191,26 @@ public class ModelManagerViewImpl implements ModelManagerView {
         }
     }
 
+    private void onDeleteDialog(final CubeModelFile cubeModelFile){
+        new AlertDialog.Builder(act)
+                .setTitle(act.getResources().getString(R.string.delete_file_dialog_title))
+                .setMessage(act.getResources().getString(R.string.delete_file_dialog_message))
+                .setPositiveButton(act.getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                        presenter.onDeleteModel(cubeModelFile);
+                    }
+                })
+                .setNegativeButton(act.getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                })
+                .create().show();
+    }
+
     @Override
     public void openModelList(CubeModelFile[] listModels) {
         selected = null;
@@ -195,7 +225,12 @@ public class ModelManagerViewImpl implements ModelManagerView {
 
     @Override
     public void showSavingMessage(String title) {
-        //TODO
+        if(progressDialog==null){
+            progressDialog = new ProgressDialog(act);
+            progressDialog.setMessage(act.getResources().getString(R.string.saving));
+            progressDialog.setCancelable(false);
+        }
+        progressDialog.show();
     }
 
     @Override

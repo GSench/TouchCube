@@ -77,5 +77,8 @@ It should also be noted that your workspace will be saved after you exit program
     <string name="date" translatable="false">02.01.2015</string>
     <string name="developer" translatable="false">© 2014-2015 MobIndustry</string>
     <string name="help_title">Help</string>
+    <string name="saving_error">Saving error</string>
+    <string name="loading_error">Loading error</string>
+    <string name="error_deleting">Deleting error</string>
 
 </resources>

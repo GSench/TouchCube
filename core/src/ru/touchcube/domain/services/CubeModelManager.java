@@ -131,11 +131,23 @@ public class CubeModelManager {
         saveToCash(presenter.getCurrentModel());
     }
 
-    public void loadFromCash(){
+    public void loadFromCash(final CubeModelFile cubeModelFile){
         system.doOnBackground(new function<Void>() {
             @Override
             public void run(Void... params) {
-                byte[] modelEncoded = system.loadCashFile(CASH, null);
+                byte[] modelEncoded = null;
+                if(cubeModelFile!=null)
+                    try {
+                        modelEncoded = cubeModelFile.read();
+                    } catch (Exception e) {
+                        system.doOnForeground(new function<Void>() {
+                            @Override
+                            public void run(Void... params) {
+                                presenter.onLoadError(cubeModelFile.getModelName());
+                            }
+                        });
+                    }
+                else modelEncoded = system.loadCashFile(CASH, null);
                 if(modelEncoded==null||modelEncoded.length==0){
                     final ArrayList<Cube> decoded = new ArrayList<Cube>();
                     decoded.add(new Cube(new V3(0,0,0), new Color(0,0,0,1,true)));

@@ -18,7 +18,21 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="file" />
+                <data android:mimeType="*/*" />
+                <data android:pathPattern=".*\\.cu" />
+                <data android:host="*" />
+            </intent-filter>
         </activity>
+        <activity
+            android:name="MyPreferenceActivity"
+            android:icon="@drawable/ic_app"
+            android:theme="@style/SettingsTheme"
+            android:label="@string/settings_label" />
     </application>
 
 </manifest>
