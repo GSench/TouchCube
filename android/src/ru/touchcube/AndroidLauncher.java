@@ -163,4 +163,9 @@ public class AndroidLauncher extends AndroidApplication {
         viewHolder.mainLayout.addView(libGDXView);
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        modelManagerView.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
 }

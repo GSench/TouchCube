@@ -24,6 +24,7 @@ import ru.touchcube.model.AndroidModelStorage;
 import ru.touchcube.model.AndroidModelUri;
 import ru.touchcube.presentation.presenters_impl.ModelManagerPresenterImpl;
 import ru.touchcube.presentation.view.ModelManagerView;
+import ru.touchcube.utils.PermissionManager;
 import ru.touchcube.viewholders.CubeModelViewHolder;
 import ru.touchcube.viewholders.ModelManagerViewHolder;
 
@@ -36,6 +37,7 @@ public class ModelManagerViewImpl implements ModelManagerView {
     private Activity act;
     private ModelManagerViewHolder viewHolder;
     private ModelManagerPresenterImpl presenter;
+    private PermissionManager permissionManager;
     private function_get<ArrayList<Cube>> getCurrentModel;
     private function<ArrayList<Cube>> loadModel;
 
@@ -46,6 +48,7 @@ public class ModelManagerViewImpl implements ModelManagerView {
 
     public ModelManagerViewImpl(Activity act, function_get<ArrayList<Cube>> getCurrentModel, function<ArrayList<Cube>> loadModel){
         this.act=act;
+        permissionManager=new PermissionManager(act);
         this.getCurrentModel=getCurrentModel;
         this.loadModel=loadModel;
         viewHolder = new ModelManagerViewHolder((ViewGroup) act.findViewById(R.id.app_layout));
@@ -77,13 +80,39 @@ public class ModelManagerViewImpl implements ModelManagerView {
         viewHolder.filesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.onFilesButtonClicked();
+                permissionManager.requestWriteESPermission(
+                        new function<Void>() {
+                            @Override
+                            public void run(Void... params) {
+                                presenter.onFilesButtonClicked();
+                            }
+                        },
+                        new function<Void>() {
+                            @Override
+                            public void run(Void... params) {
+                                Toast.makeText(act, act.getString(R.string.write_permission_denied), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                );
             }
         });
         viewHolder.saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openTitleInputDialog();
+                permissionManager.requestWriteESPermission(
+                        new function<Void>() {
+                            @Override
+                            public void run(Void... params) {
+                                openTitleInputDialog();
+                            }
+                        },
+                        new function<Void>() {
+                            @Override
+                            public void run(Void... params) {
+                                Toast.makeText(act, act.getString(R.string.write_permission_denied), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                );
             }
         });
     }
@@ -241,5 +270,9 @@ public class ModelManagerViewImpl implements ModelManagerView {
     @Override
     public void loadModel(ArrayList<Cube> cubes) {
         loadModel.run(cubes);
+    }
+
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        permissionManager.onPermissionCallback(requestCode, permissions, grantResults);
     }
 }

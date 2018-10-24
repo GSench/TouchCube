@@ -62,6 +62,7 @@ public class ModelManagerPresenterImpl implements CubeModelManagerPresenter {
 
     @Override
     public void onSavingError(String title) {
+        view.closeSavingMessage();
         view.showSavingError(title);
     }
 

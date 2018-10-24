@@ -31,9 +31,11 @@ public class TouchCubeWorld {
     }
 
     public void load(ArrayList<Cube> cubesToLoad){
+        presenter.stopRendering();
         for(CubeDrawing cube: cubes) cube.onDelete();
         cubes.clear();
         for(Cube cube: cubesToLoad) put(cube);
+        presenter.continueRendering();
     }
 
     public void isPutMode(){
@@ -82,11 +84,13 @@ public class TouchCubeWorld {
     }
 
     public void reloadCurrent() {
+        presenter.stopRendering();
         ArrayList<Cube> load = new ArrayList<Cube>(cubes.size());
         for(CubeDrawing cubeDrawing: cubes) load.add(cubeDrawing.getCube());
         for(CubeDrawing cube: cubes) cube.onDelete();
         cubes.clear();
         for(Cube cube: load) put(cube);
+        presenter.continueRendering();
     }
 
     private CubeDrawing getCubeOn(V3 v){
