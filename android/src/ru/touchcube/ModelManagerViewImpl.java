@@ -46,7 +46,7 @@ public class ModelManagerViewImpl implements ModelManagerView {
     private ProgressDialog progressDialog;
     private CubeModelFile selected = null;
 
-    public ModelManagerViewImpl(Activity act, function_get<ArrayList<Cube>> getCurrentModel, function<ArrayList<Cube>> loadModel){
+    ModelManagerViewImpl(Activity act, function_get<ArrayList<Cube>> getCurrentModel, function<ArrayList<Cube>> loadModel){
         this.act=act;
         permissionManager=new PermissionManager(act);
         this.getCurrentModel=getCurrentModel;
@@ -68,6 +68,10 @@ public class ModelManagerViewImpl implements ModelManagerView {
             return;
         }
         Uri toOpen = intent.getData();
+        if(toOpen==null){
+            presenter.start(null);
+            return;
+        }
         AndroidModelUri androidModelUri = new AndroidModelUri(toOpen, act);
         presenter.start(androidModelUri);
     }

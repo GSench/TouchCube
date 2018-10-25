@@ -58,15 +58,15 @@ When you exit the program, your color palette will be saved.
 - Saving / loading projects</string>
 	<string name="about_body_6">In the upper left corner of the screen there are three buttons: load, save and settings.
 By pressing the medium button (with the save icon) opens a window for selecting the project name. After pressing OK, the project will be saved. Attention, the file name must not be empty, or contains characters *\/&quot;:?|&lt;&gt; or end with a point.
-When you press the left button (with the folder icon) the project's folder window will open. To select a project, select it in the list (it will be highlighted in gray), and click the Load button. In this window, you can delete or share previously saved project. To close the window, click Cancel.
+When you press the left button (with the folder icon) the project\'s folder window will open. To select a project, select it in the list (it will be highlighted in gray), and click the Load button. In this window, you can delete or share previously saved project. To close the window, click Cancel.
 Files you create are stored in a folder cube projects on device memory (/sdcard/cube projects). There you can copy project files of Touch Cube app (with extension .cu) received from friends or downloaded from our website.
 If the project file is not in the app folder, you can also load it, using your file manager program, by simply clicking on the file. You will be asked to save previous work.
 It should also be noted that your workspace will be saved after you exit program.</string>
     <string name="save_workspace">Current project will be deleted. Do you want to save it?</string>
     <string name="share_file_using">Share file using</string>
     <string name="contacts_info">On all matters relating to the application to contact support</string>
-    <string name="email" translatable="false"><u>mobindustry.ru@gmail.com</u></string>
-    <string name="site" translatable="false"><u>http://www.mobindustry.ru/</u></string>
+    <string name="email" translatable="false"><u>igregs3@gmail.com</u></string>
+    <string name="site" translatable="false"><u>https://gsench.com/touchcube</u></string>
     <string name="site_title">Our Website</string>
     <string name="email_title">Our @ email</string>
     <string name="contacts_title">Contacts</string>
@@ -74,8 +74,8 @@ It should also be noted that your workspace will be saved after you exit program
     <string name="email_subject" translatable="false">Touch Cube Info</string>
     <string name="ver" translatable="false">ver.</string>
     <string name="version_name" translatable="false">1.0</string>
-    <string name="date" translatable="false">02.01.2015</string>
-    <string name="developer" translatable="false">© 2014-2015 MobIndustry</string>
+    <string name="date" translatable="false">xx.1x.2018</string> <!--TODO strings and translations-->
+    <string name="developer" translatable="false">© 2017-2019 GSench</string>
     <string name="help_title">Help</string>
     <string name="saving_error">Saving error</string>
     <string name="loading_error">Loading error</string>
