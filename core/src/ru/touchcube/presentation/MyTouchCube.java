@@ -256,6 +256,7 @@ public class MyTouchCube extends ApplicationAdapter implements WorldView {
             if(intersected!=null){
                 centerCube(intersected.f);
                 presenter.longTapOnCube(intersected.f, intersected.s);
+                Gdx.input.vibrate(100);
             }
             return false;
         }
