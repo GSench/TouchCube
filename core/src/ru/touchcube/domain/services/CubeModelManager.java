@@ -79,7 +79,17 @@ public class CubeModelManager {
             public void run(Void... params) {
                 function<Void> result;
                 try {
-                    final ArrayList<Cube> decoded = CubeModelFileDescriptor.decode(file.read());
+                    ArrayList<Cube> dec = null;
+                    byte[] enc = file.read();
+                    try {
+                        dec = CubeModelFileDescriptor.decode(enc);
+                    } catch (Exception e){}
+                    if(dec==null)
+                        try {
+                            dec = CubeModelFileDescriptor.decodeVer1(enc);
+                        } catch (Exception e){}
+                    if(dec==null) throw new Exception();
+                    final ArrayList<Cube> decoded = dec;
                     result = new function<Void>() {
                         @Override
                         public void run(Void... params) {
@@ -156,10 +166,17 @@ public class CubeModelManager {
                         public void run(Void... params) { presenter.loadModel(decoded); }
                     });
                 } else {
-                    final ArrayList<Cube> decoded = CubeModelFileDescriptor.decode(modelEncoded);
+                    ArrayList<Cube> decoded = null;
+                    try {
+                        decoded = CubeModelFileDescriptor.decode(modelEncoded);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        //should be safe
+                    }
+                    final ArrayList<Cube> toLoad = decoded;
                     system.doOnForeground(new function<Void>() {
                         @Override
-                        public void run(Void... params) { presenter.loadModel(decoded); }
+                        public void run(Void... params) { presenter.loadModel(toLoad); }
                     });
                 }
             }

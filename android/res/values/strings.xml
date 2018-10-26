@@ -2,7 +2,6 @@
 <resources>
 
     <string name="app_name" translatable="false">Touch Cube</string>
-    <string name="file_key" translatable="false">пиу пиу умри взломщик</string>
     <string name="cont_desc" translatable="false">img</string>
     <string name="clear_dialog">Clear?</string>
     <string name="clear_dialog_message">Current workspace will be deleted. Are you sure?</string>
