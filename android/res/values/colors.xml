@@ -4,5 +4,6 @@
     <color name="color_picker_background">#FAFAFA</color>
     <color name="divider">#BDBDBD</color>
     <color name="selected">#9E9E9E</color>
-    
+    <color name="load_samples_button_color">#00A1E8</color>
+
 </resources>

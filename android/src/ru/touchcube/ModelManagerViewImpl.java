@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.view.View;
@@ -14,12 +15,16 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
+import org.apache.commons.io.IOUtils;
+
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import ru.touchcube.domain.model.Cube;
 import ru.touchcube.domain.model.CubeModelFile;
 import ru.touchcube.domain.utils.function;
 import ru.touchcube.domain.utils.function_get;
+import ru.touchcube.model.AndroidModelFile;
 import ru.touchcube.model.AndroidModelStorage;
 import ru.touchcube.model.AndroidModelUri;
 import ru.touchcube.presentation.presenters_impl.ModelManagerPresenterImpl;
@@ -28,16 +33,22 @@ import ru.touchcube.utils.PermissionManager;
 import ru.touchcube.viewholders.CubeModelViewHolder;
 import ru.touchcube.viewholders.ModelManagerViewHolder;
 
+import static android.content.Context.MODE_PRIVATE;
+
 /**
  * Created by grish on 23.09.2018.
  */
 
 public class ModelManagerViewImpl implements ModelManagerView {
 
+    private static final String LOAD_SAMPLES = "Load samples";
+    private static final int LOAD_SAMPLES_OFFER_COUNT = 6;
+
     private Activity act;
     private ModelManagerViewHolder viewHolder;
     private ModelManagerPresenterImpl presenter;
     private PermissionManager permissionManager;
+    private AndroidModelStorage storage;
     private function_get<ArrayList<Cube>> getCurrentModel;
     private function<ArrayList<Cube>> loadModel;
 
@@ -52,9 +63,10 @@ public class ModelManagerViewImpl implements ModelManagerView {
         this.getCurrentModel=getCurrentModel;
         this.loadModel=loadModel;
         viewHolder = new ModelManagerViewHolder((ViewGroup) act.findViewById(R.id.app_layout));
+        storage = new AndroidModelStorage(act);
         presenter = new ModelManagerPresenterImpl(
                 new AndroidInterface(act),
-                new AndroidModelStorage(act));
+                storage);
         presenter.setView(this);
         buttonsSetting();
         listSetting();
@@ -147,6 +159,17 @@ public class ModelManagerViewImpl implements ModelManagerView {
                     }
                 })
                 .create();
+        updateLoadSamplesCounter();
+    }
+
+    private void updateLoadSamplesCounter(){
+        SharedPreferences preferences = act.getSharedPreferences(LOAD_SAMPLES, MODE_PRIVATE);
+        int counter = preferences.getInt(LOAD_SAMPLES, 0);
+        if(counter<LOAD_SAMPLES_OFFER_COUNT)
+            preferences
+                .edit()
+                .putInt(LOAD_SAMPLES, counter+1)
+                .commit();
     }
 
     private void openTitleInputDialog(){
@@ -195,6 +218,7 @@ public class ModelManagerViewImpl implements ModelManagerView {
     @Override
     public void updateModelList(CubeModelFile[] listModels) {
         modelList.removeAllViews();
+        checkAndAddLoadSamplesHeader();
         for(final CubeModelFile modelFile : listModels){
             CubeModelViewHolder modelViewHolder = new CubeModelViewHolder(act, modelList);
 
@@ -222,6 +246,59 @@ public class ModelManagerViewImpl implements ModelManagerView {
             });
             modelList.addView(modelViewHolder.cubeModel);
         }
+    }
+
+    private void checkAndAddLoadSamplesHeader(){
+        if(act.getSharedPreferences(LOAD_SAMPLES, MODE_PRIVATE).getInt(LOAD_SAMPLES, 0)<LOAD_SAMPLES_OFFER_COUNT){
+            modelList.addView(getSamplesHeader());
+        }
+    }
+
+    private View getSamplesHeader(){
+        View header = act.getLayoutInflater().inflate(R.layout.load_samples_header, modelList, false);
+        header.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        final boolean success = loadSamples();
+                        act.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if(success){
+                                    act.getSharedPreferences(LOAD_SAMPLES, MODE_PRIVATE)
+                                            .edit()
+                                            .putInt(LOAD_SAMPLES, LOAD_SAMPLES_OFFER_COUNT+1)
+                                            .commit();
+                                    updateModelList(storage.getList());
+                                }
+                                else Toast.makeText(act, R.string.on_samples_loading_error, Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                }).start();
+            }
+        });
+        return header;
+    }
+
+    private boolean loadSamples(){
+        try {
+            InputStream androidCu = act.getAssets().open("samples/Android.cu");
+            AndroidModelFile androidFile = (AndroidModelFile) storage.createNew("Android.cu");
+            androidFile.write(IOUtils.toByteArray(androidCu));
+        } catch (Exception e){
+            return false;
+        }
+        try {
+            InputStream minecraftSteveCu = act.getAssets().open("samples/MinecraftSteve.cu");
+            AndroidModelFile minecraftSteveFile = (AndroidModelFile) storage.createNew("MinecraftSteve.cu");
+            minecraftSteveFile.write(IOUtils.toByteArray(minecraftSteveCu));
+        } catch (Exception e){
+            return false;
+        }
+        return true;
     }
 
     private void onDeleteDialog(final CubeModelFile cubeModelFile){

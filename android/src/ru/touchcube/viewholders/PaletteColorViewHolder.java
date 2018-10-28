@@ -16,7 +16,7 @@ public class PaletteColorViewHolder {
     public LinearLayout colorView;
 
     public PaletteColorViewHolder(Activity act, ViewGroup palette){
-        paletteColor = (LinearLayout) act.getLayoutInflater().inflate(R.layout.palett_color, palette, false);
+        paletteColor = (LinearLayout) act.getLayoutInflater().inflate(R.layout.palette_color, palette, false);
         colorView = paletteColor.findViewById(R.id.color);
     }
 }

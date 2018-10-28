@@ -81,5 +81,7 @@ It should also be noted that your workspace will be saved after you exit program
     <string name="error_deleting">Deleting error</string>
     <string name="write_permission_msg">This action requires permission to write to external storage</string>
     <string name="write_permission_denied">Permission not received. Action canceled.</string>
+    <string name="load_samples">Load samples</string>
+    <string name="on_samples_loading_error">Error loading sample</string>
 
 </resources>
