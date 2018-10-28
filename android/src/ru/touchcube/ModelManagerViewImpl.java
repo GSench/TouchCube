@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -42,7 +43,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class ModelManagerViewImpl implements ModelManagerView {
 
     private static final String LOAD_SAMPLES = "Load samples";
-    private static final int LOAD_SAMPLES_OFFER_COUNT = 6;
+    private static final int LOAD_SAMPLES_OFFER_COUNT = 10;
 
     private Activity act;
     private ModelManagerViewHolder viewHolder;
@@ -255,8 +256,10 @@ public class ModelManagerViewImpl implements ModelManagerView {
     }
 
     private View getSamplesHeader(){
-        View header = act.getLayoutInflater().inflate(R.layout.load_samples_header, modelList, false);
-        header.setOnClickListener(new View.OnClickListener() {
+        final ViewGroup header = (ViewGroup) act.getLayoutInflater().inflate(R.layout.load_samples_header, modelList, false);
+        View offer = header.findViewById(R.id.samples_offer);
+        Button remove = header.findViewById(R.id.remove_samples_offer);
+        offer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new Thread(new Runnable() {
@@ -278,6 +281,16 @@ public class ModelManagerViewImpl implements ModelManagerView {
                         });
                     }
                 }).start();
+            }
+        });
+        remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                act.getSharedPreferences(LOAD_SAMPLES, MODE_PRIVATE)
+                        .edit()
+                        .putInt(LOAD_SAMPLES, LOAD_SAMPLES_OFFER_COUNT+1)
+                        .commit();
+                modelList.removeView(header);
             }
         });
         return header;

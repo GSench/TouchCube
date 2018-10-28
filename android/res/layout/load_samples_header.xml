@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="54dp"
-    android:text="@string/load_samples"
-    android:gravity="center"
-    android:background="@color/load_samples_button_color"
-    android:textSize="9pt">
+    android:layout_height="54dp">
 
-</TextView>
+    <TextView
+        android:id="@+id/samples_offer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/load_samples"
+        android:gravity="center"
+        android:background="@color/load_samples_button_color"
+        android:textSize="9pt"/>
+
+    <Button
+        android:id="@+id/remove_samples_offer"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/delete_file_button"
+        android:layout_marginRight="12dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"/>
+
+</RelativeLayout>
