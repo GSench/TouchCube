@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.decals.CameraGroupStrategy;
-import com.badlogic.gdx.graphics.g3d.decals.Decal;
 import com.badlogic.gdx.graphics.g3d.decals.DecalBatch;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.input.GestureDetector;
@@ -247,6 +246,7 @@ public class MyTouchCube extends ApplicationAdapter implements WorldView {
             else {
                 if(presenter.getCubes().size()==0) center = new V3F(0,0,0);
                 presenter.tapOnBackground();
+                Gdx.input.vibrate(30);
             }
             return false;
         }

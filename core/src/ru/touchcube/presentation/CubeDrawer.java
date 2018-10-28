@@ -1,6 +1,5 @@
 package ru.touchcube.presentation;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.decals.Decal;
@@ -108,7 +107,6 @@ public class CubeDrawer extends CubeDrawing {
                 sides[i].setColor(color);
             }
         }
-        Gdx.input.vibrate(30);
     }
 
     @Override
