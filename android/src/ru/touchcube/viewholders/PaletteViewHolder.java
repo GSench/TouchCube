@@ -10,6 +10,7 @@ import java.io.IOException;
 
 import ru.touchcube.R;
 import ru.touchcube.domain.services.Palette;
+import ru.touchcube.utils.AliasingDrawableWrapper;
 import top.defaults.colorpicker.ColorPickerView;
 
 /**
@@ -33,7 +34,8 @@ public class PaletteViewHolder {
         colorPickerCloser = parent.findViewById(R.id.colorPickerCloser);
         currentColor = parent.findViewById(R.id.selectedColor);
         try {
-            cubeTexture = Drawable.createFromStream(act.getAssets().open("cube_nc.png"), null);
+            Drawable cubeTexture = Drawable.createFromStream(act.getAssets().open("cube_nc.png"), null);
+            this.cubeTexture = new AliasingDrawableWrapper(cubeTexture);
         } catch (IOException e) {}//must be safe
         palette = new PaletteColorViewHolder[Palette.COUNT];
         for(int i=0; i< Palette.COUNT; i++) {

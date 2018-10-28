@@ -242,11 +242,13 @@ public class MyTouchCube extends ApplicationAdapter implements WorldView {
         @Override
         public boolean tap(float x, float y, int count, int button) {
             Pair<CubeDrawing, Integer> intersected = intersectCube(x,y);
-            if(intersected!=null) presenter.tapOnCube(intersected.f, intersected.s);
+            if(intersected!=null){
+                presenter.tapOnCube(intersected.f, intersected.s);
+                Gdx.input.vibrate(30);
+            }
             else {
                 if(presenter.getCubes().size()==0) center = new V3F(0,0,0);
                 presenter.tapOnBackground();
-                Gdx.input.vibrate(30);
             }
             return false;
         }
