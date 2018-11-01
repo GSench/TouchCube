@@ -1,4 +1,4 @@
-package ru.touchcube.presentation;
+package ru.touchcube.presentation.view_impl;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -23,10 +23,17 @@ import ru.touchcube.domain.model.CubeDrawing;
 import ru.touchcube.domain.model.V3;
 import ru.touchcube.domain.utils.Pair;
 import ru.touchcube.domain.utils.function_get;
+import ru.touchcube.presentation.model.CubeDrawer;
 import ru.touchcube.presentation.presenters_impl.WorldPresenterImpl;
 import ru.touchcube.presentation.utils.MyGestureListener;
-import ru.touchcube.presentation.utils.V3F;
+import ru.touchcube.domain.model.V3F;
 import ru.touchcube.presentation.view.WorldView;
+
+// This class is the View for TouchCubeWorld.
+// It draws cubes in 3D space using LibGDX.
+// It must be created in LibGDX backend (OS) and launched in LibGDX way.
+// It runs in separate thread.
+// It can create CubeDrawers.
 
 public class MyTouchCube extends ApplicationAdapter implements WorldView {
 

@@ -6,6 +6,7 @@ import ru.touchcube.domain.model.CubeDrawing;
 
 /**
  * Created by grish on 23.09.2018.
+ * View interface for TouchCubeWorld
  */
 
 public interface WorldView {

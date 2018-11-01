@@ -8,6 +8,7 @@ import ru.touchcube.R;
 
 /**
  * Created by grish on 19.09.2018.
+ * This class is used as a part of PaletteViewHolder
  */
 
 public class PaletteColorViewHolder {

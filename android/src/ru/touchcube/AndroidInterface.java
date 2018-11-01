@@ -14,6 +14,8 @@ import ru.touchcube.domain.utils.function;
 
 /**
  * Created by grish on 01.05.2017.
+ * Implementation of SystemInterface for Android.
+ * This class provides some methods of SharedPreferences and Threads
  */
 
 public class AndroidInterface implements SystemInterface {

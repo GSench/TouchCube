@@ -1,4 +1,4 @@
-package ru.touchcube;
+package ru.touchcube.view_impl;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -12,6 +12,11 @@ import android.preference.PreferenceActivity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import ru.touchcube.R;
+
+//This class is used to show app's settings
+//It is initialized and used in AndroidLauncher
 
 public class MyPreferenceActivity extends PreferenceActivity {
 

@@ -1,4 +1,7 @@
-package ru.touchcube.domain.utils.crypto;
+package ru.touchcube.domain.utils;
+
+//This class is used for enabling old model's file format in CubeModelFileDescriptor
+
 public class MyBase64
 {
 
@@ -10,7 +13,7 @@ public class MyBase64
     /**
      *  Encode some data and return a String.
      */
-    public final static String encode(byte[] d)
+    public static String encode(byte[] d)
     {
         if (d == null) return null;
         byte data[] = new byte[d.length+2];
@@ -67,7 +70,7 @@ public class MyBase64
      *  Decode data and return bytes.  Assumes that the data passed
      *  in is ASCII text.
      */
-    public final static byte[] decode(byte[] data)
+    public static byte[] decode(byte[] data)
     {
         int tail = data.length;
         while (data[tail-1] == '=')  tail--;

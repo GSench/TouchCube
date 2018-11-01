@@ -11,7 +11,7 @@
         android:label="@string/app_name"
         android:theme="@style/CubesTheme" >
         <activity
-            android:name="ru.touchcube.AndroidLauncher"
+            android:name="ru.touchcube.view_impl.AndroidLauncher"
             android:label="@string/app_name" 
             android:screenOrientation="landscape"
             android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize">
@@ -30,7 +30,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="MyPreferenceActivity"
+            android:name=".view_impl.MyPreferenceActivity"
             android:icon="@drawable/ic_app"
             android:theme="@style/SettingsTheme"
             android:label="@string/settings_label" />

@@ -11,6 +11,8 @@ import android.support.v7.graphics.drawable.DrawableWrapper;
 
 /**
  * Created by grish on 29.10.2018.
+ * This class is usen to draw no-color color in palette.
+ * It is only used in PaletteViewHolder
  */
 
 public class AliasingDrawableWrapper extends DrawableWrapper {

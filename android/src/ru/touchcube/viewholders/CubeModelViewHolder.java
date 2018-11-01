@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import ru.touchcube.R;
 
+// ViewHolder for CubeModel File as a part of CubeModelManager
+
 public class CubeModelViewHolder {
 
     public RelativeLayout cubeModel;

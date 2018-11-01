@@ -1,13 +1,14 @@
 package ru.touchcube.presentation.presenters_impl;
 
 import ru.touchcube.domain.SystemInterface;
-import ru.touchcube.domain.interactor.PalettePresenter;
+import ru.touchcube.domain.presenters.PalettePresenter;
 import ru.touchcube.domain.model.Color;
-import ru.touchcube.domain.services.Palette;
+import ru.touchcube.domain.interactors.Palette;
 import ru.touchcube.presentation.view.PaletteView;
 
 /**
  * Created by grish on 23.09.2018.
+ * Implementation of PalettePresenter to connect View and Interactor
  */
 
 public class PalettePresenterImpl implements PalettePresenter {

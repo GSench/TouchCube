@@ -17,6 +17,7 @@ import ru.touchcube.domain.model.CubeModelFile;
 
 /**
  * Created by grish on 02.09.2018.
+ * This class implements r/w file on Android
  */
 
 public class AndroidModelFile extends CubeModelFile {
@@ -56,7 +57,7 @@ public class AndroidModelFile extends CubeModelFile {
 
     @Override
     public void delete() throws Exception {
-        file.delete();
+        if(!file.delete()) throw new Exception();
     }
 
     @Override

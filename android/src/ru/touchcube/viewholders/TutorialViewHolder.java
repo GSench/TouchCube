@@ -11,6 +11,7 @@ import ru.touchcube.R;
 
 /**
  * Created by grish on 22.10.2018.
+ * ViewHolder for Tutorial
  */
 
 public class TutorialViewHolder {

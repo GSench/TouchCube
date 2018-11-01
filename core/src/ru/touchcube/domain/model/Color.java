@@ -2,15 +2,16 @@ package ru.touchcube.domain.model;
 
 /**
  * Created by grish on 21.08.2018.
+ * This class represents possible color of cube's face
  */
 
 public class Color {
 
-    int ri;
-    int gi;
-    int bi;
-    int ai;
-    boolean noColorI;
+    private int ri;
+    private int gi;
+    private int bi;
+    private int ai;
+    private boolean noColorI;
 
     public Color(int ri, int gi, int bi, int ai, boolean noColorI) {
         this.ri = ri;

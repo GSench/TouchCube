@@ -10,6 +10,8 @@ import ru.touchcube.R;
 
 /**
  * Created by grish on 02.09.2018.
+ * ViewHolder for AndroidLauncher.
+ * It keeps Android buttons, which are used in MyTouchCube
  */
 
 public class MainViewHolder {

@@ -1,4 +1,9 @@
-package ru.touchcube.presentation.utils;
+package ru.touchcube.domain.model;
+
+/**
+ * Created by grish on 21.08.2018.
+ * Vector of float in space
+ */
 
 public class V3F {
 

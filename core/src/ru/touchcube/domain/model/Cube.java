@@ -2,6 +2,8 @@ package ru.touchcube.domain.model;
 
 /**
  * Created by grish on 21.08.2018.
+ * This class represents cube as a point with a color.
+ * In cubes' coordinates 1 is the length of cube's side
  */
 
 public class Cube {

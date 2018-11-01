@@ -4,6 +4,7 @@ import ru.touchcube.domain.model.Color;
 
 /**
  * Created by grish on 23.09.2018.
+ * View interface for Palette
  */
 
 public interface PaletteView {

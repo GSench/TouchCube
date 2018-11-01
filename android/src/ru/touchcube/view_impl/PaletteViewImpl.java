@@ -1,4 +1,4 @@
-package ru.touchcube;
+package ru.touchcube.view_impl;
 
 import android.app.Activity;
 import android.content.res.Resources;
@@ -7,8 +7,10 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 
+import ru.touchcube.AndroidInterface;
+import ru.touchcube.R;
 import ru.touchcube.domain.model.Color;
-import ru.touchcube.domain.services.Palette;
+import ru.touchcube.domain.interactors.Palette;
 import ru.touchcube.presentation.presenters_impl.PalettePresenterImpl;
 import ru.touchcube.presentation.view.PaletteView;
 import ru.touchcube.viewholders.PaletteViewHolder;
@@ -16,6 +18,8 @@ import top.defaults.colorpicker.ColorObserver;
 
 /**
  * Created by grish on 23.09.2018.
+ * This class implements PaletteView.
+ * It is initialized in AndroidLauncher.
  */
 
 public class PaletteViewImpl implements PaletteView {

@@ -2,6 +2,7 @@ package ru.touchcube.domain.model;
 
 /**
  * Created by Григорий Сенченок on 24.08.2018.
+ * File interface to be implemented in system's layer.
  */
 
 public abstract class CubeModelFile {

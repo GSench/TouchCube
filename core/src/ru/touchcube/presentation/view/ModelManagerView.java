@@ -7,6 +7,7 @@ import ru.touchcube.domain.model.CubeModelFile;
 
 /**
  * Created by grish on 23.09.2018.
+ * View interface for CubeModelManager
  */
 
 public interface ModelManagerView {

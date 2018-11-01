@@ -1,4 +1,4 @@
-package ru.touchcube;
+package ru.touchcube.view_impl;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -21,6 +21,8 @@ import org.apache.commons.io.IOUtils;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+import ru.touchcube.AndroidInterface;
+import ru.touchcube.R;
 import ru.touchcube.domain.model.Cube;
 import ru.touchcube.domain.model.CubeModelFile;
 import ru.touchcube.domain.utils.function;
@@ -38,6 +40,8 @@ import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by grish on 23.09.2018.
+ * This class implements ModelManagerView.
+ * It is initialized in AndroidLauncher.
  */
 
 public class ModelManagerViewImpl implements ModelManagerView {

@@ -7,6 +7,7 @@ import ru.touchcube.R;
 
 /**
  * Created by grish on 23.09.2018.
+ * ViewHolder for ModelManagerView
  */
 
 public class ModelManagerViewHolder {

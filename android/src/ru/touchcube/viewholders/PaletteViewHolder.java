@@ -9,12 +9,13 @@ import android.widget.LinearLayout;
 import java.io.IOException;
 
 import ru.touchcube.R;
-import ru.touchcube.domain.services.Palette;
+import ru.touchcube.domain.interactors.Palette;
 import ru.touchcube.utils.AliasingDrawableWrapper;
 import top.defaults.colorpicker.ColorPickerView;
 
 /**
  * Created by grish on 23.09.2018.
+ * ViewHolder for PaletteView
  */
 
 public class PaletteViewHolder {

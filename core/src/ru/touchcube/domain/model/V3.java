@@ -2,6 +2,7 @@ package ru.touchcube.domain.model;
 
 /**
  * Created by grish on 21.08.2018.
+ * Vector of int in space
  */
 
 public class V3 {

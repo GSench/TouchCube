@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 
 /**
  * Created by grish on 23.09.2018.
+ * Class to reduce code in MyTouchCube
  */
 
 public class MyGestureListener implements GestureDetector.GestureListener {

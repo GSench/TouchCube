@@ -1,9 +1,9 @@
-package ru.touchcube.domain.services;
+package ru.touchcube.domain.interactors;
 
 import java.util.ArrayList;
 
 import ru.touchcube.domain.SystemInterface;
-import ru.touchcube.domain.interactor.CubeModelManagerPresenter;
+import ru.touchcube.domain.presenters.CubeModelManagerPresenter;
 import ru.touchcube.domain.model.Color;
 import ru.touchcube.domain.model.Cube;
 import ru.touchcube.domain.model.CubeModelFile;
@@ -14,6 +14,7 @@ import ru.touchcube.domain.utils.function;
 
 /**
  * Created by Григорий Сенченок on 24.08.2018.
+ * This interactor realizes logic of models' files' saving and loading into TouchCubeWorld
  */
 
 public class CubeModelManager {

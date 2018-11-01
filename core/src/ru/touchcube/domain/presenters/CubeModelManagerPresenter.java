@@ -1,4 +1,4 @@
-package ru.touchcube.domain.interactor;
+package ru.touchcube.domain.presenters;
 
 import java.util.ArrayList;
 
@@ -7,6 +7,7 @@ import ru.touchcube.domain.model.CubeModelFile;
 
 /**
  * Created by Григорий Сенченок on 24.08.2018.
+ * CubeModelManagerPresenter for CubeModelManager interaction with its view
  */
 
 public interface CubeModelManagerPresenter {

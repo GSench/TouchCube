@@ -1,4 +1,4 @@
-package ru.touchcube;
+package ru.touchcube.view_impl;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -12,12 +12,16 @@ import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 
 import java.util.ArrayList;
 
+import ru.touchcube.R;
 import ru.touchcube.domain.model.Color;
 import ru.touchcube.domain.model.Cube;
 import ru.touchcube.domain.utils.function;
 import ru.touchcube.domain.utils.function_get;
-import ru.touchcube.presentation.MyTouchCube;
+import ru.touchcube.presentation.view_impl.MyTouchCube;
 import ru.touchcube.viewholders.MainViewHolder;
+
+//The main Activity
+//It initialize TouchCubeWorld, ModelManagerViewImpl, PaletteViewImpl, Tutorial, MyPreferenceActivity
 
 public class AndroidLauncher extends AndroidApplication {
 

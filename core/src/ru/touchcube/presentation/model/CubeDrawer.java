@@ -1,4 +1,4 @@
-package ru.touchcube.presentation;
+package ru.touchcube.presentation.model;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -8,7 +8,11 @@ import ru.touchcube.domain.model.Cube;
 import ru.touchcube.domain.model.CubeDrawing;
 import ru.touchcube.domain.utils.Pair;
 import ru.touchcube.domain.utils.function_get;
-import ru.touchcube.presentation.utils.V3F;
+import ru.touchcube.domain.model.V3F;
+
+// Implementation of CubeDrawing.
+// This class receives events from interactor and provides methods of drawing cube using LibGDX
+// Instances of this class must be created in LibGDX view
 
 public class CubeDrawer extends CubeDrawing {
 

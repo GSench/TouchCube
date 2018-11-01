@@ -3,15 +3,16 @@ package ru.touchcube.presentation.presenters_impl;
 import java.util.ArrayList;
 
 import ru.touchcube.domain.SystemInterface;
-import ru.touchcube.domain.interactor.CubeModelManagerPresenter;
+import ru.touchcube.domain.presenters.CubeModelManagerPresenter;
 import ru.touchcube.domain.model.Cube;
 import ru.touchcube.domain.model.CubeModelFile;
 import ru.touchcube.domain.model.CubeModelStorage;
-import ru.touchcube.domain.services.CubeModelManager;
+import ru.touchcube.domain.interactors.CubeModelManager;
 import ru.touchcube.presentation.view.ModelManagerView;
 
 /**
  * Created by grish on 23.09.2018.
+ * Implementation of CubeModelManagerPresenter to connect View and Interactor
  */
 
 public class ModelManagerPresenterImpl implements CubeModelManagerPresenter {

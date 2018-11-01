@@ -11,6 +11,7 @@ import ru.touchcube.domain.model.CubeModelFile;
 
 /**
  * Created by grish on 22.10.2018.
+ * This class is only used to be forgiven to the CubeModelManager if user opens .cu file
  */
 
 public class AndroidModelUri extends CubeModelFile {

@@ -1,8 +1,8 @@
-package ru.touchcube.domain.services;
+package ru.touchcube.domain.interactors;
 
 import java.util.ArrayList;
 
-import ru.touchcube.domain.interactor.WorldPresenter;
+import ru.touchcube.domain.presenters.WorldPresenter;
 import ru.touchcube.domain.model.Color;
 import ru.touchcube.domain.model.Cube;
 import ru.touchcube.domain.model.CubeDrawing;
@@ -11,6 +11,7 @@ import ru.touchcube.domain.utils.TouchCubeUtils;
 
 /**
  * Created by grish on 21.08.2018.
+ * This interactor realizes logic of cubes' proceeding and loading model passed from CubeModelManager
  */
 
 public class TouchCubeWorld {

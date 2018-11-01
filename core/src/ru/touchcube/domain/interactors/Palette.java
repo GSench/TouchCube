@@ -1,12 +1,13 @@
-package ru.touchcube.domain.services;
+package ru.touchcube.domain.interactors;
 
 import ru.touchcube.domain.SystemInterface;
 import ru.touchcube.domain.model.Color;
-import ru.touchcube.domain.interactor.PalettePresenter;
+import ru.touchcube.domain.presenters.PalettePresenter;
 import ru.touchcube.domain.utils.function;
 
 /**
  * Created by Григорий Сенченок on 23.08.2018.
+ * This interactor realizes logic of interaction with palette and passing colors to TouchCubeWorld
  */
 
 public class Palette {

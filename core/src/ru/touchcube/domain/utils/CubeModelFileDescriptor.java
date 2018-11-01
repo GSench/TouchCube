@@ -12,7 +12,8 @@ import javax.crypto.spec.SecretKeySpec;
 import ru.touchcube.domain.model.Color;
 import ru.touchcube.domain.model.Cube;
 import ru.touchcube.domain.model.V3;
-import ru.touchcube.domain.utils.crypto.MyBase64;
+
+// Class with static instruments of converting array of Cubes to byte[] and versa
 
 public class CubeModelFileDescriptor {
 

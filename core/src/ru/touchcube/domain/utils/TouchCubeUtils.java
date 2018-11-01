@@ -5,6 +5,7 @@ import ru.touchcube.domain.model.V3;
 
 /**
  * Created by grish on 21.08.2018.
+ * Some utils, used in TouchCubeWorld
  */
 
 public class TouchCubeUtils {

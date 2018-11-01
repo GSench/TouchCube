@@ -1,15 +1,17 @@
-package ru.touchcube;
+package ru.touchcube.view_impl;
 
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewGroup;
 
+import ru.touchcube.R;
 import ru.touchcube.domain.utils.function;
 import ru.touchcube.viewholders.TutorialViewHolder;
 
 /**
  * Created by grish on 22.10.2018.
+ * This class is used as part of AndroidLauncher to show tutorial on the 1st app launch
  */
 
 public class Tutorial {

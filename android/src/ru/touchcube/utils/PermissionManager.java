@@ -14,6 +14,7 @@ import ru.touchcube.domain.utils.function;
 
 /**
  * Created by Григорий Сенченок on 10.03.2017.
+ * This class realizes asking user to allow to create folders and save models
  */
 
 public class PermissionManager {

@@ -18,6 +18,7 @@ import ru.touchcube.domain.utils.Pair;
 
 /**
  * Created by grish on 02.09.2018.
+ * This class implements cubes' files' storage on Android
  */
 
 public class AndroidModelStorage extends CubeModelStorage {
