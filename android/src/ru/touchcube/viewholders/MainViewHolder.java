@@ -1,5 +1,6 @@
 package ru.touchcube.viewholders;
 
+import android.graphics.drawable.Drawable;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -27,6 +28,9 @@ public class MainViewHolder {
     public Button settings_button;
     public Button centreButton;
     public Button clearButton;
+    public Button orthoPerspSwitch;
+    public Drawable orthographyBtn;
+    public Drawable perspectiveBtn;
 
 
     public MainViewHolder(ViewGroup parent){
@@ -41,7 +45,9 @@ public class MainViewHolder {
         settings_button = parent.findViewById(R.id.settings_button);
         centreButton = parent.findViewById(R.id.centreButton);
         clearButton = parent.findViewById(R.id.clearButton);
-
+        orthoPerspSwitch = parent.findViewById(R.id.ortho_persp_switch);
+        orthographyBtn = parent.getContext().getResources().getDrawable(R.drawable.orthography_btn);
+        perspectiveBtn = parent.getContext().getResources().getDrawable(R.drawable.perspective_btn);
     }
 
 }

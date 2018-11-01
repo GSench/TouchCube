@@ -73,7 +73,14 @@
         android:layout_alignParentTop="true"
         android:background="@drawable/settings_button" />
 
-    
+	<Button
+		android:id="@+id/ortho_persp_switch"
+		style="?android:attr/buttonStyleSmall"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_above="@id/centreButton"
+		android:layout_alignParentLeft="true"
+		android:background="@drawable/orthography_btn"/>
 
     <Button
         android:id="@+id/centreButton"

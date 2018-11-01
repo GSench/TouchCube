@@ -3,8 +3,10 @@ package ru.touchcube.presentation.view_impl;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.decals.CameraGroupStrategy;
@@ -37,8 +39,16 @@ import ru.touchcube.presentation.view.WorldView;
 
 public class MyTouchCube extends ApplicationAdapter implements WorldView {
 
-    //Orthographic Camera
-    private OrthographicCamera cam;
+    //Camera
+    private Camera cam;
+
+    //Camera mode
+    private static final int ORTHOGRAPHY = 1;
+    private static final int PERSPECTIVE = 2;
+    private int cameraMode = ORTHOGRAPHY;
+
+    //Input processor
+    private InputMultiplexer input;
 
     //Screen size
     private float w, h;
@@ -86,7 +96,53 @@ public class MyTouchCube extends ApplicationAdapter implements WorldView {
         w= Gdx.graphics.getWidth();
         h= Gdx.graphics.getHeight();
 
-        //Camera description
+        //Handing touches
+        input = new InputMultiplexer();
+        Gdx.input.setInputProcessor(input);
+
+        //Camera init
+        setOrthographycCam();
+
+        //Decal Batch for cubes
+        initDecalBatch();
+
+        presenter.start();
+	}
+
+	private void initInputProcessor(){
+	    CameraInputController camController = new CameraInputController(cam);
+        GestureDetector gestureDetector = new GestureDetector(gestureListener);
+        input.clear();
+        input.addProcessor(gestureDetector);
+        input.addProcessor(camController);
+    }
+
+    private void initDecalBatch(){
+        decalBt=new DecalBatch(new CameraGroupStrategy(cam));
+    }
+
+    public void setOrthography(){
+	    Gdx.app.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                setOrthographycCam();
+            }
+        });
+    }
+
+    public void setPerspective(){
+	    Gdx.app.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                setPerspectiveCam();
+            }
+        });
+    }
+
+    private void setOrthographycCam(){
+        cameraMode=ORTHOGRAPHY;
+
+        //Orthographic camera
         cam = new OrthographicCamera(Gdx.graphics.getWidth()/60, Gdx.graphics.getHeight()/60);
         float camPosition = CubeDrawer.CUBE_SIZE*maxDistance;
         float camFarDistance = (float) (Math.sqrt(3)*camPosition*2);
@@ -96,19 +152,32 @@ public class MyTouchCube extends ApplicationAdapter implements WorldView {
         cam.far = camFarDistance;
         cam.update();
 
-        //Handing touches
-        InputMultiplexer input = new InputMultiplexer();
-        CameraInputController camController = new CameraInputController(cam);
-        GestureDetector gestureDetector = new GestureDetector(gestureListener);
-        input.addProcessor(gestureDetector);
-        input.addProcessor(camController);
-        Gdx.input.setInputProcessor(input);
+        //Updating input
+        initInputProcessor();
 
-        //Decal Batch for cubes
-        decalBt=new DecalBatch(new CameraGroupStrategy(cam));
+        //Updating decal batch
+        initDecalBatch();
+    }
 
-        presenter.start();
-	}
+    private void setPerspectiveCam(){
+        cameraMode=PERSPECTIVE;
+
+        //Perspective camera
+        cam = new PerspectiveCamera(67, Gdx.graphics.getWidth()/60, Gdx.graphics.getHeight()/60);
+        float camPosition = CubeDrawer.CUBE_SIZE*maxDistance/20;
+        float camFarDistance = (float) (Math.sqrt(3)*camPosition*2);
+        cam.position.set(camPosition, camPosition, camPosition);
+        cam.lookAt(0,0,0);
+        cam.near = 0.1f;
+        cam.far = camFarDistance;
+        cam.update();
+
+        //Updating input
+        initInputProcessor();
+
+        //Updating decal batch
+        initDecalBatch();
+    }
 
 	@Override
 	public void render () {
@@ -175,6 +244,14 @@ public class MyTouchCube extends ApplicationAdapter implements WorldView {
         presenter.isDeleteMode();
     }
 
+    public boolean isOrthography(){
+	    return cameraMode==ORTHOGRAPHY;
+    }
+
+    public boolean isPerspective(){
+        return cameraMode==PERSPECTIVE;
+    }
+
     public void onCentreButtonPushed() {
         Gdx.app.postRunnable(new Runnable() {
             @Override
@@ -239,11 +316,17 @@ public class MyTouchCube extends ApplicationAdapter implements WorldView {
         private float prevCamZoom = 1;
         @Override
         public boolean zoom(float initialDistance, float distance) {
-            if(prevInitialDistance!=initialDistance){
-                prevInitialDistance=initialDistance;
-                prevCamZoom=cam.zoom;
+            if(cam instanceof OrthographicCamera){
+                OrthographicCamera cam = (OrthographicCamera) MyTouchCube.this.cam;
+                if(prevInitialDistance!=initialDistance){
+                    prevInitialDistance=initialDistance;
+                    prevCamZoom=cam.zoom;
+                }
+                cam.zoom=prevCamZoom*(initialDistance/distance);
+            } else {
+                prevInitialDistance = -1;
+                prevCamZoom = 1;
             }
-            cam.zoom=prevCamZoom*(initialDistance/distance);
             return false;
         }
         @Override

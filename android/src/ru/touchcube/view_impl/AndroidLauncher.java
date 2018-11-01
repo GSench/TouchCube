@@ -135,6 +135,20 @@ public class AndroidLauncher extends AndroidApplication {
                 onClearDialog();
             }
         });
+        viewHolder.orthoPerspSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(libgdx.isOrthography()){
+                    libgdx.setPerspective();
+                    view.setBackground(viewHolder.perspectiveBtn);
+                } else if(libgdx.isPerspective()){
+                    libgdx.setOrthography();
+                    view.setBackground(viewHolder.orthographyBtn);
+                }
+            }
+        });
+        if(libgdx.isOrthography()) viewHolder.orthoPerspSwitch.setBackground(viewHolder.orthographyBtn);
+        if(libgdx.isPerspective()) viewHolder.orthoPerspSwitch.setBackground(viewHolder.perspectiveBtn);
     }
 
     private void onClearDialog(){
