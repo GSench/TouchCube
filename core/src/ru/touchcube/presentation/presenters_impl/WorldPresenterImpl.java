@@ -69,7 +69,7 @@ public class WorldPresenterImpl implements WorldPresenter {
         interactor.isDeleteMode();
     }
 
-    public void onCentreButtonPushed() {
+    public void reloadCurrentModel() {
         interactor.reloadCurrent();
     }
 

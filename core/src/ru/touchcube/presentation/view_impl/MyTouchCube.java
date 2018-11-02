@@ -96,14 +96,15 @@ public class MyTouchCube extends ApplicationAdapter implements WorldView {
         w= Gdx.graphics.getWidth();
         h= Gdx.graphics.getHeight();
 
-        //Handing touches
-        input = new InputMultiplexer();
-        Gdx.input.setInputProcessor(input);
-
         //Camera init
         setOrthographycCam();
 
-        //Decal Batch for cubes
+        //Handing touches
+        input = new InputMultiplexer();
+        Gdx.input.setInputProcessor(input);
+        initInputProcessor();
+
+        //Decal batch for cubes
         initDecalBatch();
 
         presenter.start();
@@ -126,6 +127,8 @@ public class MyTouchCube extends ApplicationAdapter implements WorldView {
             @Override
             public void run() {
                 setOrthographycCam();
+                initInputProcessor();
+                initDecalBatch();
             }
         });
     }
@@ -135,6 +138,8 @@ public class MyTouchCube extends ApplicationAdapter implements WorldView {
             @Override
             public void run() {
                 setPerspectiveCam();
+                initInputProcessor();
+                initDecalBatch();
             }
         });
     }
@@ -143,7 +148,7 @@ public class MyTouchCube extends ApplicationAdapter implements WorldView {
         cameraMode=ORTHOGRAPHY;
 
         //Orthographic camera
-        cam = new OrthographicCamera(Gdx.graphics.getWidth()/60, Gdx.graphics.getHeight()/60);
+        cam = new OrthographicCamera(w/60, h/60);
         float camPosition = CubeDrawer.CUBE_SIZE*maxDistance;
         float camFarDistance = (float) (Math.sqrt(3)*camPosition*2);
         cam.position.set(camPosition, camPosition, camPosition);
@@ -151,32 +156,20 @@ public class MyTouchCube extends ApplicationAdapter implements WorldView {
         cam.near = 0.1f;
         cam.far = camFarDistance;
         cam.update();
-
-        //Updating input
-        initInputProcessor();
-
-        //Updating decal batch
-        initDecalBatch();
     }
 
     private void setPerspectiveCam(){
         cameraMode=PERSPECTIVE;
 
         //Perspective camera
-        cam = new PerspectiveCamera(67, Gdx.graphics.getWidth()/60, Gdx.graphics.getHeight()/60);
-        float camPosition = CubeDrawer.CUBE_SIZE*maxDistance/20;
-        float camFarDistance = (float) (Math.sqrt(3)*camPosition*2);
+        cam = new PerspectiveCamera(67, w, h);
+        float camPosition = CubeDrawer.CUBE_SIZE*5;
+        float camFarDistance = (float) (Math.sqrt(3)*camPosition*100);
         cam.position.set(camPosition, camPosition, camPosition);
         cam.lookAt(0,0,0);
         cam.near = 0.1f;
         cam.far = camFarDistance;
         cam.update();
-
-        //Updating input
-        initInputProcessor();
-
-        //Updating decal batch
-        initDecalBatch();
     }
 
 	@Override
@@ -199,14 +192,14 @@ public class MyTouchCube extends ApplicationAdapter implements WorldView {
 	}
 
 	private boolean isDrawing(CubeDrawer cube, int side) {
-        return cube.getCube().getDrawSides()[side] && (
+        return cube.getCube().getDrawSides()[side] && ((
                         (side == 0 && cam.position.z < 0) ||
                         (side == 1 && cam.position.x > 0) ||
                         (side == 2 && cam.position.z > 0) ||
                         (side == 3 && cam.position.x < 0) ||
                         (side == 4 && cam.position.y < 0) ||
                         (side == 5 && cam.position.y > 0)
-        );
+        ) || isPerspective());
     }
 	
 	@Override
@@ -257,7 +250,7 @@ public class MyTouchCube extends ApplicationAdapter implements WorldView {
             @Override
             public void run() {
                 centerModel();
-                presenter.onCentreButtonPushed();
+                presenter.reloadCurrentModel();
             }
         });
     }
