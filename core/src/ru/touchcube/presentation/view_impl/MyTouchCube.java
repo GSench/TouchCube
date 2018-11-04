@@ -7,28 +7,32 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g3d.decals.CameraGroupStrategy;
-import com.badlogic.gdx.graphics.g3d.decals.DecalBatch;
+import com.badlogic.gdx.graphics.g3d.Environment;
+import com.badlogic.gdx.graphics.g3d.ModelBatch;
+import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
+import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
+import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import ru.touchcube.domain.model.Color;
 import ru.touchcube.domain.model.Cube;
 import ru.touchcube.domain.model.CubeDrawing;
 import ru.touchcube.domain.model.V3;
+import ru.touchcube.domain.model.V3F;
 import ru.touchcube.domain.utils.Pair;
 import ru.touchcube.domain.utils.function_get;
 import ru.touchcube.presentation.model.CubeDrawer;
 import ru.touchcube.presentation.presenters_impl.WorldPresenterImpl;
+import ru.touchcube.presentation.utils.MaterialManager;
 import ru.touchcube.presentation.utils.MyGestureListener;
-import ru.touchcube.domain.model.V3F;
 import ru.touchcube.presentation.view.WorldView;
 
 // This class is the View for TouchCubeWorld.
@@ -57,29 +61,15 @@ public class MyTouchCube extends ApplicationAdapter implements WorldView {
     private static final int maxDistance = 128;
 
     //Batchs
-    private DecalBatch decalBt;
+    private ModelBuilder modelBuilder;
+    private ModelBatch modelBatch;
+    private Environment environment;
 
     //Cube textures
-	private TextureRegion cubeTexture, cubeNCTexture;
+	private MaterialManager materialManager;
 
 	//Center
     private V3F center = new V3F(0,0,0);
-
-	private function_get<TextureRegion> getCubeTexture = new function_get<TextureRegion>() {
-        @Override
-        public TextureRegion get() {
-            if(cubeTexture==null) cubeTexture = new TextureRegion(new Texture("cube.png"));
-            return cubeTexture;
-        }
-    };
-
-    private function_get<TextureRegion> getCubeNCTexture = new function_get<TextureRegion>() {
-        @Override
-        public TextureRegion get() {
-            if(cubeNCTexture==null) cubeNCTexture = new TextureRegion(new Texture("cube_nc.png"));
-            return cubeNCTexture;
-        }
-    };
 
 	private WorldPresenterImpl presenter;
 	private function_get<Color> getCurrentColor;
@@ -105,7 +95,13 @@ public class MyTouchCube extends ApplicationAdapter implements WorldView {
         initInputProcessor();
 
         //Decal batch for cubes
-        initDecalBatch();
+        modelBatch = new ModelBatch();
+        modelBuilder = new ModelBuilder();
+        materialManager = new MaterialManager();
+        environment = new Environment();
+        environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
+        environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
+        initBatch();
 
         presenter.start();
 	}
@@ -118,8 +114,8 @@ public class MyTouchCube extends ApplicationAdapter implements WorldView {
         input.addProcessor(camController);
     }
 
-    private void initDecalBatch(){
-        decalBt=new DecalBatch(new CameraGroupStrategy(cam));
+    private void initBatch(){
+
     }
 
     public void setOrthography(){
@@ -128,7 +124,7 @@ public class MyTouchCube extends ApplicationAdapter implements WorldView {
             public void run() {
                 setOrthographycCam();
                 initInputProcessor();
-                initDecalBatch();
+                initBatch();
             }
         });
     }
@@ -139,7 +135,7 @@ public class MyTouchCube extends ApplicationAdapter implements WorldView {
             public void run() {
                 setPerspectiveCam();
                 initInputProcessor();
-                initDecalBatch();
+                initBatch();
             }
         });
     }
@@ -172,6 +168,24 @@ public class MyTouchCube extends ApplicationAdapter implements WorldView {
         cam.update();
     }
 
+    private Iterable<ModelInstance> array = new Iterable<ModelInstance>() {
+        @Override
+        public Iterator<ModelInstance> iterator() {
+            return new Iterator<ModelInstance>() {
+                private int pos=0;
+                @Override
+                public boolean hasNext() {
+                    return presenter.getCubes().size()-pos!=0;
+                }
+
+                @Override
+                public ModelInstance next() {
+                    return ((CubeDrawer)(presenter.getCubes().get(pos++))).getModelInstance();
+                }
+            };
+        }
+    };
+
 	@Override
 	public void render () {
 
@@ -180,15 +194,12 @@ public class MyTouchCube extends ApplicationAdapter implements WorldView {
         //Graphic setting
         Gdx.gl.glViewport(0, 0, (int)w, (int)h);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-        Gdx.gl.glEnable(GL20.GL_CULL_FACE);
+        //Gdx.gl.glEnable(GL20.GL_CULL_FACE);
 
         //Drawing cubes
-        for(CubeDrawing cubeDrawing: presenter.getCubes()){
-            CubeDrawer cubeDrawer = (CubeDrawer) cubeDrawing;
-            for(int i=0; i<6; i++)
-                if(isDrawing(cubeDrawer, i)) decalBt.add(cubeDrawer.getSides()[i]);
-        }
-        decalBt.flush();
+        modelBatch.begin(cam);
+        modelBatch.render(array, environment);
+        modelBatch.end();
 	}
 
 	private boolean isDrawing(CubeDrawer cube, int side) {
@@ -204,14 +215,14 @@ public class MyTouchCube extends ApplicationAdapter implements WorldView {
 	
 	@Override
 	public void dispose () {
-		decalBt.dispose();
+		modelBatch.dispose();
 	}
 
     @Override
     public CubeDrawing add(Cube newCube) {
         return new CubeDrawer(newCube,
-                getCubeTexture,
-                getCubeNCTexture,
+                modelBuilder,
+                materialManager,
                 new function_get<V3F>() {
                     @Override
                     public V3F get() {

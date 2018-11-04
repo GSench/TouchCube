@@ -1,14 +1,17 @@
 package ru.touchcube.presentation.model;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g3d.decals.Decal;
+import com.badlogic.gdx.graphics.VertexAttributes;
+import com.badlogic.gdx.graphics.g3d.Material;
+import com.badlogic.gdx.graphics.g3d.Model;
+import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 
 import ru.touchcube.domain.model.Cube;
 import ru.touchcube.domain.model.CubeDrawing;
+import ru.touchcube.domain.model.V3F;
 import ru.touchcube.domain.utils.Pair;
 import ru.touchcube.domain.utils.function_get;
-import ru.touchcube.domain.model.V3F;
+import ru.touchcube.presentation.utils.MaterialManager;
 
 // Implementation of CubeDrawing.
 // This class receives events from interactor and provides methods of drawing cube using LibGDX
@@ -17,117 +20,47 @@ import ru.touchcube.domain.model.V3F;
 public class CubeDrawer extends CubeDrawing {
 
     public static final int CUBE_SIZE = 2;
-    private Decal[] sides;
-    private function_get<TextureRegion> getCubeTexture;
-    private function_get<TextureRegion> getCubeNCTexture;
+    private Model model;
+    private ModelInstance modelInstance;
+    private ModelBuilder modelBuilder;
+    private MaterialManager materialManager;
     private function_get<V3F> getCenter;
 
     public CubeDrawer(Cube cube,
-                      function_get<TextureRegion> getCubeTexture,
-                      function_get<TextureRegion> getCubeNCTexture,
+                      ModelBuilder modelBuilder,
+                      MaterialManager materialManager,
                       function_get<V3F> getCenter) {
         super(cube);
-        sides = new Decal[6];
-        this.getCubeTexture=getCubeTexture;
-        this.getCubeNCTexture=getCubeNCTexture;
+        this.modelBuilder=modelBuilder;
+        this.materialManager=materialManager;
         this.getCenter=getCenter;
     }
 
-    public Decal[] getSides() {
-        return sides;
+    public ModelInstance getModelInstance() {
+        return modelInstance;
     }
 
     @Override
     public void onDelete() {
-        sides=null;
+        model.dispose();
     }
 
     @Override
     public void onCreate() {
-
-        int s=CUBE_SIZE;
-        TextureRegion texture = getCubeNCTexture.get();
-        TextureRegion textureC = getCubeTexture.get();
-        int xReal = 0, yReal = 0, zReal = 0, angleAlpha = 0, angleBeta = 0;
-        int x = getCube().getPosition().x();
-        int y = getCube().getPosition().y();
-        int z = getCube().getPosition().z();
-
-        for (int i=0; i<6; i++) {
-            sides[i] = Decal.newDecal(s, s, getCube().getColor().noColor()?texture:textureC, true);
-            switch (i) {
-                case 0:
-                    xReal = x * s;
-                    yReal = y * s;
-                    zReal = z * s - s/2;
-                    angleAlpha = 180;
-                    angleBeta = 0;
-                    break;
-                case 1:
-                    xReal = x * s + s/2;
-                    yReal = y * s;
-                    zReal = z * s;
-                    angleAlpha = 90;
-                    angleBeta = 0;
-                    break;
-                case 2:
-                    xReal = x * s;
-                    yReal = y * s;
-                    zReal = z * s + s/2;
-                    angleAlpha = 0;
-                    angleBeta = 0;
-                    break;
-                case 3:
-                    xReal = x * s - s/2;
-                    yReal = y * s;
-                    zReal = z * s;
-                    angleAlpha = 270;
-                    angleBeta = 0;
-                    break;
-                case 4:
-                    xReal = x * s;
-                    yReal = y * s - s/2;
-                    zReal = z * s;
-                    angleAlpha = 0;
-                    angleBeta = 90;
-                    break;
-                case 5:
-                    xReal = x * s;
-                    yReal = y * s + s/2;
-                    zReal = z * s;
-                    angleAlpha = 0;
-                    angleBeta = 270;
-                    break;
-            }
-            sides[i].setPosition(xReal - getCenter.get().x(), yReal - getCenter.get().y(), zReal - getCenter.get().z());
-            sides[i].rotateY(angleAlpha);
-            sides[i].rotateX(angleBeta);
-            if (!getCube().getColor().noColor()){
-                float color = Color.toFloatBits(
-                        getCube().getColor().r(),
-                        getCube().getColor().g(),
-                        getCube().getColor().b(),
-                        getCube().getColor().a());
-                sides[i].setColor(color);
-            }
-        }
+        Material material = materialManager.forColor(getCube().getColor());
+        model = modelBuilder.createBox(CUBE_SIZE, CUBE_SIZE, CUBE_SIZE, material, VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+        V3F center = getCenter.get();
+        float x = getCube().getPosition().x()*CUBE_SIZE-center.x();
+        float y = getCube().getPosition().y()*CUBE_SIZE-center.y();
+        float z = getCube().getPosition().z()*CUBE_SIZE-center.z();
+        modelInstance = new ModelInstance(model, x, y, z);
     }
 
     @Override
     public void onColorChanged() {
-        for(Decal side: sides){
-            if(getCube().getColor().noColor()){
-                side.setTextureRegion(getCubeNCTexture.get());
-                side.setColor(Color.WHITE);
-            } else {
-                side.setTextureRegion(getCubeTexture.get());
-                float color = Color.toFloatBits(
-                        getCube().getColor().r(),
-                        getCube().getColor().g(),
-                        getCube().getColor().b(),
-                        getCube().getColor().a());
-                side.setColor(color);
-            }
+        for(int m=0;m<modelInstance.materials.size;m++) {
+            Material mat = modelInstance.materials.get(m);
+            materialManager.toColor(mat, getCube().getColor());
         }
     }
 
@@ -135,6 +68,7 @@ public class CubeDrawer extends CubeDrawing {
         float triangle1[] = new float[9];
         float triangle2[] = new float[9];
 
+        /**
         float[] verticesOfDecal=sides[side].getVertices();
         //vertices: {x1, y1, z1, ?, ?, ?, x2, y2, z2, ?, ?, ?, x3, y3, z3, ?, ?, ?, x4, y4, z4, ?, ?, ?}
         // if we look on the face side of decal's rectangle,
@@ -168,6 +102,7 @@ public class CubeDrawer extends CubeDrawing {
         triangle2[7]=verticesOfDecal[19];
         triangle2[8]=verticesOfDecal[20];
 
+        return new Pair<float[], float[]>(triangle1, triangle2);*/
         return new Pair<float[], float[]>(triangle1, triangle2);
     }
 
