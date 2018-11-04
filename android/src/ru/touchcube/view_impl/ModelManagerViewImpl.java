@@ -303,14 +303,14 @@ public class ModelManagerViewImpl implements ModelManagerView {
     private boolean loadSamples(){
         try {
             InputStream androidCu = act.getAssets().open("samples/Android.cu");
-            AndroidModelFile androidFile = (AndroidModelFile) storage.createNew("Android.cu");
+            AndroidModelFile androidFile = (AndroidModelFile) storage.createNew("Android");
             androidFile.write(IOUtils.toByteArray(androidCu));
         } catch (Exception e){
             return false;
         }
         try {
             InputStream minecraftSteveCu = act.getAssets().open("samples/MinecraftSteve.cu");
-            AndroidModelFile minecraftSteveFile = (AndroidModelFile) storage.createNew("MinecraftSteve.cu");
+            AndroidModelFile minecraftSteveFile = (AndroidModelFile) storage.createNew("MinecraftSteve");
             minecraftSteveFile.write(IOUtils.toByteArray(minecraftSteveCu));
         } catch (Exception e){
             return false;
