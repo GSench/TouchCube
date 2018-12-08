@@ -1,15 +1,19 @@
 package ru.touchcube.domain.interactors;
 
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 
 import ru.touchcube.domain.SystemInterface;
-import ru.touchcube.domain.presenters.CubeModelManagerPresenter;
 import ru.touchcube.domain.model.Color;
 import ru.touchcube.domain.model.Cube;
 import ru.touchcube.domain.model.CubeModelFile;
 import ru.touchcube.domain.model.CubeModelStorage;
+import ru.touchcube.domain.model.OBJFile;
 import ru.touchcube.domain.model.V3;
+import ru.touchcube.domain.presenters.CubeModelManagerPresenter;
 import ru.touchcube.domain.utils.CubeModelFileDescriptor;
+import ru.touchcube.domain.utils.OBJExporter;
+import ru.touchcube.domain.utils.Pair;
 import ru.touchcube.domain.utils.function;
 
 /**
@@ -80,15 +84,8 @@ public class CubeModelManager {
             public void run(Void... params) {
                 function<Void> result;
                 try {
-                    ArrayList<Cube> dec = null;
                     byte[] enc = file.read();
-                    try {
-                        dec = CubeModelFileDescriptor.decode(enc);
-                    } catch (Exception e){}
-                    if(dec==null)
-                        try {
-                            dec = CubeModelFileDescriptor.decodeVer1(enc);
-                        } catch (Exception e){}
+                    ArrayList<Cube> dec = decode(enc);
                     if(dec==null) throw new Exception();
                     final ArrayList<Cube> decoded = dec;
                     result = new function<Void>() {
@@ -136,6 +133,54 @@ public class CubeModelManager {
 
     public void onShareModel(CubeModelFile file){
         file.share();
+    }
+
+    public void onExportModelAsOBJ(final CubeModelFile file){
+        system.doOnBackground(new function<Void>() {
+            @Override
+            public void run(Void... params) {
+                function<Void> result;
+                try {
+                    byte[] enc = file.read();
+                    ArrayList<Cube> dec = decode(enc);
+                    if(dec==null) throw new Exception();
+                    ArrayList<Cube> decoded = dec;
+
+                    final Pair<OBJFile, OBJFile> objAndMtlFiles = storage.createNewObj(file.getModelName());
+                    Pair<String, String> objAndMtl = OBJExporter.exportObjAndMtl(decoded, objAndMtlFiles.s.getFilename());
+                    objAndMtlFiles.f.write(objAndMtl.f.getBytes(Charset.forName("UTF-8")));
+                    objAndMtlFiles.s.write(objAndMtl.s.getBytes(Charset.forName("UTF-8")));
+
+                    result = new function<Void>() {
+                        @Override
+                        public void run(Void... params) {
+                            presenter.onExportedAsObj(objAndMtlFiles.f.getFullPath(), objAndMtlFiles.s.getFullPath());
+                        }
+                    };
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    result = new function<Void>() {
+                        @Override
+                        public void run(Void... params) {
+                            presenter.onExportError(file.getModelName());
+                        }
+                    };
+                }
+                system.doOnForeground(result);
+            }
+        });
+    }
+
+    private ArrayList<Cube> decode(byte[] enc){
+        ArrayList<Cube> dec = null;
+        try {
+            dec = CubeModelFileDescriptor.decode(enc);
+        } catch (Exception e){}
+        if(dec==null)
+            try {
+                dec = CubeModelFileDescriptor.decodeVer1(enc);
+            } catch (Exception e){}
+        return dec;
     }
 
     public void exit(){

@@ -4,16 +4,12 @@ import android.content.Context;
 import android.os.Environment;
 
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.io.comparator.ExtensionFileComparator;
 
 import java.io.File;
-import java.util.ArrayList;
 
-import ru.touchcube.domain.model.Color;
 import ru.touchcube.domain.model.CubeModelFile;
 import ru.touchcube.domain.model.CubeModelStorage;
-import ru.touchcube.domain.utils.CubeModelFileDescriptor;
+import ru.touchcube.domain.model.OBJFile;
 import ru.touchcube.domain.utils.Pair;
 
 /**
@@ -25,6 +21,8 @@ public class AndroidModelStorage extends CubeModelStorage {
 
     private static final String PATH = "cube projects";
     public static final String EXTENSION = "cu";
+    public static final String OBJ = "obj";
+    public static final String MTL = "mtl";
 
     private File path;
     private Context context;
@@ -56,6 +54,16 @@ public class AndroidModelStorage extends CubeModelStorage {
     public CubeModelFile createNew(String filename) throws Exception {
         File file = new File(path, filename+"."+EXTENSION);
         if(file.exists()||file.createNewFile()) return new AndroidModelFile(file, context);
+        else throw new Exception();
+    }
+
+    @Override
+    public Pair<OBJFile, OBJFile> createNewObj(String modelName) throws Exception {
+        File obj = new File(path, modelName+"."+OBJ);
+        File mtl = new File(path, modelName+"."+MTL);
+        if(!obj.exists()) obj.createNewFile();
+        if(!mtl.exists()) mtl.createNewFile();
+        if(obj.exists()&&mtl.exists()) return new Pair<OBJFile, OBJFile>(new AndroidOBJFile(obj), new AndroidOBJFile(mtl));
         else throw new Exception();
     }
 }

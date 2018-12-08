@@ -21,4 +21,6 @@ public interface CubeModelManagerPresenter {
     void onStartSaving(String title);
     ArrayList<Cube> getCurrentModel();
     void loadModel(ArrayList<Cube> cubes);
+    void onExportedAsObj(String fullPath, String fullPath1);
+    void onExportError(String modelName);
 }

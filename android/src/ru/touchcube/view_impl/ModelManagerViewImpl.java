@@ -249,6 +249,13 @@ public class ModelManagerViewImpl implements ModelManagerView {
                     view.setBackgroundColor(act.getResources().getColor(R.color.selected));
                 }
             });
+            modelViewHolder.shareButton.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    presenter.exportAsObj(modelFile);
+                    return true;
+                }
+            });
             modelList.addView(modelViewHolder.cubeModel);
         }
     }
@@ -368,6 +375,16 @@ public class ModelManagerViewImpl implements ModelManagerView {
     @Override
     public void loadModel(ArrayList<Cube> cubes) {
         loadModel.run(cubes);
+    }
+
+    @Override
+    public void onExportedAsObj(String fullPath, String fullPath1) {
+        Toast.makeText(act, act.getResources().getString(R.string.export_success)+" "+fullPath+" , "+fullPath1, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onExportError(String modelName) {
+        Toast.makeText(act, act.getResources().getString(R.string.export_error)+" "+modelName, Toast.LENGTH_SHORT).show();
     }
 
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {

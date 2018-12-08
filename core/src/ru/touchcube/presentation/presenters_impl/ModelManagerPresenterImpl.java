@@ -83,6 +83,16 @@ public class ModelManagerPresenterImpl implements CubeModelManagerPresenter {
     }
 
     @Override
+    public void onExportedAsObj(String fullPath, String fullPath1) {
+        view.onExportedAsObj(fullPath, fullPath1);
+    }
+
+    @Override
+    public void onExportError(String modelName) {
+        view.onExportError(modelName);
+    }
+
+    @Override
     public void onSaved(String title) {
         view.closeSavingMessage();
     }
@@ -105,5 +115,9 @@ public class ModelManagerPresenterImpl implements CubeModelManagerPresenter {
     @Override
     public void onNameError(String title) {
         view.onNameError();
+    }
+
+    public void exportAsObj(CubeModelFile modelFile) {
+        interactor.onExportModelAsOBJ(modelFile);
     }
 }
