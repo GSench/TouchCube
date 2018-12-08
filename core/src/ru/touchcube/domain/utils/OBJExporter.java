@@ -41,24 +41,18 @@ public class OBJExporter {
             obj.append("v ").append(p.z() - 0.5).append(" ").append(p.x() + 0.5).append(" ").append(p.y() - 0.5).append("\n");
             obj.append("v ").append(p.z() + 0.5).append(" ").append(p.x() + 0.5).append(" ").append(p.y() - 0.5).append("\n");
             obj.append("v ").append(p.z() + 0.5).append(" ").append(p.x() - 0.5).append(" ").append(p.y() - 0.5).append("\n");
-            obj.append("vn -1 0 0\n" +
-                    "vn 0 1 0\n" +
-                    "vn 1 0 0\n" +
-                    "vn 0 -1 0\n" +
-                    "vn 0 0 -1\n" +
-                    "vn 0 0 1\n");
 
             String colorStr = cube.getColor().toString();
             if(!colors.contains(colorStr)) colors.add(colorStr);
             obj.append("usemtl ").append(colorStr).append("\n");
             obj.append("s off\n");
 
-            obj.append("f ").append(i*8 + 5).append("//").append(i*6 + 1).append(" ").append(i*8 + 1).append("//").append(i*6 +1).append(" ").append(i*8 + 2).append("//").append(i*6 +1).append(" ").append(i*8 + 6).append("//").append(i*6 +1).append("\n");
-            obj.append("f ").append(i*8 + 7).append("//").append(i*6 + 2).append(" ").append(i*8 + 3).append("//").append(i*6 +2).append(" ").append(i*8 + 2).append("//").append(i*6 +2).append(" ").append(i*8 + 6).append("//").append(i*6 +2).append("\n");
-            obj.append("f ").append(i*8 + 8).append("//").append(i*6 + 3).append(" ").append(i*8 + 4).append("//").append(i*6 +3).append(" ").append(i*8 + 3).append("//").append(i*6 +3).append(" ").append(i*8 + 7).append("//").append(i*6 +3).append("\n");
-            obj.append("f ").append(i*8 + 5).append("//").append(i*6 + 4).append(" ").append(i*8 + 1).append("//").append(i*6 +4).append(" ").append(i*8 + 4).append("//").append(i*6 +4).append(" ").append(i*8 + 8).append("//").append(i*6 +4).append("\n");
-            obj.append("f ").append(i*8 + 5).append("//").append(i*6 + 5).append(" ").append(i*8 + 6).append("//").append(i*6 +5).append(" ").append(i*8 + 7).append("//").append(i*6 +5).append(" ").append(i*8 + 8).append("//").append(i*6 +5).append("\n");
-            obj.append("f ").append(i*8 + 1).append("//").append(i*6 + 6).append(" ").append(i*8 + 2).append("//").append(i*6 +6).append(" ").append(i*8 + 3).append("//").append(i*6 +6).append(" ").append(i*8 + 4).append("//").append(i*6 +6).append("\n");
+            obj.append("f ").append(i*8 + 5).append(" ").append(i*8 + 1).append(" ").append(i*8 + 2).append(" ").append(i*8 + 6).append("\n");
+            obj.append("f ").append(i*8 + 7).append(" ").append(i*8 + 3).append(" ").append(i*8 + 2).append(" ").append(i*8 + 6).append("\n");
+            obj.append("f ").append(i*8 + 8).append(" ").append(i*8 + 4).append(" ").append(i*8 + 3).append(" ").append(i*8 + 7).append("\n");
+            obj.append("f ").append(i*8 + 5).append(" ").append(i*8 + 1).append(" ").append(i*8 + 4).append(" ").append(i*8 + 8).append("\n");
+            obj.append("f ").append(i*8 + 5).append(" ").append(i*8 + 6).append(" ").append(i*8 + 7).append(" ").append(i*8 + 8).append("\n");
+            obj.append("f ").append(i*8 + 1).append(" ").append(i*8 + 2).append(" ").append(i*8 + 3).append(" ").append(i*8 + 4).append("\n");
             
             obj.append("\n");
         }
