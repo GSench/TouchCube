@@ -146,6 +146,7 @@ public class CubeModelManager {
                     if(dec==null) throw new Exception();
                     ArrayList<Cube> decoded = dec;
 
+                    //TODO mtl might be empty
                     final Pair<OBJFile, OBJFile> objAndMtlFiles = storage.createNewObj(file.getModelName());
                     Pair<String, String> objAndMtl = OBJExporter.exportObjAndMtl(decoded, objAndMtlFiles.s.getFilename());
                     objAndMtlFiles.f.write(objAndMtl.f.getBytes(Charset.forName("UTF-8")));
