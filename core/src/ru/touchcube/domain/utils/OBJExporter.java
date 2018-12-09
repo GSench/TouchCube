@@ -1,6 +1,5 @@
 package ru.touchcube.domain.utils;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import ru.touchcube.domain.model.Color;
@@ -16,7 +15,7 @@ public class OBJExporter {
     private static final String OBJ_HEADER = "# TouchCube v? OBJ File\n"; //TODO version
     private static final String MTL_HEADER = "# TouchCube v? MTL File\n"; //TODO version
 
-    public static Pair<String, String> exportObjAndMtl(ArrayList<Cube> cubes, String mtlFilename) throws IOException {
+    public static Pair<String, String> exportObjAndMtl(ArrayList<Cube> cubes, String mtlFilename) {
         
         StringBuilder obj = new StringBuilder();
         StringBuilder mtl = new StringBuilder();
@@ -33,18 +32,20 @@ public class OBJExporter {
 
             V3 p = cube.getPosition();
             obj.append("o Cube.").append(i).append("\n");
-            obj.append("v ").append(p.z() - 0.5).append(" ").append(p.x() - 0.5).append(" ").append(p.y() + 0.5).append("\n");
-            obj.append("v ").append(p.z() - 0.5).append(" ").append(p.x() + 0.5).append(" ").append(p.y() + 0.5).append("\n");
-            obj.append("v ").append(p.z() + 0.5).append(" ").append(p.x() + 0.5).append(" ").append(p.y() + 0.5).append("\n");
-            obj.append("v ").append(p.z() + 0.5).append(" ").append(p.x() - 0.5).append(" ").append(p.y() + 0.5).append("\n");
-            obj.append("v ").append(p.z() - 0.5).append(" ").append(p.x() - 0.5).append(" ").append(p.y() - 0.5).append("\n");
-            obj.append("v ").append(p.z() - 0.5).append(" ").append(p.x() + 0.5).append(" ").append(p.y() - 0.5).append("\n");
-            obj.append("v ").append(p.z() + 0.5).append(" ").append(p.x() + 0.5).append(" ").append(p.y() - 0.5).append("\n");
-            obj.append("v ").append(p.z() + 0.5).append(" ").append(p.x() - 0.5).append(" ").append(p.y() - 0.5).append("\n");
+            obj.append("v ").append(p.x() - 0.5).append(" ").append(p.y() - 0.5).append(" ").append(p.z() + 0.5).append("\n");
+            obj.append("v ").append(p.x() - 0.5).append(" ").append(p.y() + 0.5).append(" ").append(p.z() + 0.5).append("\n");
+            obj.append("v ").append(p.x() + 0.5).append(" ").append(p.y() + 0.5).append(" ").append(p.z() + 0.5).append("\n");
+            obj.append("v ").append(p.x() + 0.5).append(" ").append(p.y() - 0.5).append(" ").append(p.z() + 0.5).append("\n");
+            obj.append("v ").append(p.x() - 0.5).append(" ").append(p.y() - 0.5).append(" ").append(p.z() - 0.5).append("\n");
+            obj.append("v ").append(p.x() - 0.5).append(" ").append(p.y() + 0.5).append(" ").append(p.z() - 0.5).append("\n");
+            obj.append("v ").append(p.x() + 0.5).append(" ").append(p.y() + 0.5).append(" ").append(p.z() - 0.5).append("\n");
+            obj.append("v ").append(p.x() + 0.5).append(" ").append(p.y() - 0.5).append(" ").append(p.z() - 0.5).append("\n");
 
             String colorStr = cube.getColor().toString();
-            if(!colors.contains(colorStr)) colors.add(colorStr);
-            obj.append("usemtl ").append(colorStr).append("\n");
+            if(!cube.getColor().noColor()){
+                if(!colors.contains(colorStr)) colors.add(colorStr);
+                obj.append("usemtl ").append(colorStr).append("\n");
+            }
             obj.append("s off\n");
 
             obj.append("f ").append(i*8 + 5).append(" ").append(i*8 + 1).append(" ").append(i*8 + 2).append(" ").append(i*8 + 6).append("\n");
@@ -57,18 +58,20 @@ public class OBJExporter {
             obj.append("\n");
         }
 
+        if(colors.size()==0) return new Pair<String, String>(obj.toString(), "");
+
         mtl.append(MTL_HEADER);
 
         for(String colorStr: colors){
             Color c = new Color(colorStr);
             mtl.append("newmtl ").append(colorStr).append("\n"); //material name
-            mtl.append(c.noColor()? "Ns 0\n" : "Ns 100\n"); //specular exponent
-            mtl.append(c.noColor()? "Ka 0 0.41 0.59\n" : "Ka 1 1 1\n"); //ambient color
-            mtl.append(c.noColor()? "Kd 0.08 0.08 0.08\n" : "Kd "+c.r()/255f+" "+c.g()/255f+" "+c.b()/255f+"\n"); //diffuse color
+            mtl.append("Ns 100\n"); //specular exponent
+            mtl.append("Ka 1 1 1\n"); //ambient color
+            mtl.append("Kd ").append(c.r() / 255f).append(" ").append(c.g() / 255f).append(" ").append(c.b() / 255f).append("\n"); //diffuse color
             mtl.append("Ks 0 0 0\n"); //specular reflectivity
             mtl.append("Ke 0 0 0\n"); //emissive coeficient
             mtl.append("Ni 1\n"); //optical density
-            mtl.append(c.noColor()? "d 1\n" : "d "+c.a()/255f+"\n"); //transparency
+            mtl.append("d ").append(c.a() / 255f).append("\n"); //transparency
             mtl.append("illum 2\n"); //various material lighting and shading effects (2: Highlight on)
             mtl.append("\n");
         }
