@@ -378,8 +378,8 @@ public class ModelManagerViewImpl implements ModelManagerView {
     }
 
     @Override
-    public void onExportedAsObj(String fullPath, String fullPath1) {
-        Toast.makeText(act, act.getResources().getString(R.string.export_success)+" "+fullPath+" , "+fullPath1, Toast.LENGTH_LONG).show();
+    public void onExportedAsObj(String fullPath) {
+        Toast.makeText(act, act.getResources().getString(R.string.export_success)+" "+fullPath, Toast.LENGTH_LONG).show();
     }
 
     @Override

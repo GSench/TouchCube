@@ -58,7 +58,7 @@ public class OBJExporter {
             obj.append("\n");
         }
 
-        if(colors.size()==0) return new Pair<String, String>(obj.toString(), "");
+        if(colors.size()==0) return new Pair<String, String>(obj.toString(), null);
 
         mtl.append(MTL_HEADER);
 

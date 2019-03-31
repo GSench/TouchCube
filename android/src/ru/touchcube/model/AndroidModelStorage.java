@@ -10,7 +10,6 @@ import java.io.File;
 import ru.touchcube.domain.model.CubeModelFile;
 import ru.touchcube.domain.model.CubeModelStorage;
 import ru.touchcube.domain.model.OBJFile;
-import ru.touchcube.domain.utils.Pair;
 
 /**
  * Created by grish on 02.09.2018.
@@ -58,12 +57,18 @@ public class AndroidModelStorage extends CubeModelStorage {
     }
 
     @Override
-    public Pair<OBJFile, OBJFile> createNewObj(String modelName) throws Exception {
+    public OBJFile createNewObj(String modelName) throws Exception {
         File obj = new File(path, modelName+"."+OBJ);
-        File mtl = new File(path, modelName+"."+MTL);
         if(!obj.exists()) obj.createNewFile();
+        if(obj.exists()) return new AndroidOBJFile(obj);
+        else throw new Exception();
+    }
+
+    @Override
+    public OBJFile createNewMtl(String modelName) throws Exception {
+        File mtl = new File(path, modelName+"."+MTL);
         if(!mtl.exists()) mtl.createNewFile();
-        if(obj.exists()&&mtl.exists()) return new Pair<OBJFile, OBJFile>(new AndroidOBJFile(obj), new AndroidOBJFile(mtl));
+        if (mtl.exists()) return new AndroidOBJFile(mtl);
         else throw new Exception();
     }
 }

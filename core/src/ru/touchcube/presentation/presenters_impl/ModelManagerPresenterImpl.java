@@ -83,8 +83,8 @@ public class ModelManagerPresenterImpl implements CubeModelManagerPresenter {
     }
 
     @Override
-    public void onExportedAsObj(String fullPath, String fullPath1) {
-        view.onExportedAsObj(fullPath, fullPath1);
+    public void onExportedAsObj(String fullPath) {
+        view.onExportedAsObj(fullPath);
     }
 
     @Override

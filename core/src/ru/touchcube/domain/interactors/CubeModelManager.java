@@ -144,18 +144,19 @@ public class CubeModelManager {
                     byte[] enc = file.read();
                     ArrayList<Cube> dec = decode(enc);
                     if(dec==null) throw new Exception();
-                    ArrayList<Cube> decoded = dec;
 
-                    //TODO mtl might be empty
-                    final Pair<OBJFile, OBJFile> objAndMtlFiles = storage.createNewObj(file.getModelName());
-                    Pair<String, String> objAndMtl = OBJExporter.exportObjAndMtl(decoded, objAndMtlFiles.s.getFilename());
-                    objAndMtlFiles.f.write(objAndMtl.f.getBytes(Charset.forName("UTF-8")));
-                    objAndMtlFiles.s.write(objAndMtl.s.getBytes(Charset.forName("UTF-8")));
+                    final OBJFile objFile = storage.createNewObj(file.getModelName());
+                    Pair<String, String> objAndMtl = OBJExporter.exportObjAndMtl(dec, objFile.getFilename());
+                    objFile.write(objAndMtl.f.getBytes(Charset.forName("UTF-8")));
+                    if(objAndMtl.s!=null&&!objAndMtl.s.equals("")) {
+                        OBJFile mtlFile = storage.createNewMtl(file.getModelName());
+                        mtlFile.write(objAndMtl.s.getBytes(Charset.forName("UTF-8")));
+                    }
 
                     result = new function<Void>() {
                         @Override
                         public void run(Void... params) {
-                            presenter.onExportedAsObj(objAndMtlFiles.f.getFullPath(), objAndMtlFiles.s.getFullPath());
+                            presenter.onExportedAsObj(objFile.getFullPath());
                         }
                     };
                 } catch (Exception e) {
