@@ -249,11 +249,10 @@ public class ModelManagerViewImpl implements ModelManagerView {
                     view.setBackgroundColor(act.getResources().getColor(R.color.selected));
                 }
             });
-            modelViewHolder.shareButton.setOnLongClickListener(new View.OnLongClickListener() {
+            modelViewHolder.exportObjButton.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public boolean onLongClick(View v) {
+                public void onClick(View v) {
                     presenter.exportAsObj(modelFile);
-                    return true;
                 }
             });
             modelList.addView(modelViewHolder.cubeModel);

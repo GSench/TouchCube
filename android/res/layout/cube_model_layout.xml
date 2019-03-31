@@ -21,10 +21,10 @@
             android:textColor="@color/menu_text_color"/>
 
         <Button
-            android:id="@+id/delete_model_btn"
+            android:id="@+id/export_obj_btn"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:background="@drawable/delete_file_button"
+            android:background="@drawable/export_obj_button"
             android:layout_marginLeft="12dp"/>
 
         <Button
@@ -32,6 +32,13 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:background="@drawable/share_button"
+            android:layout_marginLeft="12dp"/>
+
+        <Button
+            android:id="@+id/delete_model_btn"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@drawable/delete_file_button"
             android:layout_marginLeft="12dp"/>
 
     </LinearLayout>
