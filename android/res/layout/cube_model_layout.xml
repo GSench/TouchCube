@@ -17,7 +17,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="9pt"/>
+            android:textSize="9pt"
+            android:textColor="@color/menu_text_color"/>
 
         <Button
             android:id="@+id/delete_model_btn"

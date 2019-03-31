@@ -2,6 +2,7 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
     <color android:id="@+id/color1" android:layout_width="wrap_content" android:layout_height="wrap_content" name="tutorial_back_color">#C000</color>
     <color name="color_picker_background">#FAFAFA</color>
+    <color name="menu_text_color">#FFF</color>
     <color name="divider">#BDBDBD</color>
     <color name="selected">#9E9E9E</color>
     <color name="load_samples_button_color">#00A1E8</color>
