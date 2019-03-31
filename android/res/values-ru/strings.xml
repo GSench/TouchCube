@@ -14,7 +14,7 @@
     <string name="delete_file_dialog_title">Удалить?</string>
     <string name="delete_file_dialog_message">Этот файл будет удален. Продолжить?</string>
     <string name="get_name_title">Введите имя</string>
-    <string name="bad_name">имя файла не должно быть пустым или содержать специальные символы *\/&quot;:?|&lt;&gt;</string>
+    <string name="bad_name">Имя файла не должно быть пустым или содержать специальные символы *\/&quot;:?|&lt;&gt;</string>
     <string name="no_files_selected">файл не выбран</string>
     <string name="put_ic">поставить</string>
     <string name="paint_ic">красить</string>
@@ -71,4 +71,13 @@ C помощью приложения Touch Cube вы можете строит�
     <string name="contacts_title">Контакты</string>
     <string name="contacts_msg">Техническая поддержка и обратная связь</string>
     <string name="help_title">Помощь</string>
+    <string name="saving_error">Ошибка сохранения</string>
+    <string name="loading_error">Ошибка загрузки</string>
+    <string name="error_deleting">Ошибка удаления</string>
+    <string name="write_permission_msg">Это действие требует разрешения на доступ к записи в память</string>
+    <string name="write_permission_denied">Разрешение не получено. Действие отменено.</string>
+    <string name="load_samples">Загрузить примеры</string>
+    <string name="on_samples_loading_error">Ошибка загрузки примеров</string>
+    <string name="export_success">Успешко экспортировано как</string>
+    <string name="export_error">Ошибка экспорта</string>
 </resources>

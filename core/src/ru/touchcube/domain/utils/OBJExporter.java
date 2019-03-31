@@ -12,8 +12,8 @@ import ru.touchcube.domain.model.V3;
 
 public class OBJExporter {
 
-    private static final String OBJ_HEADER = "# TouchCube v? OBJ File\n"; //TODO version
-    private static final String MTL_HEADER = "# TouchCube v? MTL File\n"; //TODO version
+    private static final String OBJ_HEADER = "# TouchCube v1.2 OBJ File\n";
+    private static final String MTL_HEADER = "# TouchCube v1.2 MTL File\n";
 
     public static Pair<String, String> exportObjAndMtl(ArrayList<Cube> cubes, String mtlFilename) {
         

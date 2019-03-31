@@ -64,16 +64,16 @@ It should also be noted that your workspace will be saved after you exit program
     <string name="save_workspace">Current project will be deleted. Do you want to save it?</string>
     <string name="share_file_using">Share file using</string>
     <string name="contacts_info">On all matters relating to the application to contact support</string>
-    <string name="email" translatable="false"><u>igregs3@gmail.com</u></string>
-    <string name="site" translatable="false"><u>https://gsench.com/touchcube</u></string>
-    <string name="site_title">Our Website</string>
-    <string name="email_title">Our @ email</string>
+    <string name="email" translatable="false"><u>grishasenchenok@yandex.ru</u></string>
+    <string name="site" translatable="false"><u>https://gsench.com</u></string>
+    <string name="site_title">My Website</string>
+    <string name="email_title">My @ email</string>
     <string name="contacts_title">Contacts</string>
     <string name="contacts_msg">Technical Support and Feedback</string>
     <string name="email_subject" translatable="false">Touch Cube Info</string>
     <string name="ver" translatable="false">ver.</string>
-    <string name="version_name" translatable="false">1.0</string>
-    <string name="date" translatable="false">xx.1x.2018</string> <!--TODO strings and translations-->
+    <string name="version_name" translatable="false">1.2 Momus</string>
+    <string name="date" translatable="false">1.04.2019</string>
     <string name="developer" translatable="false">© 2017-2019 GSench</string>
     <string name="help_title">Help</string>
     <string name="saving_error">Saving error</string>
